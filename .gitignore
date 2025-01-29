@@ -1,0 +1,129 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.jars
+*.log
+/build
+/out
+/target
+/.idea
+/.vscode
+/.classpath
+/.project
+/.settings
+
+# Java (Maven/Gradle)
+target/
+build/
+*.log
+*.jar
+*.war
+*.ear
+*.iml
+/.idea
+/.gradle
+.gradle/
+!gradle-wrapper.jar
+
+# Node.js (JavaScript/TypeScript/React)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+dist/
+build/
+/*.tgz
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts
+
+# React (common)
+build/
+*.log
+.DS_Store
+/.vscode
+/.idea
+
+# .NET
+bin/
+obj/
+.vscode/
+.vs/
+.idea/
+
+# .NET Core/ASP.NET Core (build and publish)
+*.vspscc
+.vsconfig
+.idea/
+
+# Spring Boot (Java)
+target/
+*.log
+*.jar
+*.war
+*.class
+
+# C/C++
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.dll
+*.out
+*.app
+*.idb
+*.pdb
+*.stackdump
+/build/
+*.obj
+*.lib
+*.log
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# General IDE files
+*.idea/
+*.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS system files
+.DS_Store
+Icon?
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+
+# Logs
+*.log
+
+# Coverage directory for JavaScript
+coverage/
+
+# JetBrains IDE (IntelliJ, PhpStorm, etc.)
+.idea/
+
+# Eclipse IDE
+/.classpath
+/.project
+/.settings
+/.buildpath
+/.metadata/
+
+# IntelliJ IDEA
+.idea/
+
+# VS Code settings
+.vscode/
+
+
+auto_commit.sh
