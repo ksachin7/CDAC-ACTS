@@ -8,9 +8,11 @@ Established in March 1988, as a Scientific Society of the Ministry of Communicat
 
 C-DAC has established the Advanced Computing Training School (ACTS) to meet the training needs of existing and prospective users of advanced computing and information technology. 
 
-Training Centers like SunBeam has been established, where in hundreds of students and professionals are trained in higher value skills in frontline tools and methodologies technology.
+<!-- Training Centers like SunBeam has been established, where in hundreds of students and professionals are trained in higher value skills in frontline tools and methodologies technology. -->
 
-[CDAC](https://www.cdac.in/) | [Sunbeam](https://www.sunbeaminfo.com/about-us) | [PGDAC-Syllabus](https://www.sunbeaminfo.com/post-graduate-diploma-programmes/PG-DAC) | [Placements](https://www.sunbeaminfo.com/placements)
+[CDAC](https://www.cdac.in/) | [PGDAC_Syllabus](https://www.cdac.in/index.aspx?id=DAC&courseid=0) | [ACTS Contact](https://www.cdac.in/index.aspx?id=edu_acts_EnquiryForm)
+
+<!-- | [Sunbeam](https://www.sunbeaminfo.com/about-us) | [PGDAC-Syllabus](https://www.sunbeaminfo.com/post-graduate-diploma-programmes/PG-DAC) | [Placements](https://www.sunbeaminfo.com/placements) -->
 
 Every day, I will practice coding challenges, build projects, and learn new concepts which will be committed to this repository.
 
@@ -41,7 +43,7 @@ Here are some resources I’m using during my learning journey:
 - [React Documentation](https://reactjs.org/docs/getting-started.html)
 - [MDN Web Docs](https://developer.mozilla.org/en-US/)
 
-- [Sunbeam](https://www.sunbeaminfo.com/)
+<!-- - [Sunbeam](https://www.sunbeaminfo.com/) -->
 
 ## 📄 License
 
