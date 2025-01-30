@@ -97,7 +97,7 @@ target/
 
 # MacOS system files
 .DS_Store
-Icon?
+**Icon?
 
 # Windows system files
 Thumbs.db
