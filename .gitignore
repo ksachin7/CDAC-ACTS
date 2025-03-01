@@ -125,5 +125,5 @@ coverage/
 # VS Code settings
 .vscode/
 
-
+Notes/**
 auto_commit.sh
