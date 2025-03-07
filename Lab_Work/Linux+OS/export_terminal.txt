@@ -1,0 +1,170 @@
+dac@dac:~$ pwd
+/home/dac
+dac@dac:~$ ls
+a.out               Day1      Day3      Day5      Desktop    hello.cpp  script       Templates
+Assignment4_Q1.cpp  Day1.zip  Day3.zip  Day5.zip  Documents  Music      Shellprg     Videos
+Assignment4_Q2.cpp  Day2      Day4      Day6      Downloads  Pictures   shellprg.sh
+Batch_2             Day2.zip  Day4.zip  Day6.zip  first      Public     snap
+dac@dac:~$ cd Batch_2/
+dac@dac:~/Batch_2$ mkdir os
+dac@dac:~/Batch_2$ touch os/example.tx
+dac@dac:~/Batch_2$ cd os
+dac@dac:~/Batch_2/os$ ls
+example.tx
+dac@dac:~/Batch_2/os$ vi example.txt
+dac@dac:~/Batch_2/os$ cat example.txt
+Here are some contents of example.txt
+
+
+dac@dac:~/Batch_2/os$ # listing all files and dir.
+dac@dac:~/Batch_2/os$ ls -l
+total 4
+-rw-rw-r-- 1 dac dac  0 Mar  7 17:35 example.tx
+-rw-rw-r-- 1 dac dac 40 Mar  7 17:36 example.txt
+dac@dac:~/Batch_2/os$ mkdir documents
+dac@dac:~/Batch_2/os$ touch file1.txt
+dac@dac:~/Batch_2/os$ mv file1.txt documents/
+dac@dac:~/Batch_2/os$ cd documents/
+dac@dac:~/Batch_2/os/documents$ ls
+file1.txt
+dac@dac:~/Batch_2/os/documents$ cd ..
+dac@dac:~/Batch_2/os$ nano fruits.txt
+dac@dac:~/Batch_2/os$ grep "apple" fruits.txt
+apple
+dac@dac:~/Batch_2/os$ ls
+documents  example.tx  example.txt  fruits.txt
+dac@dac:~/Batch_2/os$ mkdir old_files
+dac@dac:~/Batch_2/os$ cd old_files/
+dac@dac:~/Batch_2/os/old_files$ touch a.txt xyz.cpp o.out
+dac@dac:~/Batch_2/os/old_files$ ls
+a.txt  o.out  xyz.cpp
+dac@dac:~/Batch_2/os/old_files$ cd ..
+dac@dac:~/Batch_2/os$ rm -rf old_files/
+dac@dac:~/Batch_2/os$ ls
+documents  example.tx  example.txt  fruits.txt
+dac@dac:~/Batch_2/os$ ls
+documents  example.tx  example.txt  fruits.txt  report.pdf
+dac@dac:~/Batch_2/os$ ls -l
+total 84
+drwxrwxr-x 2 dac dac  4096 Mar  7 17:43 documents
+-rw-rw-r-- 1 dac dac     0 Mar  7 17:35 example.tx
+-rw-rw-r-- 1 dac dac    40 Mar  7 17:36 example.txt
+-rw-rw-r-- 1 dac dac    26 Mar  7 17:44 fruits.txt
+-rw-rw-r-- 1 dac dac 70011 Mar  7 17:51 report.pdf
+dac@dac:~/Batch_2/os$ ls -ltr
+total 84
+-rw-rw-r-- 1 dac dac     0 Mar  7 17:35 example.tx
+-rw-rw-r-- 1 dac dac    40 Mar  7 17:36 example.txt
+drwxrwxr-x 2 dac dac  4096 Mar  7 17:43 documents
+-rw-rw-r-- 1 dac dac    26 Mar  7 17:44 fruits.txt
+-rw-rw-r-- 1 dac dac 70011 Mar  7 17:51 report.pdf
+dac@dac:~/Batch_2/os$ ls -lh
+total 84K
+drwxrwxr-x 2 dac dac 4.0K Mar  7 17:43 documents
+-rw-rw-r-- 1 dac dac    0 Mar  7 17:35 example.tx
+-rw-rw-r-- 1 dac dac   40 Mar  7 17:36 example.txt
+-rw-rw-r-- 1 dac dac   26 Mar  7 17:44 fruits.txt
+-rw-rw-r-- 1 dac dac  69K Mar  7 17:51 report.pdf
+dac@dac:~/Batch_2/os$ ls -sh
+total 84K
+4.0K documents     0 example.tx  4.0K example.txt  4.0K fruits.txt   72K report.pdf
+dac@dac:~/Batch_2/os$ ls -lsh
+total 84K
+4.0K drwxrwxr-x 2 dac dac 4.0K Mar  7 17:43 documents
+   0 -rw-rw-r-- 1 dac dac    0 Mar  7 17:35 example.tx
+4.0K -rw-rw-r-- 1 dac dac   40 Mar  7 17:36 example.txt
+4.0K -rw-rw-r-- 1 dac dac   26 Mar  7 17:44 fruits.txt
+ 72K -rw-rw-r-- 1 dac dac  69K Mar  7 17:51 report.pdf
+dac@dac:~/Batch_2/os$ touch oldname.txt
+dac@dac:~/Batch_2/os$ ls
+documents  example.tx  example.txt  fruits.txt  oldname.txt  report.pdf
+dac@dac:~/Batch_2/os$ mv oldname.txt newname.txt
+dac@dac:~/Batch_2/os$ ls
+documents  example.tx  example.txt  fruits.txt  newname.txt  report.pdf
+dac@dac:~/Batch_2/os$ vi logfile.txt
+dac@dac:~/Batch_2/os$ echo $0;
+bash
+dac@dac:~/Batch_2/os$ cat /etc/shells
+# /etc/shells: valid login shells
+/bin/sh
+/bin/bash
+/usr/bin/bash
+/bin/rbash
+/usr/bin/rbash
+/usr/bin/sh
+/bin/dash
+/usr/bin/dash
+dac@dac:~/Batch_2/os$ tail logfile.txt
+and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+software like Aldus PageMaker including versions of Lorem Ipsum.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+software like Aldus PageMaker including versions of Lorem Ipsum.
+dac@dac:~/Batch_2/os$ sudo adduser john
+[sudo] password for dac: 
+Adding user `john' ...
+Adding new group `john' (1003) ...
+Adding new user `john' (1002) with group `john' ...
+Creating home directory `/home/john' ...
+Copying files from `/etc/skel' ...
+New password: 
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: 
+passwd: password updated successfully
+Changing the user information for john
+Enter the new value, or press ENTER for the default
+	Full Name []: Sachin K.
+	Room Number []: 7
+	Work Phone []: 0123456789
+	Home Phone []: 0
+	Other []: 0
+Is the information correct? [Y/n] y
+dac@dac:~/Batch_2/os$ whoami
+dac
+dac@dac:~/Batch_2/os$ sudo adduser alice
+Adding user `alice' ...
+Adding new group `alice' (1004) ...
+Adding new user `alice' (1003) with group `alice' ...
+Creating home directory `/home/alice' ...
+Copying files from `/etc/skel' ...
+New password: 
+BAD PASSWORD: The password is shorter than 8 characters
+Retype new password: 
+passwd: password updated successfully
+Changing the user information for alice
+Enter the new value, or press ENTER for the default
+	Full Name []: alice            
+	Room Number []: 0
+	Work Phone []: 0
+	Home Phone []: 0
+	Other []: 0
+Is the information correct? [Y/n] y
+dac@dac:~/Batch_2/os$ sudo userdel alice
+dac@dac:~/Batch_2/os$ rm -r /home/alice
+rm: descend into write-protected directory '/home/alice'? y
+rm: remove write-protected directory '/home/alice'? yeas
+rm: cannot remove '/home/alice': Permission denied
+dac@dac:~/Batch_2/os$ sudo rm -r /home/alice
+dac@dac:~/Batch_2/os$ touch data.txt
+dac@dac:~/Batch_2/os$ chmod 644 data.txt
+dac@dac:~/Batch_2/os$ ls -l
+total 88
+-rw-r--r-- 1 dac dac     0 Mar  7 18:34 data.txt
+drwxrwxr-x 2 dac dac  4096 Mar  7 17:43 documents
+-rw-rw-r-- 1 dac dac     0 Mar  7 17:35 example.tx
+-rw-rw-r-- 1 dac dac    40 Mar  7 17:36 example.txt
+-rw-rw-r-- 1 dac dac    26 Mar  7 17:44 fruits.txt
+-rw-rw-r-- 1 dac dac  1150 Mar  7 18:23 logfile.txt
+-rw-rw-r-- 1 dac dac     0 Mar  7 18:19 newname.txt
+-rw-rw-r-- 1 dac dac 70011 Mar  7 17:51 report.pdf
+dac@dac:~/Batch_2/os$ mkdir shared
+dac@dac:~/Batch_2/os$ chown bob:staff shared
+chown: invalid user: ‘bob:staff’
+dac@dac:~/Batch_2/os$ touch export_terminal.txt
+dac@dac:~/Batch_2/os$ 
+
