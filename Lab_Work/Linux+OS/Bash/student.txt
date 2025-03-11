@@ -1,0 +1,12 @@
+11,abc,50,70,55,175,58,B
+101,John Doe,85,90,78
+102,Jane Smith,92,88,81
+103,Sam Wilson,67,72,81
+104,Emily Davis,59,65,71
+105,Michael Brown,78,85,94
+106,Amy Adams,82,79,88
+107,David Clark,91,95,89
+108,Olivia Turner,67,71,75
+109,James Harris,83,80,77
+110,Isabella Moore,75,73,85
+111,xyz,60,50,40,150,50,B
