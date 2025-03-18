@@ -1,18 +1,19 @@
-#include<iostream>
-#include"EmployeeHeader.h"
-#include"PermHeader.h"
-#include"ContractHeader.h"
+#include <iostream>
+#include "EmployeeHeader.h"
+#include "PermHeader.h"
+#include "ContractHeader.h"
 using namespace std;
 
-int main(){
-	// Employee e; // // Error: Cannot instantiate abstract class
-    
+int main()
+{
+    // Employee e; // Error: Cannot instantiate abstract class
+
     // Create objects of the derived classes
-    PermEmployee pe("Alice", 50000, 5);     // Permanent Employee with bonus
-    ContractEmployee ce("Bob", 30000, 2);   // Contract Employee with duration in months
+    PermEmployee pe("Alice", 50000, 5);   // Permanent Employee with bonus
+    ContractEmployee ce("Bob", 30000, 2); // Contract Employee with duration in months
 
     // Create a base class pointer to demonstrate polymorphism
-    Employee* emp;
+    Employee *emp;
 
     // Point to PermanentEmployee object and call getSalary() dynamically
     emp = &pe;
@@ -24,5 +25,5 @@ int main(){
     emp = &ce;
     emp->Display();
 
-	return 0;
+    return 0;
 }

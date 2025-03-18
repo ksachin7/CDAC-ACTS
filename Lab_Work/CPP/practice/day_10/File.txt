@@ -1,0 +1,2 @@
+12345 S24 Samsung 74000
+12346 Iphone-14 Apple 90000
