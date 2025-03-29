@@ -1,0 +1,487 @@
+1. Consider following tables
+product(pid,pname,price,qty)
+product_details(pid,amt)
+amt =price * qty
+Write a trigger which will calculate amt every time any update is done in the price of an item. 
+mysql> CREATE TABLE product (
+    ->     pid INT PRIMARY KEY AUTO_INCREMENT,
+    ->     pname VARCHAR(255),
+    ->     price DECIMAL(10, 2),
+    ->     qty INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE product_details (
+    ->     pid INT,
+    ->     amt DECIMAL(10, 2),
+    ->     FOREIGN KEY (pid) REFERENCES product(pid)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO product (pname, price, qty) 
+    -> VALUES 
+    -> ('Laptop', 1000.00, 10),
+    -> ('Smartphone', 500.00, 20),
+    -> ('Headphones', 150.00, 50);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO product_details (pid, amt)
+    -> VALUES 
+    -> (1, 1000.00 * 10),
+    -> (2, 500.00 * 20),
+    -> (3, 150.00 * 50);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER //
+mysql> 
+mysql> DROP TRIGGER IF EXISTS amt_trigger;
+    -> CREATE TRIGGER amt_trigger
+    -> AFTER UPDATE
+    -> ON product
+    -> FOR EACH ROW
+    -> BEGIN
+    ->       IF OLD.PRICE != NEW.PRICE THEN
+    ->       UPDATE product_details
+    ->       SET amt= NEW.price * NEW.qty
+    ->       WHERE pid= NEW.pid;
+    -> 
+    ->       END IF;
+    -> END //
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+
+mysql> update product set qty= 11 where pid = 1;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from product;
++-----+------------+---------+------+
+| pid | pname      | price   | qty  |
++-----+------------+---------+------+
+|   1 | Laptop     | 1000.00 |   11 |
+|   2 | Smartphone |  500.00 |   20 |
+|   3 | Headphones |  150.00 |   50 |
++-----+------------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product_details;
++------+----------+
+| pid  | amt      |
++------+----------+
+|    1 | 10000.00 |
+|    2 | 10000.00 |
+|    3 |  7500.00 |
++------+----------+
+3 rows in set (0.00 sec)
+
+2. Consider following table
+emp_wage(eno,ename,sal,over_time)
+eno : pk auto inc
+Write a trigger which will insert over_time as 400 if value of over_time entered is null. 
+mysql> CREATE TABLE emp_wage (
+    ->     eno INT PRIMARY KEY AUTO_INCREMENT,
+    ->     ename VARCHAR(255),
+    ->     sal DECIMAL(10, 2),
+    ->     over_time DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO emp_wage (ename, sal, over_time)
+    -> VALUES 
+    -> ('John Doe', 3000.00, 500.00),
+    -> ('Jane Smith', 3500.00, 400.00),
+    -> ('Mike Johnson', 2500.00, 300.00);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER ##
+mysql> 
+mysql> DROP TRIGGER IF EXISTS INSERT_400;
+    -> CREATE TRIGGER INSERT_400
+    -> BEFORE INSERT ON emp_wage
+    -> FOR EACH ROW
+    -> BEGIN
+    ->       IF NEW.over_time IS NULL THEN
+    ->       SET NEW.over_time= 400;
+    ->       END IF;
+    -> END ##
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DELIMITER ;
+mysql> 
+mysql> INSERT into emp_wage VALUES
+    -> (NULL, 'Mike Tyson', 4500, null);
+Query OK, 1 row affected (0.02 sec)
+
+3. Consider following table
+order_master(oid,pname,qty,price)
+oid : pk auto inc
+order_log(oid,odate,amt)
+Write a trigger which will create a log of all orders once order is placed.
+mysql> CREATE TABLE order_master (
+    ->     oid INT PRIMARY KEY AUTO_INCREMENT,
+    ->     pname VARCHAR(255),
+    ->     qty INT,
+    ->     price DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE order_log (
+    ->     oid INT,
+    ->     odate DATE,
+    ->     amt DECIMAL(10, 2),
+    ->     FOREIGN KEY (oid) REFERENCES order_master(oid)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO order_master (pname, qty, price)
+    -> VALUES 
+    -> ('Laptop', 1, 1000.00),
+    -> ('Smartphone', 2, 500.00),
+    -> ('Headphones', 3, 150.00);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO order_log (oid, odate, amt)
+    -> VALUES 
+    -> (1, '2025-03-29', 1000.00),
+    -> (2, '2025-03-29', 1000.00),
+    -> (3, '2025-03-29', 450.00);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER ##
+mysql> 
+mysql> DROP TRIGGER IF EXISTS create_log;
+    -> CREATE TRIGGER create_log
+    -> AFTER INSERT ON order_master
+    -> FOR EACH ROW
+    -> BEGIN
+    ->       INSERT INTO order_log VALUES(NEW.oid, CURDATE(), NEW.PRICE);
+    -> END ##
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> INSERT INTO order_master VALUES(4, 'Ear-Buds', 2, 700);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM order_master;
++-----+------------+------+---------+
+| oid | pname      | qty  | price   |
++-----+------------+------+---------+
+|   1 | Laptop     |    1 | 1000.00 |
+|   2 | Smartphone |    2 |  500.00 |
+|   3 | Headphones |    3 |  150.00 |
+|   4 | Ear-Buds   |    2 |  700.00 |
++-----+------------+------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM order_log;
++------+------------+---------+
+| oid  | odate      | amt     |
++------+------------+---------+
+|    1 | 2025-03-29 | 1000.00 |
+|    2 | 2025-03-29 | 1000.00 |
+|    3 | 2025-03-29 |  450.00 |
+|    4 | 2025-03-29 |  700.00 |
++------+------------+---------+
+4 rows in set (0.00 sec)
+
+4. Consider following table
+cust_master(cid,cname,accno,city)
+cust_details(cid,deleted_date)
+Write a trigger which will save the information of deleted customer in cust_details table. 
+mysql> CREATE TABLE cust_master (
+    ->     cid INT PRIMARY KEY AUTO_INCREMENT,
+    ->     cname VARCHAR(255),
+    ->     accno VARCHAR(255),
+    ->     city VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE cust_details (
+    ->     cid INT,
+    ->     deleted_date DATE);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO cust_master (cname, accno, city)
+    -> VALUES 
+    -> ('Alice Brown', 'ACC001', 'New York'),
+    -> ('Bob White', 'ACC002', 'Los Angeles'),
+    -> ('Charlie Black', 'ACC003', 'Chicago');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER #
+mysql> DROP TRIGGER IF EXISTS deleted_records;
+    -> CREATE TRIGGER deleted_records
+    -> BEFORE DELETE ON cust_master
+    -> FOR EACH ROW
+    -> BEGIN
+    ->       INSERT INTO cust_details values(OLD.cid, CURDATE());
+    -> END #
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> DELIMITER ;
+mysql> 
+mysql> DELETE FROM cust_master WHERE cid=3;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from cust_master;
++-----+-------------+--------+-------------+
+| cid | cname       | accno  | city        |
++-----+-------------+--------+-------------+
+|   1 | Alice Brown | ACC001 | New York    |
+|   2 | Bob White   | ACC002 | Los Angeles |
++-----+-------------+--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from cust_details;
++------+--------------+
+| cid  | deleted_date |
++------+--------------+
+|    3 | 2025-03-29   |
++------+--------------+
+1 row in set (0.00 sec)
+
+5. create table med_master
+(mno int primary key auto_increment,
+ mname varchar(15),
+ stock int
+);
+create table med_order
+(mid int primary key auto_increment,
+ mno int,
+ qty int);
+
+Create above tables and write the trigger which will insert data in med_order table if stock drops down below 15.
+Use update after trigger.
+
+mysql> create table med_master
+    -> (mno int primary key auto_increment,
+    ->  mname varchar(15),
+    ->  stock int
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table med_order
+    -> (mid int primary key auto_increment,
+    ->  mno int,
+    ->  qty int);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO med_master (mname, stock)
+    -> VALUES
+    -> ('Paracetamol', 50),
+    -> ('Ibuprofen', 20),
+    -> ('Aspirin', 10),
+    -> ('Amoxicillin', 30),
+    -> ('Cough Syrup', 5);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO med_order (mno, qty)
+    -> VALUES 
+    -> (1, 10),
+    -> (2, 20),
+    -> (3, 5);
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> DELIMITER #
+mysql> DROP TRIGGER IF EXISTS insert_if_below15;
+    -> CREATE TRIGGER insert_if_below15
+    -> AFTER UPDATE ON med_master
+    -> FOR EACH ROW
+    -> BEGIN
+    ->       IF NEW.stock < 15 AND OLD.stock >=15 THEN
+    ->       INSERT INTO med_order VALUES(NULL, NEW.MNO, 15-NEW.STOCK);
+    ->       END IF;
+    -> END #
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> 
+mysql> UPDATE med_master
+    -> SET stock= 14 WHERE mno= 2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM med_master;
++-----+-------------+-------+
+| mno | mname       | stock |
++-----+-------------+-------+
+|   1 | Paracetamol |    50 |
+|   2 | Ibuprofen   |    14 |
+|   3 | Aspirin     |    10 |
+|   4 | Amoxicillin |    30 |
+|   5 | Cough Syrup |     5 |
++-----+-------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM med_order;
++-----+------+------+
+| mid | mno  | qty  |
++-----+------+------+
+|   1 |    1 |   10 |
+|   2 |    2 |   20 |
+|   3 |    3 |    5 |
+|   4 |    2 |    1 |
++-----+------+------+
+4 rows in set (0.00 sec)
+
+
+6. Try all basic commands of mongodb
+
+test> show databases
+admin    40.00 KiB
+batch2    8.00 KiB
+config  108.00 KiB
+local    40.00 KiB
+
+test> use batch2
+switched to db batch2
+
+batch2> show collections
+movie
+
+batch2> db.movie.find({name:'Andhadhund'})
+
+[
+  {
+    _id: ObjectId('5bf6a38c57b2d4cc676c7a96'),
+    name: 'Andhadhund',
+    price: null,
+    actor: [ 'Tabbu' ],
+    rating: 4
+  },
+  {
+    _id: ObjectId('5bf6a36f57b2d4cc676c7a95'),
+    name: 'Andhadhund',
+    price: 400,
+    actor: [ 'Ayushman', 'radhika' ],
+    rating: 4
+  }
+]
+
+
+batch2> db.movie.find({name:'paa'},{_id:0,name:1,rating:1,actor:1,price:1})
+[
+  {
+    name: 'paa',
+    actor: [ 'Amitabh', 'vidya balan', 'Abhishek' ],
+    rating: 2,
+    price: 270
+  }
+]
+
+
+batch2> db.movie.find({rating:4,price:400})
+[
+  {
+    _id: ObjectId('5bf6a36f57b2d4cc676c7a95'),
+    name: 'Andhadhund',
+    price: 400,
+    actor: [ 'Ayushman', 'radhika' ],
+    rating: 4
+  }
+]
+
+
+batch2> db.movie.find({rating:{$gt:6}})
+[
+  {
+    _id: ObjectId('5aaa31a2639395f86922a87e'),
+    name: 'kahani',
+    actor: [ 'aaaa', 'bbbb', 'karan', 'karri', 'vidya' ],
+    ticket_no: 420,
+    price: 200,
+    ac7tors: [ 'bbbb' ],
+    rating: 8,
+    lastmodified: ISODate('2019-04-07T11:25:40.634Z')
+  }
+]
+batch2>
+
+
+batch2> db.movie.find({rating:{$gt:4},price:{$eq:350}})
+[
+  {
+    _id: ObjectId('5aaa3334639395f86922a880'),
+    name: 'lagaan',
+    actor: [ 'amir', 'angraz' ],
+    rating: 6,
+    ticket_no: 410,
+    price: 350,
+    cancellation: {
+      date: Timestamp({ t: 1554356003, i: 1 }),
+      reason: 'user request'
+    },
+    lastModified: ISODate('2019-04-04T05:33:23.022Z')
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a881'),
+    name: 'sholay',
+    actor: [
+      'Dharamendra',
+      'Amitabh',
+      'Sachin Pilgaokar',
+      'Dharamendra',
+      'Dharamendra',
+      'Mr. Khote',
+      'jaya bacchan',
+      'sanjiv kapoor'
+    ],
+    rating: 6,
+    ticket_no: 550,
+    price: 350,
+    position: [ 2, 2 ]
+  },
+  {
+    _id: ObjectId('5d6935a3470e2bef2a82cdfa'),
+    name: 'mission mangal',
+    price: 350,
+    actor: [ 'Sonakshi', 'Vidya Balan' ],
+    rating: 6
+  },
+  {
+    _id: ObjectId('5ca453ef2952ebdd7ae2a92f'),
+    name: 'Kesari',
+    actor: [ 'Akshay Kumar', 'Pariniti chopra' ],
+    rating: 6,
+    price: 350,
+    ticket_no: 270,
+    rdate: ISODate('2019-01-23T00:00:00.000Z')
+  }
+]
+
+
+batch2> db.emp.insertMany([{eno:1,ename:'Pranit',sal:400000},{eno:2,ename:'Sachin',sal:500000}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('67e845776d0b8ce420b71237'),
+    '1': ObjectId('67e845776d0b8ce420b71238')
+  }
+}
+
+
+batch2> db.emp.drop()
+true
+
+

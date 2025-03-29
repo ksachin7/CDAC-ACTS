@@ -1,0 +1,221 @@
+Constraints in RDBMS
+
+-- Create new table dept100 having same structure and data as that of dept table.
+
+mysql> create table dept100 as select * from dept;
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept100;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+-- Create new table emp100 having same structure and data as that of emp table.
+
+mysql> create table emp100 as select * from emp;
+Query OK, 14 rows affected (0.04 sec)
+Records: 14  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp100;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  880.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1760.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1375.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 3272.50 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1375.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 3135.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2695.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3300.00 |    NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5500.00 |    NULL |     10 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1650.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1210.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 | 1045.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3300.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1430.00 |    NULL |     10 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+14 rows in set (0.00 sec)
+
+-- Add primary key constraint on deptno for dept100 table.
+
+mysql> alter table dept100
+    -> add constraint pk_deptno primary key(deptno);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept100;
++--------+------------+----------+
+| DEPTNO | DNAME      | LOC      |
++--------+------------+----------+
+|     10 | ACCOUNTING | NEW YORK |
+|     20 | RESEARCH   | DALLAS   |
+|     30 | SALES      | CHICAGO  |
+|     40 | OPERATIONS | BOSTON   |
++--------+------------+----------+
+4 rows in set (0.00 sec)
+
+-- Add primary key constraint on empno for emp100 table. Check structure of both the tables.
+mysql> alter table emp100 add constraint pk_empno primary key(empno);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc emp100;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| EMPNO    | int          | NO   | PRI | NULL    |       |
+| ENAME    | varchar(12)  | YES  |     | NULL    |       |
+| JOB      | varchar(9)   | YES  |     | NULL    |       |
+| MGR      | int          | YES  |     | NULL    |       |
+| HIREDATE | date         | YES  |     | NULL    |       |
+| SAL      | decimal(7,2) | YES  |     | NULL    |       |
+| COMM     | decimal(7,2) | YES  |     | NULL    |       |
+| DEPTNO   | int          | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+-- 2. Create following tables for given schema. Apply constraints as mentioned in the schema.
+trainer(tid PK, tname not null , cid fk, salary default 20000,experience in years check >10 )
+
+CREATE table course(
+	cid int PRIMARY KEY,
+	cname VARCHAR(15) UNIQUE NOT NULL,
+	fees FLOAT(7,2) DEFAULT 500
+);
+
+create table trainer(
+  tid int PRIMARY KEY AUTO_INCREMENT,
+  tname varchar(15) NOT NULL,
+  cid int,
+  salary int default 2000,
+  experience int CHECK(experience > 10), 
+  constraint fk_cid FOREIGN KEY(cid) REFERENCES course(cid) 
+  ON DELETE CASCADE
+ );
+
+insert into course(cid,cname,fees) values
+(1, 'Core', 7000),
+ (2, 'Linux', 8000),
+ (3, 'Data Structure', 10000), 
+ (4, "Python", 12000), 
+ (5, "Dot Net", null);
+
+insert into trainer values
+
+insert into trainer values
+(2,'Mahesh',null,16000,12),
+ (8,'Meena',3,25000,11),
+ (9,null,2,30000,10),
+ (10,'Soham',2,35000,8),
+ (11,'Anil',3,null,11);
+
+mysql> insert into course(cid,cname,fees) values
+    ->  (2, 'Linux', 8000),
+    ->  (3, 'Data Structure', 10000),
+    ->  (4, "Python", 12000),
+    ->  (5, "Dot Net", null);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into trainer values
+    -> (2,'Mahesh',null,16000,12),
+    -> (8,'Meena',3,25000,11),
+    -> (9,null,2,30000,10),
+    -> (10,'Soham',2,35000,8),
+    -> (11,'Anil',3,null,11);
+ERROR 1048 (23000): Column 'tname' cannot be null
+
+mysql> alter table trainer modify tname varchar(15);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc trainer;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| tid        | int         | NO   | PRI | NULL    | auto_increment |
+| tname      | varchar(15) | YES  |     | NULL    |                |
+| cid        | int         | YES  | MUL | NULL    |                |
+| salary     | int         | YES  |     | 2000    |                |
+| experience | int         | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into trainer values
+    -> (2,'Mahesh',null,16000,12),
+    -> (8,'Meena',3,25000,11),
+    -> (9,null,2,30000,10),
+    -> (10,'Soham',2,35000,8),
+    -> (11,'Anil',3,null,11);
+ERROR 3819 (HY000): Check constraint 'trainer_chk_1' is violated.
+
+mysql> insert into trainer values
+    -> (2,'Mahesh',null,16000,12),
+    -> (8,'Meena',3,25000,11),
+    -> (11,'Anil',3,null,11);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+mysql> drop table trainer;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table trainer(
+    ->   tid int PRIMARY KEY AUTO_INCREMENT,
+    ->   tname varchar(15) NOT NULL,
+    ->   cid int,
+    ->   salary int default 2000,
+    ->   experience int CHECK(experience > 10),
+    ->   constraint fk_cid FOREIGN KEY(cid) REFERENCES course(cid)
+    ->   ON DELETE CASCADE
+    ->  );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc trainer;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| tid        | int         | NO   | PRI | NULL    | auto_increment |
+| tname      | varchar(15) | NO   |     | NULL    |                |
+| cid        | int         | YES  | MUL | NULL    |                |
+| salary     | int         | YES  |     | 2000    |                |
+| experience | int         | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into trainer values
+    -> (2,'Mahesh',null,16000,12),
+    ->  (8,'Meena',3,25000,11),
+    ->  (11,'Anil',3,null,11);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from trainer;
++-----+--------+------+--------+------------+
+| tid | tname  | cid  | salary | experience |
++-----+--------+------+--------+------------+
+|   2 | Mahesh | NULL |  16000 |         12 |
+|   8 | Meena  |    3 |  25000 |         11 |
+|  11 | Anil   |    3 |   NULL |         11 |
++-----+--------+------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> delete from trainer where tid =2;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from trainer;
++-----+-------+------+--------+------------+
+| tid | tname | cid  | salary | experience |
++-----+-------+------+--------+------------+
+|   8 | Meena |    3 |  25000 |         11 |
+|  11 | Anil  |    3 |   NULL |         11 |
++-----+-------+------+--------+------------+
+2 rows in set (0.00 sec)

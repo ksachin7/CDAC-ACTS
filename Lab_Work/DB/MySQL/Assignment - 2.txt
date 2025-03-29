@@ -1,0 +1,376 @@
+﻿mysql> use batch_2;
+Database changed
+mysql> source C:\Users\dac\Downloads\demobldmysql-1.sql
+Database changed
+
+Select clause in details
+========================
+1. Display vid, vname, price and details from table vehicle with column heading as Vehicle id, vehicle name, price, discount and details.
+mysql> select vid as "Vehicle id", vname as "Vehicle name", price, details as "discount and details" from vehicle;
+
+2. Create a copy of table customer and salesman by name customer1 and salesman1
+mysql> create table customer1 as select * from customer;
+mysql> create table salesman1 as select * from salesman;
+
+3. List all records with sal > 2000 and comm>200
+mysql> select EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, ifnull(COMM, 0), DEPTNO from emp where SAL>2000 and COMM>200;
+
+4. List all records where job=’Clerk’ or sal>2000
+mysql> select * from emp where JOB="CLERK" or SAL>2000;
+
+5. List all the records with sal=1250 or 1100
+mysql> select * from emp where sal= 1250 or sal = 1100;
+ 
+6. List all employees with sal>1250 and <2850
+mysql> select * from emp where sal>1250 or sal < 2850;
+
+7. Retrieve the details (Name, Salary and dept no) of the emp who are working in department no 20
+mysql> select EName as Name, sal as Salary, deptno from emp where deptno=20;
+
+8. Display all employees who have joined after 9th june 81.
+mysql> select * from emp where hiredate > "1981-01-09";
+
+9. Display empno,empname,sal, comm and total salary. Total Salary = comm + sal
+mysql> select empno, ename as empname, sal, comm, sal+ifnull(comm, 0) as "Total Salary" from emp;
+
+ 
+10. Display all employees with sal >2000 or job is either clerk or Salesman.
+mysql> select * from emp where sal>2000 and job="CLERK" or JOB="Salesman";
+
+11. List the employees in dept 20 and 30 who did not get any commission.
+mysql> select * from emp where (deptno=20 or deptno=30) and (comm=NULL or COMM=0);
+
+12. Display all employees who works in either dept 10 or 30 or joined in year 1982
+mysql> select * from emp where (deptno=10 or deptno=30) and HIREDATE like "1982%";
+
+13. There is a salary hike by 20% . Display the information from emp table as empno,ename,sal and new sal.
+mysql> SELECT empno, ename, sal, sal*1.2 as "new sal" from emp;
+
+14. Create new table emp100 same as emp without any data. Check it's structure.
+mysql> create table emp100 as select * from emp where 3=2;
+mysql> desc emp100;
+
+15. Insert new row with data of your choice in emp10 table where manager(mgr) is null.
+mysql> insert into emp100 values(9099, "JOHN", "DEVELOPER", null, "1985-11-10", 4700, 1000, 30);
+
+16. Display the emp details who do not have manager.
+mysql> select * from emp where mgr is null;
+
+17. Use emp100 table to perform following query
+Update employee salary. Increase sal of each employee by 15% of (sal+comm), change the mgr to 777 for all employees in dept 10.
+mysql> update emp100 set sal=sal+(sal+ifnull(comm, 0))*0.15 and mgr=777 where deptno=10;
+
+18. Display all employees who joined between years 1981 to 1983.
+mysql> select * from emp where hiredate between "1981-01-01" and "1983-12-31";
+
+19. Display empno, name and department number of an emp working under manager with id 7698.
+mysql> select empno, ename, deptno from emp where mgr=7698;
+
+20. List all managers working in dept 10. 
+mysql> select ENAME from EMP where DEPTNO=10 and JOB="MANAGER";
+
+21. Display all jobs from emp table.
+SELECT DISTINCT JOB FROM emp;
+
+22. Display all unique deptnos in which employees are working.
+mysql> select distinct DEPTNO from EMP;
+
+23. Implement following using case statement. Use data from emp database. 
+
+
+24. Company decides to give salary rise with following percentage.
+    Using case statement display the data as below
+    ename,job,sal,new sal
+    Generate new sal and display with proper heading.
+    clerk 7%
+    analyst 5%
+    manager %2
+    others no rise
+
+mysql>SELECT ename, job, sal, 
+       CASE
+           WHEN job = 'CLERK' THEN sal * 1.07
+           WHEN job = 'ANALYST' THEN sal * 1.05
+           WHEN job = 'MANAGER' THEN sal * 1.02
+           ELSE sal  
+       END AS "new salary"
+FROM EMP;
+
+25. Create a copy of table salesman as salesman1.
+mysql> create table salesman1 as select * from salesman;
+
+26. Increase the salary of all employees by 5% who are earning less than 20000 as a basic pay. 
+ /m    Update in the table.
+mysql>UPDATE EMP 
+ SET SAL = SAL*1.05
+ WHERE SAL<20000;
+
+ 
+Restricting rows using like operator and reg_exp
+
+1. Find all employees with name ending with R .
+mysql>SELECT * FROM EMP WHERE ENAME like "%R";
+ 
+2. Find all employees with name starting with M and ending with R.
+mysql>SELECT * FROM EMP WHERE ENAME like "M%R";
+
+3. To find all employees with name starting with either M or A.
+mysql>SELECT * FROM emp WHERE ENAME LIKE 'M%' OR ENAME LIKE 'A%';
+
+4. List the employee name having letter 'L' as the second character.
+mysql>SELECT * FROM EMP WHERE ENAME like "_L%";
+
+5. Find all employees with name having L at 3 rd position.
+mysql>SELECT * FROM EMP WHERE ENAME like "__L%";
+ 
+6. To list all employees with name ending by ES.
+mysql>SELECT * FROM EMP WHERE ENAME like "%ES";
+ 
+7. To list all employees with job starting with C and ending with K.
+mysql>SELECT * FROM EMP WHERE JOB like "C%K";
+ 
+8. To find all employees with name starting with either M or A and last character as either R or E.
+mysql>SELECT * FROM emp WHERE (ENAME LIKE 'M%R' OR ENAME LIKE 'M%E') 
+                      OR (ENAME LIKE 'A%R' OR ENAME LIKE 'A%E');
+
+9. To find all employee with name starting with A or M and ending with E.
+mysql>SELECT * FROM emp WHERE (ENAME LIKE 'A%E' OR ENAME LIKE 'M%E');
+
+10. Find all employees with name starting with A and ending with N, or it may start with S and end with H.
+mysql>SELECT * FROM EMP WHERE ENAME like "A%N" or like "S%H";
+
+11. Find all employees with name starting with M, having L at 3 rd position and ends with R.
+mysql>SELECT * FROM EMP WHERE ENAME like "M_L%R";
+
+12. Find all employees with name having L at 3 rd position and E at second last position.
+mysql>SELECT * FROM EMP WHERE ENAME like "__L%E_";
+
+13. Find all employees with name not starting with A or M
+mysql>SELECT * FROM emp WHERE ENAME NOT LIKE 'A%' AND ENAME NOT LIKE 'M%';
+
+14. Display all employees with sal >1000 and sal<3000 and job has A at starting position and ends with T.
+mysql>SELECT * FROM EMP WHERE SAL>1000 AND SAL<3000 AND JOB LIKE "A%T";
+
+15. Write a query to display empno, ename, sal, commission, increased sal by 10% and for all employees whose name starts with A,M or S.
+mysql>SELECT empno, ename, sal, commission, sal * 1.1 AS "Increased Salary"
+FROM emp
+WHERE ENAME LIKE 'A%' OR ENAME LIKE 'M%' OR ENAME LIKE 'S%';
+
+ 
+16. Display all employees whose name starts with A and ends with either N or S, or works in dept 10. 
+mysql>SELECT * 
+FROM EMP 
+WHERE (ENAME LIKE 'A%N' OR ENAME LIKE 'A%S') 
+   OR deptno = 10;
+
+17. List all departments whose name has atleast 8 characters.
+mysql>SELECT * 
+FROM DEPT 
+WHERE LENGTH(DNAME) >= 8;
+
+18. List the employees name having 'E' as a second last character.
+mysql>SELECT * 
+FROM emp 
+WHERE ENAME LIKE '%E_';
+
+19. List the details of the employee , whose names start with ‘A’ and end with ‘S’ or whose names contains N as the second or third     character, and end with either ‘N’ or ‘S’.
+mysql>SELECT * 
+FROM emp 
+WHERE (ENAME LIKE 'A%S' OR ENAME LIKE '%N%' AND (ENAME LIKE '%N' OR ENAME LIKE '%S'));
+
+20. List employees whose name starts with either 'A' or 'S' in dept 20.
+mysql>SELECT * 
+FROM emp 
+WHERE (ENAME LIKE 'A%' OR ENAME LIKE 'S%') 
+   AND deptno = 20;
+
+21. To list all employees with job starting with C , E at 3rd position and ending with K.
+mysql>SELECT * 
+FROM emp 
+WHERE JOB LIKE 'C%K' AND JOB LIKE '__E%K';
+
+22. To list all employees with job containing L at third position and M at third last position.
+mysql>SELECT * 
+FROM emp 
+WHERE JOB LIKE '__L%' AND JOB LIKE '%M__';
+
+23. To list all employees with comm is null and name starts with ‘S’
+mysql>SELECT * 
+FROM emp 
+WHERE comm IS NULL AND ENAME LIKE 'S%';
+
+24. List employees in all dept whose salary not in the range of 2000 to 3000 with the job which is having a stringcalled 'MAN' at the end.
+mysql>SELECT * 
+FROM emp 
+WHERE (sal NOT BETWEEN 2000 AND 3000) AND JOB LIKE '%MAN';
+
+25. List all the employee whose name does not end with 'S' in dept 20 and 30?
+mysql>SELECT * 
+FROM emp 
+WHERE (deptno = 20 OR deptno = 30) AND ENAME NOT LIKE '%S';
+
+26. Display list all employees whose name ends with ER.
+mysql>SELECT * 
+FROM emp 
+WHERE ENAME LIKE '%ER';
+
+27. Display all employees where comm is null and name starts with ‘S’.
+mysql>SELECT * 
+FROM emp 
+WHERE comm IS NULL AND ENAME LIKE 'S%';
+
+28. Display all rows where comm is null.
+mysql>SELECT * 
+FROM emp 
+WHERE comm IS NULL;
+
+---
+
+Here are the same queries using **regex** instead of `LIKE`:
+
+### 1. **Find all employees with names ending with "R"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP 'R$';
+   ```
+
+### 2. **Find all employees with names starting with "M" and ending with "R"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^M.*R$';
+   ```
+
+### 3. **Find all employees with names starting with either "M" or "A"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^[MA]';
+   ```
+
+### 4. **List the employee names having "L" as the second character**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^.L';
+   ```
+
+### 5. **Find all employees with names having "L" at the 3rd position**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^..L';
+   ```
+
+### 6. **List all employees with names ending by "ES"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP 'ES$';
+   ```
+
+### 7. **List all employees with jobs starting with "C" and ending with "K"**:
+   ```sql
+   SELECT * FROM EMP WHERE JOB REGEXP '^C.*K$';
+   ```
+
+### 8. **Find all employees with names starting with either "M" or "A" and last character as either "R" or "E"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^[MA].*[RE]$';
+   ```
+
+### 9. **Find all employees with names starting with either "M" or "A" and ending with "E"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^[MA].*E$';
+   ```
+
+### 10. **Find all employees with names starting with "A" and ending with "N", or starting with "S" and ending with "H"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^(A.*N|S.*H)$';
+   ```
+
+### 11. **Find all employees with names starting with "M", having "L" at the 3rd position, and ending with "R"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^M.L.*R$';
+   ```
+
+### 12. **Find all employees with names having "L" at the 3rd position and "E" at the second last position**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^..L.*E.$';
+   ```
+
+### 13. **Find all employees whose names do not start with "A" or "M"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME NOT REGEXP '^[AM]';
+   ```
+
+### 14. **Display all employees with salary greater than 1000 and less than 3000, and job starting with "A" and ending with "T"**:
+   ```sql
+   SELECT * FROM EMP WHERE SAL > 1000 AND SAL < 3000 AND JOB REGEXP '^A.*T$';
+   ```
+
+### 15. **Display empno, ename, sal, commission, and increased salary by 10% for employees whose names start with "A", "M", or "S"**:
+   ```sql
+   SELECT empno, ename, sal, commission, sal * 1.1 AS "Increased Salary"
+   FROM EMP
+   WHERE ENAME REGEXP '^[AMS]';
+   ```
+
+### 16. **Display all employees whose names start with "A" and end with either "N" or "S", or work in dept 10**:
+   ```sql
+   SELECT * FROM EMP WHERE (ENAME REGEXP '^A.*[NS]$') OR deptno = 10;
+   ```
+
+### 17. **List all departments whose name has at least 8 characters**:
+   ```sql
+   SELECT * FROM DEPT WHERE LENGTH(DNAME) >= 8;
+   ```
+
+### 18. **List employees whose names have "E" as the second last character**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP 'E.$';
+   ```
+
+### 19. **List the details of employees whose names start with "A" and end with "S", or whose names contain "N" as the second or third character, and end with either "N" or "S"**:
+   ```sql
+   SELECT * FROM EMP WHERE (ENAME REGEXP '^A.*S$' OR ENAME REGEXP '^.*N.*[NS]$');
+   ```
+
+### 20. **List employees whose names start with either "A" or "S" in dept 20**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP '^[AS]' AND deptno = 20;
+   ```
+
+### 21. **List all employees with jobs starting with "C", having "E" at the 3rd position, and ending with "K"**:
+   ```sql
+   SELECT * FROM EMP WHERE JOB REGEXP '^C.*E.*K$';
+   ```
+
+### 22. **List all employees with jobs containing "L" at the 3rd position and "M" at the 3rd last position**:
+   ```sql
+   SELECT * FROM EMP WHERE JOB REGEXP '^..L.*M..$';
+   ```
+
+### 23. **List all employees with commission as null and name starting with "S"**:
+   ```sql
+   SELECT * FROM EMP WHERE COMM IS NULL AND ENAME REGEXP '^S';
+   ```
+
+### 24. **List employees in all departments whose salary is not in the range of 2000 to 3000 and job has "MAN" at the end**:
+   ```sql
+   SELECT * FROM EMP WHERE (SAL NOT BETWEEN 2000 AND 3000) AND JOB REGEXP 'MAN$';
+   ```
+
+### 25. **List all employees whose names do not end with "S" in departments 20 and 30**:
+   ```sql
+   SELECT * FROM EMP WHERE (DEPTNO = 20 OR DEPTNO = 30) AND ENAME NOT REGEXP 'S$';
+   ```
+
+### 26. **Display a list of all employees whose names end with "ER"**:
+   ```sql
+   SELECT * FROM EMP WHERE ENAME REGEXP 'ER$';
+   ```
+
+### 27. **Display all employees where commission is null and name starts with "S"**:
+   ```sql
+   SELECT * FROM EMP WHERE COMM IS NULL AND ENAME REGEXP '^S';
+   ```
+
+### 28. **Display all rows where commission is null**:
+   ```sql
+   SELECT * FROM EMP WHERE COMM IS NULL;
+   ```
+
+---
+
+
+

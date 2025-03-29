@@ -1,0 +1,647 @@
+1. Write a stored PROCEDURE which will find avg of all the salaries in the table. Display avg sal in the PROCEDURE.
+mysql> delimiter //
+mysql> CREATE PROCEDURE display_avg()
+    -> BEGIN
+    -> SELECT avg(sal)
+    -> FROM emp;
+    -> END //
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> delimiter ;
+mysql> call display_avg;
++-------------+
+| avg(sal)    |
++-------------+
+| 2074.264286 |
++-------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+2. Write a stored PROCEDURE which will find avg salary of dept no 20. Display' avg salary out of the PROCEDURE.
+mysql> delimiter //
+mysql> CREATE PROCEDURE display_avg_20()
+    -> BEGIN
+    -> SELECT avg(sal)
+    -> FROM emp WHERE deptno=20;
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call display_avg_20;
++-------------+
+| avg(sal)    |
++-------------+
+| 2176.050000 |
++-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+3 Write a stored PROCEDURE which will find avg salary for any deptno passed to it.' Pass deptno as in parameter and avg(sal) as out parameter.
+mysql> delimiter //
+mysql> DROP PROCEDURE IF EXISTS display_avg_dept;
+    -> CREATE PROCEDURE display_avg_dept(d1 int)
+    -> BEGIN
+    -> SELECT avg(sal)
+    -> FROM emp WHERE deptno=d1;
+    -> END //
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call display_avg_dept(10);
++-------------+
+| avg(sal)    |
++-------------+
+| 2917.716667 |
++-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call display_avg_dept(30);
++-------------+
+| avg(sal)    |
++-------------+
+| 1567.716667 |
++-------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+4 Write a PROCEDURE to calculate total salary of all employees.'
+Total sal = sal +comm.
+mysql> delimiter //
+mysql> DROP PROCEDURE IF EXISTS display_total_sal;
+    -> CREATE PROCEDURE display_total_sal()
+    -> BEGIN
+    -> SELECT ename,sal, comm, sal+IFnull(comm, 0) as total
+    -> FROM emp;
+    -> END //
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> CALL display_total_sal;
++--------+---------+---------+---------+
+| ename  | sal     | comm    | total   |
++--------+---------+---------+---------+
+| SMITH  |  801.05 |    NULL |  801.05 |
+| ALLEN  | 1601.05 |  300.00 | 1901.05 |
+| WARD   | 1251.05 |  500.00 | 1751.05 |
+| JONES  | 2976.05 |    NULL | 2976.05 |
+| MARTIN | 1251.05 | 1400.00 | 2651.05 |
+| BLAKE  | 2851.05 |    NULL | 2851.05 |
+| CLARK  | 2451.05 |    NULL | 2451.05 |
+| SCOTT  | 3001.05 |    NULL | 3001.05 |
+| KING   | 5001.05 |    NULL | 5001.05 |
+| TURNER | 1501.05 |    0.00 | 1501.05 |
+| ADAMS  | 1101.05 |    NULL | 1101.05 |
+| JAMES  |  951.05 |    NULL |  951.05 |
+| FORD   | 3001.05 |    NULL | 3001.05 |
+| MILLER | 1301.05 |    NULL | 1301.05 |
++--------+---------+---------+---------+
+14 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+5. Pass any number to the PROCEDURE and check IF it is a perfect number. IF the number is
+perfect, PROCEDURE should set value of out parameter as 1 otherwise as 0.
+mysql> DROP PROCEDURE IF EXISTS check_perfect_number;
+    -> CREATE PROCEDURE check_perfect_number(num int, out isPerfect int)
+    -> BEGIN
+    ->   -- Check IF the number is perfect
+    ->   declare sum int default 0;
+    ->   declare i int default 1;
+    -> 
+    ->   -- Calculate sum of divisors
+    ->   while i <= num / 2 do
+    ->     IF num % i = 0 THEN
+    ->       set sum = sum + i;
+    ->     END IF;
+    ->     set i = i + 1;
+    ->   END while;
+    -> 
+    ->   -- Set output parameter
+    ->   IF sum = num THEN
+    ->     set isPerfect = 1;
+    ->   else
+    ->     set isPerfect = 0;
+    ->   END IF;
+    -> END //
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+
+mysql> SET @isPerfect = 0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL check_perfect_number(21, @isPerfect);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @isPerfect AS isPerfect;
++-----------+
+| isPerfect |
++-----------+
+|         0 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> CALL check_perfect_number(41, @isPerfect);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @isPerfect AS isPerfect;
++-----------+
+| isPerfect |
++-----------+
+|         0 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> CALL check_perfect_number(6, @isPerfect);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT @isPerfect AS isPerfect;
++-----------+
+| isPerfect |
++-----------+
+|         1 |
++-----------+
+1 row in set (0.00 sec)
+
+
+6. Pass empno as a in parameter to the PROCEDURE. IF empno is found in the table THEN,
+display corrosponding salary out of the PROCEDURE. IF empno is not found in the table
+THEN, display 0 out of the parameter.
+mysql> delimiter //
+mysql> DROP PROCEDURE IF EXISTS find_sal;
+    -> CREATE PROCEDURE find_sal(eno int)
+    -> BEGIN
+    -> IF EXISTS (SELECT empno FROM emp WHERE empno = eno) 
+    -> THEN
+    -> SELECT empno, sal FROM emp
+    -> WHERE empno=eno;
+    -> else SELECT 0 as sal;
+    -> END IF;
+    -> 
+    -> END //
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> CALL find_sal(7369);
++-------+--------+
+| empno | sal    |
++-------+--------+
+|  7369 | 801.05 |
++-------+--------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+7. Write PROCEDURE &#39;prime&#39; which will check IF number passed to the PROCEDURE is prime.
+PROCEDURE should display 1 IF prime or 0 IF nit prime. Use out parameter to display value out
+of the PROCEDURE and in parameter to pass value to the PROCEDURE.
+
+8. Copy table emp as empTmp.
+Write the PROCEDURE to accept job as in parameter and perform following actions.
+Hike in sal by' 5% IF employee is manager.
+Hike in sal by 10% IF employee is clerk
+Hile in sal by 7% IF employee is analyse
+otherwise hike by 3%.
+Make necessary changes in empTmp table.
+
+mysql> DELIMITER //
+mysql> 
+mysql> DROP PROCEDURE IF EXISTS HIKE_EMP;
+    -> CREATE PROCEDURE HIKE_EMP(IN job_type varchar(15))
+    -> 
+    -> BEGIN
+    -> 
+    -> DROP TEMPORARY TABLE IF EXISTS EmpTmp;
+    -> 
+    -> CREATE TEMPORARY TABLE EmpTmp AS
+    -> SELECT * FROM emp;
+    -> 
+    -> UPDATE EmpTmp
+    -> SET SAL=
+    ->         CASE
+    ->             WHEN JOB = 'CLERK' THEN SAL * 1.10   	-- 10% hike for CLERK
+    ->             WHEN JOB = 'MANAGER' THEN SAL * 1.05 	-- 5% hike for MANAGER
+    ->             WHEN JOB = 'ANALYST' THEN SAL * 1.07 	-- 7% hike for ANALYST
+    ->             ELSE SAL * 1.03                     		-- 3% hike for other jobs
+    ->         END
+    ->     WHERE JOB = job_type;
+    -> 
+    ->     SELECT empno, ename, job, SAL
+    ->     FROM EmpTmp
+    ->     WHERE JOB = job_type;
+    -> 
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> call HIKE_EMP('Salesman');
++-------+--------+----------+---------+
+| empno | ename  | job      | SAL     |
++-------+--------+----------+---------+
+|  7499 | ALLEN  | SALESMAN | 1649.08 |
+|  7521 | WARD   | SALESMAN | 1288.58 |
+|  7654 | MARTIN | SALESMAN | 1288.58 |
+|  7844 | TURNER | SALESMAN | 1546.08 |
++-------+--------+----------+---------+
+4 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call HIKE_EMP('Clerk');
++-------+--------+-------+---------+
+| empno | ename  | job   | SAL     |
++-------+--------+-------+---------+
+|  7369 | SMITH  | CLERK |  881.16 |
+|  7876 | ADAMS  | CLERK | 1211.16 |
+|  7900 | JAMES  | CLERK | 1046.16 |
+|  7934 | MILLER | CLERK | 1431.16 |
++-------+--------+-------+---------+
+4 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+1. Write a FUNCTION to calculate total salary of an employee. Call the FUNCTION in the SELECT
+clause.
+'total sal=sal+comm
+
+2. Write a FUNCTION to generate an email. Call the FUNCTION in SELECT clause.email is
+generated as follows
+first 2 letters of name + last 2 letters of job @knowit.com. Call the FUNCTION in the
+SELECT clause.
+
+mysql> delimiter //
+mysql> DROP FUNCTION IF EXISTS CREATE_email;
+    -> CREATE FUNCTION CREATE_email(ename varchar(15), job varchar(15)) returns varchar(20)
+    -> deterministic
+    -> 
+    -> BEGIN
+    -> return concat(concat(substr(ename,1,2),substr(job,-2)),'@knowit.com');
+    -> 
+    -> END //
+Query OK, 0 rows affected, 1 warning (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> SELECT ename, CREATE_email(ename, job) as email FROM emp;
++--------+-----------------+
+| ename  | email           |
++--------+-----------------+
+| SMITH  | SMRK@knowit.com |
+| ALLEN  | ALAN@knowit.com |
+| WARD   | WAAN@knowit.com |
+| JONES  | JOER@knowit.com |
+| MARTIN | MAAN@knowit.com |
+| BLAKE  | BLER@knowit.com |
+| CLARK  | CLER@knowit.com |
+| SCOTT  | SCST@knowit.com |
+| KING   | KINT@knowit.com |
+| TURNER | TUAN@knowit.com |
+| ADAMS  | ADRK@knowit.com |
+| JAMES  | JARK@knowit.com |
+| FORD   | FOST@knowit.com |
+| MILLER | MIRK@knowit.com |
++--------+-----------------+
+14 rows in set (0.00 sec)
+
+3. Write a PROCEDURE which accepts job as a 'in' parameter, and display maximunm
+salary for that job.
+Write a FUNCTION cal_sal() which calculates maximum salary for the job. FUNCTION
+should return maximum salary to the PROCEDURE. Print max sal in the PROCEDURE.
+
+mysql> delimiter //
+mysql> DROP FUNCTION IF EXISTS calc_max_sal;
+    -> CREATE FUNCTION calc_max_sal(j varchar(15)) returns decimal(7,2)
+    -> deterministic
+    -> BEGIN
+    -> 
+    -> declare max_sal decimal(7,2);
+    -> SELECT max(sal) into max_sal FROM emp WHERE job=j;
+    -> return max_sal;
+    -> 
+    -> END //
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> 
+mysql> delimiter //
+mysql> DROP PROCEDURE IF EXISTS max_sal;
+    -> CREATE PROCEDURE max_sal(j varchar(15)) 
+    -> BEGIN
+    -> 
+    -> SELECT distinct job, calc_max_sal(job) as max_salary
+    -> FROM emp
+    -> WHERE job=j;
+    -> 
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> delimiter ;
+
+mysql> CALL max_sal('MANAGER');
++---------+------------+
+| job     | max_salary |
++---------+------------+
+| MANAGER |    2976.05 |
++---------+------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CALL max_sal('CLERK');
++-------+------------+
+| job   | max_salary |
++-------+------------+
+| CLERK |    1301.05 |
++-------+------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+1. Write a cursor which will handle all rows having deptno 20;
+mysql> delimiter //
+mysql> drop procedure if exists process_dept_20_employees;
+    -> 
+    -> create procedure process_dept_20_employees()
+    -> BEGIN
+    -> 
+    ->     -- Declare the necessary variables
+    ->     declare done int;
+    ->     declare eno int;
+    ->     declare name varchar(14);
+    ->     declare salary decimal(7,2);
+    -> 
+    ->     -- Declare the cursor to fetch records
+    ->     DECLARE dept_cursor cursor for 
+    ->         select empno, ename, sal 
+    ->         from emp 
+    ->         where deptno = 20;
+    -> 
+    ->     -- Declare continue handler for not found
+    ->     DECLARE continue handler for not found set done = 1;
+    -> 
+    ->     -- Open the cursor
+    ->     OPEN dept_cursor;
+    -> 
+    ->     -- Loop through the fetched records
+    ->     read_loop: loop
+    ->         -- Fetch the current row into variables
+    ->         FETCH dept_cursor INTO eno, name, salary;
+    -> 
+    ->         -- If no more rows are found, exit the loop
+    ->         IF done THEN
+    ->             LEAVE read_loop;
+    ->         END IF;
+    -> 
+    ->         -- Output the result for each employee in deptno 20
+    ->         SELECT eno as EMP_ID, name as NAME, salary as SALARY;
+    ->     END loop;
+    -> 
+    ->     -- Close the cursor after the loop
+    ->     CLOSE dept_cursor;
+    -> 
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter ;
+mysql> call process_dept_20_employees();
++--------+-------+--------+
+| EMP_ID | NAME  | SALARY |
++--------+-------+--------+
+|   7369 | SMITH | 801.05 |
++--------+-------+--------+
+1 row in set (0.00 sec)
+
++--------+-------+---------+
+| EMP_ID | NAME  | SALARY  |
++--------+-------+---------+
+|   7566 | JONES | 2976.05 |
++--------+-------+---------+
+1 row in set (0.00 sec)
+
++--------+-------+---------+
+| EMP_ID | NAME  | SALARY  |
++--------+-------+---------+
+|   7788 | SCOTT | 3001.05 |
++--------+-------+---------+
+1 row in set (0.00 sec)
+
++--------+-------+---------+
+| EMP_ID | NAME  | SALARY  |
++--------+-------+---------+
+|   7876 | ADAMS | 1101.05 |
++--------+-------+---------+
+1 row in set (0.00 sec)
+
++--------+------+---------+
+| EMP_ID | NAME | SALARY  |
++--------+------+---------+
+|   7902 | FORD | 3001.05 |
++--------+------+---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+2. Write a cursor to increment salary as follows
+Clerk 10 % rise
+Manager 5% rise
+Analyst 7% rise.
+No rise given for other jobs.
+
+mysql> DELIMITER //
+mysql> 
+mysql> DROP PROCEDURE IF EXISTS increment_sal;
+    -> CREATE PROCEDURE increment_sal()
+    -> 
+    -> BEGIN
+    -> 
+    -> DECLARE done int default 0;
+    -> DECLARE v_ename VARCHAR(15);
+    -> DECLARE v_salary DECIMAL(7, 2);
+    -> 
+    -> DECLARE increment_cur CURSOR for
+    -> SELECT ename,
+    -> CASE
+    -> WHEN JOB='CLERK' THEN SAL*1.10
+    -> WHEN JOB='MANAGER' THEN SAL*1.05
+    -> WHEN JOB='ANALYST' THEN SAL*1.07
+    -> ELSE SAL
+    -> END as incremented_sal
+    -> FROM emp
+    -> WHERE JOB IN ('CLERK', 'MANAGER', 'ANALYST');
+    -> 
+    -> DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE =1;
+    -> 
+    -> OPEN increment_cur;
+    -> 
+    -> read_loop : LOOP
+    -> fetch increment_cur into v_ename, v_salary;
+    -> 
+    -> IF done THEN
+    -> LEAVE read_loop;
+    -> END IF;
+    -> 
+    -> SELECT v_ename as Emp_Name, v_salary as "Incremented Salary";
+    -> END LOOP;
+    -> 
+    -> CLOSE increment_cur;
+    -> 
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL increment_sal();
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| SMITH    |             881.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| JONES    |            3124.85 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| BLAKE    |            2993.60 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| CLARK    |            2573.60 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| SCOTT    |            3211.12 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| ADAMS    |            1211.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| JAMES    |            1046.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| FORD     |            3211.12 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| MILLER   |            1431.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+3. Pass job as a parameter to PROCEDURE and display all employees working for the specIFied job using cursor.
+mysql> DELIMITER //
+
+mysql> DROP PROCEDURE IF EXISTS employees_withJob_cur;
+    -> 
+    -> CREATE PROCEDURE employees_withJob_cur(J VARCHAR(15))
+    -> BEGIN
+    -> declare done int DEFAULT 0;
+    -> declare name varchar(25);
+    -> 
+    -> DECLARE EMP_CURSOR CURSOR FOR
+    -> SELECT ename FROM emp WHERE JOB= J;
+    -> 
+    -> DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE= 1;
+    -> 
+    -> OPEN EMP_CURSOR;
+    -> 
+    -> read_loop: LOOP
+    -> FETCH EMP_CURSOR INTO name;
+    -> IF done THEN
+    -> LEAVE read_loop;
+    -> END IF;
+    -> SELECT name;
+    -> END LOOP;
+    -> 
+    -> CLOSE EMP_CURSOR;
+    -> 
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+
+mysql> CALL employees_withJob_cur("MANAGER");
++-------+
+| name  |
++-------+
+| JONES |
++-------+
+1 row in set (0.00 sec)
+
++-------+
+| name  |
++-------+
+| BLAKE |
++-------+
+1 row in set (0.00 sec)
+
++-------+
+| name  |
++-------+
+| CLARK |
++-------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+

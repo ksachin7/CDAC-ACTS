@@ -1,0 +1,328 @@
+Assignment-6
+------------------------------------------------------------------------------------------------------------------------
+1. Display all empno,ename,deptno,sal,avg(sal),min(sal), max(sal).
+mysql> SELECT empno, ename, deptno, sal,
+    -> avg(sal) OVER() AS AVG_SAL, 
+    -> min(sal) OVER() AS MIN_SAL, 
+    -> max(sal) OVER() AS MAX_SAL
+    -> FROM EMP;
++-------+--------+--------+---------+-------------+---------+---------+
+| empno | ename  | deptno | sal     | AVG_SAL     | MIN_SAL | MAX_SAL |
++-------+--------+--------+---------+-------------+---------+---------+
+|  7369 | SMITH  |     20 |  801.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7499 | ALLEN  |     30 | 1601.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7521 | WARD   |     30 | 1251.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7566 | JONES  |     20 | 2976.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7654 | MARTIN |     30 | 1251.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7698 | BLAKE  |     30 | 2851.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7782 | CLARK  |     10 | 2451.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7788 | SCOTT  |     20 | 3001.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7839 | KING   |     10 | 5001.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7844 | TURNER |     30 | 1501.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7876 | ADAMS  |     20 | 1101.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7900 | JAMES  |     30 |  951.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7902 | FORD   |     20 | 3001.05 | 2074.264286 |  801.05 | 5001.05 |
+|  7934 | MILLER |     10 | 1301.05 | 2074.264286 |  801.05 | 5001.05 |
++-------+--------+--------+---------+-------------+---------+---------+
+14 rows in set (0.00 sec)
+
+
+2. Write a query to display maximum salary, minimum salary and average sal along with emp name
+and deptno for all departments.
+mysql> SELECT ename, deptno, sal,
+    -> avg(sal) OVER(PARTITION BY deptno) AS AVG_SAL, 
+    -> min(sal) OVER(PARTITION BY deptno) AS MIN_SAL, 
+    -> max(sal) OVER(PARTITION BY deptno) AS MAX_SAL
+    -> FROM EMP;
++--------+--------+---------+-------------+---------+---------+
+| ename  | deptno | sal     | AVG_SAL     | MIN_SAL | MAX_SAL |
++--------+--------+---------+-------------+---------+---------+
+| CLARK  |     10 | 2451.05 | 2917.716667 | 1301.05 | 5001.05 |
+| KING   |     10 | 5001.05 | 2917.716667 | 1301.05 | 5001.05 |
+| MILLER |     10 | 1301.05 | 2917.716667 | 1301.05 | 5001.05 |
+| SMITH  |     20 |  801.05 | 2176.050000 |  801.05 | 3001.05 |
+| JONES  |     20 | 2976.05 | 2176.050000 |  801.05 | 3001.05 |
+| SCOTT  |     20 | 3001.05 | 2176.050000 |  801.05 | 3001.05 |
+| ADAMS  |     20 | 1101.05 | 2176.050000 |  801.05 | 3001.05 |
+| FORD   |     20 | 3001.05 | 2176.050000 |  801.05 | 3001.05 |
+| ALLEN  |     30 | 1601.05 | 1567.716667 |  951.05 | 2851.05 |
+| WARD   |     30 | 1251.05 | 1567.716667 |  951.05 | 2851.05 |
+| MARTIN |     30 | 1251.05 | 1567.716667 |  951.05 | 2851.05 |
+| BLAKE  |     30 | 2851.05 | 1567.716667 |  951.05 | 2851.05 |
+| TURNER |     30 | 1501.05 | 1567.716667 |  951.05 | 2851.05 |
+| JAMES  |     30 |  951.05 | 1567.716667 |  951.05 | 2851.05 |
++--------+--------+---------+-------------+---------+---------+
+14 rows in set (0.00 sec)
+
+
+3. Find sum of salary for all employees whose sal > 1000. Query should display ename,sal,Sum of
+salary, should be displayed according to the job.
+mysql> SELECT ename, JOB, sal,
+    -> SUM(sal) OVER(PARTITION BY JOB) AS SUM_SAL
+    -> FROM EMP
+    -> WHERE SAL > 1000;
++--------+-----------+---------+---------+
+| ename  | JOB       | sal     | SUM_SAL |
++--------+-----------+---------+---------+
+| SCOTT  | ANALYST   | 3001.05 | 6002.10 |
+| FORD   | ANALYST   | 3001.05 | 6002.10 |
+| ADAMS  | CLERK     | 1101.05 | 2402.10 |
+| MILLER | CLERK     | 1301.05 | 2402.10 |
+| JONES  | MANAGER   | 2976.05 | 8278.15 |
+| BLAKE  | MANAGER   | 2851.05 | 8278.15 |
+| CLARK  | MANAGER   | 2451.05 | 8278.15 |
+| KING   | PRESIDENT | 5001.05 | 5001.05 |
+| ALLEN  | SALESMAN  | 1601.05 | 5604.20 |
+| WARD   | SALESMAN  | 1251.05 | 5604.20 |
+| MARTIN | SALESMAN  | 1251.05 | 5604.20 |
+| TURNER | SALESMAN  | 1501.05 | 5604.20 |
++--------+-----------+---------+---------+
+12 rows in set (0.01 sec)
+
+
+4. Find number of clerks working in each department. Display ename,job and count of that job.
+SELECT ENAME, JOB, DEPTNO, COUNT(*) OVER(PARTITION BY DEPTNO) FROM EMP
+WHERE JOB = 'CLERK';
+mysql> SELECT ENAME, JOB, DEPTNO, COUNT(*) OVER(PARTITION BY DEPTNO) AS COUNT_CLERKS
+    -> FROM EMP
+    -> WHERE JOB = 'CLERK';
++--------+-------+--------+--------------+
+| ENAME  | JOB   | DEPTNO | COUNT_CLERKS |
++--------+-------+--------+--------------+
+| MILLER | CLERK |     10 |            1 |
+| SMITH  | CLERK |     20 |            2 |
+| ADAMS  | CLERK |     20 |            2 |
+| JAMES  | CLERK |     30 |            1 |
++--------+-------+--------+--------------+
+4 rows in set (0.00 sec)
+
+5. Find how many employees are working under same manager display mgr and the count.
+mysql> SELECT MGR, COUNT(*) AS EMP_COUNT
+    -> FROM EMP
+    -> GROUP BY MGR;
++------+-----------+
+| MGR  | EMP_COUNT |
++------+-----------+
+| 7902 |         1 |
+| 7698 |         5 |
+| 7839 |         3 |
+| 7566 |         2 |
+| NULL |         1 |
+| 7788 |         1 |
+| 7782 |         1 |
++------+-----------+
+7 rows in set (0.00 sec)
+
+6. Calculate how many employees earn sal greater than 1500 in each dept. Query should display
+ename, sal, count of employees earning sal>1500.
+mysql> SELECT ENAME, SAL, DEPTNO, COUNT(*) OVER(PARTITION BY DEPTNO) AS COUNT_EMP
+    -> FROM EMP
+    -> WHERE SAL > 1500;
++--------+---------+--------+-----------+
+| ENAME  | SAL     | DEPTNO | COUNT_EMP |
++--------+---------+--------+-----------+
+| CLARK  | 2451.05 |     10 |         2 |
+| KING   | 5001.05 |     10 |         2 |
+| JONES  | 2976.05 |     20 |         3 |
+| SCOTT  | 3001.05 |     20 |         3 |
+| FORD   | 3001.05 |     20 |         3 |
+| ALLEN  | 1601.05 |     30 |         3 |
+| BLAKE  | 2851.05 |     30 |         3 |
+| TURNER | 1501.05 |     30 |         3 |
++--------+---------+--------+-----------+
+8 rows in set (0.00 sec)
+
+7.Calculate the difference between max salary and minimum salary for depatno 20. Query should
+display ename,sal, diff between max sal and employee&#39;s sal, diff between min sal and max sal of
+the dept.
+mysql> SELECT ENAME, SAL, 
+    -> MIN(SAL) OVER() AS 'MIN_SALARY', 
+    -> MAX(SAL) OVER() AS 'MAX_SALARY',
+    -> MAX(SAL) OVER(PARTITION BY DEPTNO) - SAL AS DIFF_MAX_SAL,
+    -> MAX(SAL) OVER(PARTITION BY DEPTNO) - MIN(SAL) OVER(PARTITION BY DEPTNO) AS DIFF_MIN_MAX_SAL
+    -> FROM EMP 
+    -> WHERE DEPTNO=20;
++-------+---------+------------+------------+--------------+------------------+
+| ENAME | SAL     | MIN_SALARY | MAX_SALARY | DIFF_MAX_SAL | DIFF_MIN_MAX_SAL |
++-------+---------+------------+------------+--------------+------------------+
+| SMITH |  801.05 |     801.05 |    3001.05 |      2200.00 |          2200.00 |
+| JONES | 2976.05 |     801.05 |    3001.05 |        25.00 |          2200.00 |
+| SCOTT | 3001.05 |     801.05 |    3001.05 |         0.00 |          2200.00 |
+| ADAMS | 1101.05 |     801.05 |    3001.05 |      1900.00 |          2200.00 |
+| FORD  | 3001.05 |     801.05 |    3001.05 |         0.00 |          2200.00 |
++-------+---------+------------+------------+--------------+------------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT ENAME, SAL,
+    ->        (SELECT MAX(SAL) FROM EMP WHERE DEPTNO = 20) - SAL AS DIFF_MAX_SAL,  -- Diff between max salary and employee's salary
+    ->        (SELECT MAX(SAL) FROM EMP WHERE DEPTNO = 20) - (SELECT MIN(SAL) FROM EMP WHERE DEPTNO = 20) AS DIFF_MIN_MAX_SAL  -- Diff between min salary and max salary of dept
+    -> FROM EMP
+    -> WHERE DEPTNO = 20;
++-------+---------+--------------+------------------+
+| ENAME | SAL     | DIFF_MAX_SAL | DIFF_MIN_MAX_SAL |
++-------+---------+--------------+------------------+
+| SMITH |  801.05 |      2200.00 |          2200.00 |
+| JONES | 2976.05 |        25.00 |          2200.00 |
+| SCOTT | 3001.05 |         0.00 |          2200.00 |
+| ADAMS | 1101.05 |      1900.00 |          2200.00 |
+| FORD  | 3001.05 |         0.00 |          2200.00 |
++-------+---------+--------------+------------------+
+5 rows in set (0.00 sec)
+
+---
+1.faculty(fid(PK),fname,sp.skill1,sp.skill2)  
+CREATE TABLE faculty(
+	fid int primary key, 
+	fname varchar (20) not null, 
+	sp_skill1 varchar(30),
+	sp_skill2 varchar(30)
+);
+
+fid fname sp_skill1 sp_skill2
+-----------------------------
+(10 Amol Database Java)
+(11 Asha Java MySQL)
+(12 Kiran CPP database)
+(13 Seeta MySQL database)
+
+2. courses(cid(PK),cname,rid,fid(FK))
+CREATE TABLE Courses(
+	cid int primary key,
+ 	cname varchar (15) not null ,
+ 	rid int,
+  	fid int,
+  	foreign key(rid) references room(rid) on delete set null,
+ 	foreign key(fid) references faculty(fid) on delete set null
+);
+
+cid cname rid fid
+-----------------------------
+121 DBDA 100 101
+31 DAC 101 null
+141 DTISS null null
+151 DOIT 105 12
+
+3. room(roomid,rname,rloc)
+CREATE TABLE room(
+	rid int primary key,
+	rname varchar(15) not null,
+	rloc varchar(20)
+);
+
+rid rname rloc
+-----------------------------
+100 Jasmin 1st floor
+101 Rose 2nd floor
+105 Lotus 1st floor
+103 Mogra 1st floor
+---
+
+mysql> CREATE TABLE faculty(
+    -> fid int primary key, 
+    -> fname varchar (20) not null, 
+    -> sp_skill1 varchar(30),
+    -> sp_skill2 varchar(30)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> CREATE TABLE room(
+    -> rid int primary key,
+    -> rname varchar(15) not null,
+    -> rloc varchar(20)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Courses(
+    -> cid int primary key,
+    ->  cname varchar (15) not null ,
+    ->  rid int,
+    ->   fid int,
+    ->   foreign key(rid) references room(rid) on delete set null,
+    ->  foreign key(fid) references faculty(fid) on delete set null
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into faculty values
+    -> (10,"Amol","Database","Java"),
+    -> (11,"Asha","Java","MySQL"),
+    -> (12,"Kiran","CPP","database"),
+    -> (13,"Seeta","MySQL","database");
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO room VALUES
+    -> (100,'Jasmin','1st floor'),
+    -> (101,'Rose','2nd floor'),
+    -> (105,'Lotus','1st floor'),
+    -> (103,'Mogra','1st floor')
+    -> ;
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO faculty (fid, fname, sp_skill1, sp_skill2)
+    -> VALUES 
+    -> (10, 'Amol', 'Database', 'Java'),
+    -> (11, 'Asha', 'Java', 'MySQL'),
+    -> (12, 'Kiran', 'CPP', 'Database'),
+    -> (13, 'Seeta', 'MySQL', 'Database');
+ERROR 1062 (23000): Duplicate entry '10' for key 'faculty.PRIMARY'
+mysql> select * from faculty;
++-----+-------+-----------+-----------+
+| fid | fname | sp_skill1 | sp_skill2 |
++-----+-------+-----------+-----------+
+|  10 | Amol  | Database  | Java      |
+|  11 | Asha  | Java      | MySQL     |
+|  12 | Kiran | CPP       | database  |
+|  13 | Seeta | MySQL     | database  |
++-----+-------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO Courses (cid, cname, rid, fid) 
+    -> VALUES 
+    -> (121, 'DBDA', 100, 11),
+    -> (31, 'DAC', 101, NULL),
+    -> (141, 'DTISS', NULL, NULL),
+    -> (151, 'DOIT', 105, 12);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+
+1. list all rooms which are allocated or not allocated to any courses.
+Expected Output
+-- LEFT JOIN will include all rooms, even those that are not allocated to any course 
+mysql> SELECT r.rid, r.rname, c.cid, c.cname
+    -> FROM room r
+    -> LEFT JOIN Courses c ON r.rid = c.rid;
++-----+--------+------+-------+
+| rid | rname  | cid  | cname |
++-----+--------+------+-------+
+| 100 | Jasmin |  121 | DBDA  |
+| 101 | Rose   |   31 | DAC   |
+| 103 | Mogra  | NULL | NULL  |
+| 105 | Lotus  |  151 | DOIT  |
++-----+--------+------+-------+
+4 rows in set (0.00 sec)
+
+2. list all rooms which are not allocated to any courses.
+mysql> SELECT r.rid, RNAME FROM room r
+    -> LEFT JOIN Courses c ON r.rid= c.rid
+    -> WHERE c.CID IS NULL; 
++-----+-------+
+| rid | RNAME |
++-----+-------+
+| 103 | Mogra |
++-----+-------+
+1 row in set (0.00 sec)
+
+3. display courses and faculty assigned to those courses whose special skill is database.
+mysql> SELECT c.cid, c.cname, f.fid, f.fname, f.sp_skill1, f.sp_skill2
+    -> FROM Courses c
+    -> JOIN faculty f ON c.fid = f.fid
+    -> WHERE f.sp_skill1 = 'database' OR f.sp_skill2 = 'database';
++-----+-------+-----+-------+-----------+-----------+
+| cid | cname | fid | fname | sp_skill1 | sp_skill2 |
++-----+-------+-----+-------+-----------+-----------+
+| 151 | DOIT  |  12 | Kiran | CPP       | database  |
++-----+-------+-----+-------+-----------+-----------+
+1 row in set (0.00 sec)
+

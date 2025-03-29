@@ -1,0 +1,223 @@
+
+-------------------------------------------- Restricting and Sorting Data-------------------------------------------
+The HR department needs your assistance in creating some queries.
+1.	Because of budget issues, the HR department needs a report that displays the last name and salary of employees earning more than $12,000.
+
+
+2.	Open a new SQL Worksheet. Create a report that displays the last name and department number for employee number 176.
+
+3.	The HR department needs to find high-salary and low-salary employees. Modify lab_03_01.sql to display the last name and salary for all employees whose salary is not in the range $5,000 through $12,000.
+
+4.	Modify above query  to list the last name and salary of employees who earn between
+	$5,000 and $12,000, and are in department 20 or 50. Label the columns Employee and Monthly Salary, respectively.
+6.	Modify lab_03_03.sql to list the last name and salary of employees who earn between
+	$5,000 and $12,000, and are in department 20 or 50. Label the columns Employee and Monthly Salary, respectively.
+
+5.	Create a report to display the last name, job ID, and hire date for employees with the last names of Matos and Taylor. Order the query in ascending order by hire date.
+
+6.	Display the last name and department ID of all employees in departments 20 or 50 in ascending alphabetical order by last_name.
+
+
+7.	The HR department needs a report that displays the last name and hire date of all employees who were hired in 2006.
+
+8.	Create a report to display the last name and job title of all employees who do not have a manager.
+
+
+9.	Create a report to display the last name, salary, and commission for all employees who earn commissions. Sort data in descending order of salary and commissions. Use the column’s numeric position in the ORDER BY clause.
+
+
+
+10.	Display the last names of all employees where the third letter of the name is “a.”
+
+
+11.	Display the last names of all employees who have both an “a” and an “e” in their last name.
+
+
+12.	Display the last name, job, and salary for all employees whose job is that of a sales representative or a stock clerk, and whose salary is not equal to $2,500, $3,500, or $7,000.
+
+13.	Display the last name, salary, and commission for all employees whose commission amount is 20%. 
+
+
+----------------------------------------------- Aggregate Function -------------------------------------
+The HR department needs the following reports:
+14.	Find the highest, lowest, sum, and average salary of all employees. Label the columns Maximum, Minimum, Sum, and Average, respectively. Round your results to the nearest whole number.
+
+
+15.	Create a query that displays employees’ last names, and indicates the amounts of their salaries with asterisks. Each asterisk signifies a thousand dollars. Sort the data in descending order of salary. Label the column EMPLOYEES_AND_THEIR_SALARIES.
+
+------------------------------------------ Joins --------------------------------------------------------
+16.	Write a query for the HR department to produce the addresses of all the departments. Use the LOCATIONS and COUNTRIES tables. Show the location ID, street address, city, state or province, and country in the output. 
+
+
+17.	The HR department needs a report of all employees with corresponding departments. Write a query to display the last name, department number, and department name for all the employees.
+
+
+18.	The HR department needs a report of employees in Toronto. Display the last name, job, department number, and department name for all employees who work in Toronto.
+
+19.	Create a report to display employees’ last names and employee numbers along with their managers’ last names and manager numbers. Label the columns Employee, Emp#, Manager, and Mgr#, respectively. 
+
+20.	Modifyabove to display all employees, including King, who has no manager. Order the results by employee number.
+
+21.	Create a report for the HR department that displays employee last names, department numbers, and all employees who work in the same department(colleague) as a given employee. Give each column an appropriate label.
+
+22.	The HR department needs a report on job grades and salaries. To familiarize yourself with the JOB_GRADES table, first show the structure of the JOB_GRADES table. Then create a query that displays the name, job, department name, salary, and grade for all employees.
+DESC JOB_GRADES;
+
+
+23.	The HR department wants to determine the names of all employees who were hired after Davies. Create a query to display the name and hire date of any employee hired after employee Davies.
+
+24.	The HR department needs to find the names and hire dates of all employees who were hired before their managers, along with their managers’ names and hire dates.
+
+
+ ------------------------------------------------ Using Subqueries to Solve Queries -------------------------
+ 
+25.	The HR department needs a query the to display  the last name and hire date of any employee in the same department as the employee whose name the user supplies (excluding that employee). For example, if the user enters Zlotkey, find all employees who work with Zlotkey (excluding Zlotkey).
+
+26. Create a report that displays the employee number, last name, and salary of all employees who earn more than the average salary. Sort the results in ascending order by salary.
+
+27.	Write a query that displays the employee number and last name of all employees who work in a department with any employee whose last name contains the letter “u.” 
+
+28.	The HR department needs a report that displays the last name, department number, and job ID of all employees whose department location ID is 1700.
+
+29.	Create a report for HR that displays the last name and salary of every employee who reports to King.
+
+
+30.	Create a report for HR that displays the department number, last name, and job ID for every employee in the Executive department.
+
+31.	Create a report that displays a list of all employees whose salary is more than the salary of any employee from department 60.
+
+32.	Modify above query in display the employee number, last name, and salary of all employees who earn more than the average salary and who work in a department with any employee whose 
+
+------------------------------------: Using Set Operators :--------------------------
+
+33.	The HR department needs a list of department IDs for departments that do not contain the job ID ST_CLERK. Use the set operators to create this report.
+
+34.	The HR department needs a list of countries that have no departments located in them. Display the country IDs and the names of the countries. Use the set operators to create this report.
+
+35.	Produce a list of all the employees who work in departments 50 and 80. Display the employee ID, job ID, and department ID by using the set operators.
+
+36.	Create a report that lists the detail of all employees who are sales representatives and are currently working in the sales department.
+
+----------------------------------------Managing Tables by Using DML Statements-------------------------------------------
+Insert data into the MY_EMPLOYEE table.
+37.	Create a table called MY_EMPLOYEE.
+
+CREATE TABLE my_employee
+(id int CONSTRAINT my_employee_id_pk PRIMARY Key,
+ last_name VARCHAR(25),
+first_name VARCHAR(25),
+userid VARCHAR(8), salary decimal(9,2));
+
+
+
+38.	Create an INSERT statement to add the first row of data to the MY_EMPLOYEE table from the following sample data. Do not list the columns in the INSERT clause.
+
+ID	LAST_NAME	FIRST_NAME	USERID	SALARY
+1	Patel	Ralph	rpatel	895
+2	Dancs	Betty	bdancs	860
+3	Biri	Ben	bbiri	1100
+4	Newman	Chad	cnewman	750
+5	Ropeburn	Audrey	aropebur	1550
+
+pass values to id last_name,first_name and salary and generate userid as given
+
+------------------------------------- procedure ----------------------
+1. Retrieve Employees by Manager
+Objective: Create a stored procedure that retrieves all employees under a specific manager.
+
+Input: p_manager_id IN NUMBER (Manager's employee ID)
+Output: List of employees with their details (Employee ID, First Name, Last Name, Job Title, Salary)
+Business Logic: The procedure should return employees whose manager_id matches the given p_manager_id.
+
+
+2. Update Employee Salary
+Objective: Create a stored procedure that updates the salary of a given employee based on their employee ID.
+Input: p_employee_id IN NUMBER, p_new_salary IN NUMBER
+Output: Success message or error message if the employee is not found.
+Business Logic: The procedure should check if the employee exists and then update their salary. If the employee doesn't exist, return an error message.
+
+3. Employee Count by Department
+Objective: Create a stored procedure that returns the count of employees in a specific department.
+Input: p_department_id IN NUMBER
+Output: Count of employees in that department.
+Business Logic: The procedure should count the employees in the specified department and return the result.
+
+
+4. Employee Job Title and Salary Information
+Objective: Create a stored procedure that retrieves employees' job titles and salary information based on a specific job title.
+Input: p_job_id IN VARCHAR2
+Output: List of employees with job title and salary.
+Business Logic: The procedure should return the employee ID, first name, last name, and salary for employees with the specified job title.
+
+
+5. Promote Employee
+Objective: Create a stored procedure to promote an employee by changing their job title and salary.
+Input: p_employee_id IN NUMBER, p_new_job_id IN VARCHAR2, p_salary_increase IN NUMBER
+Output: Success or failure message.
+Business Logic: The procedure should check if the employee exists, and then update the job_id and salary based on the provided values. Ensure salary increase is not less than a certain percentage (e.g., 10%).
+
+6. Employee Payroll Report
+Objective: Create a stored procedure that generates a payroll report for a specific date range.
+Input: p_start_date IN DATE, p_end_date IN DATE
+Output: A list of employees along with their payroll details (Employee ID, Name, Job Title, Salary, Bonus, Total Pay).
+Business Logic: The procedure should return payroll data (including salary and any bonuses) for employees who were active during the specified date range.
+
+7. Employee Tenure
+Objective: Create a stored procedure that calculates and returns the tenure (in years) for an employee based on their hire date.
+Input: p_employee_id IN NUMBER
+Output: Employee's tenure in years.
+Business Logic: The procedure should calculate the difference between the current date and the employee's hire date, returning the number of years the employee has worked.
+
+8. Department Budget Summary
+Objective: Create a stored procedure that calculates and returns the total salary expense for a department.
+Input: p_department_id IN NUMBER
+Output: Total salary expense for the department.
+Business Logic: The procedure should sum the salaries of all employees in the given department and return the total salary expense.
+
+9. Find Employees with No Manager
+Objective: Create a stored procedure that identifies employees who do not have a manager assigned.
+Input: None
+Output: List of employees without a manager (Employee ID, Name, Job Title).
+Business Logic: The procedure should return a list of employees whose manager_id is NULL.
+
+
+10. Employee Turnover Rate
+Objective: Create a stored procedure that calculates the turnover rate for a department within a given period.
+Input: p_department_id IN NUMBER, p_start_date IN DATE, p_end_date IN DATE
+Output: Turnover rate as a percentage of the total number of employees in that department who left during the specified period.
+Business Logic: The procedure should calculate the number of employees who left the department within the given date range and divide by the total number of employees in the department during that period.
+
+
+----------------------------- Function -----------------------
+1. Problem: "The finance department needs to calculate the average salary for each department to analyze salary distribution and budget planning."
+
+Function: GetAverageDepartmentSalary(dept_id INT)
+
+2. Problem: "As an HR analyst, I need to quickly retrieve the full name of an employee given their employee ID for reporting purposes."
+
+Function: GetEmployeeFullName(emp_id INT)
+
+3.Problem: "When reviewing employee information, I need to know the department name an employee belongs to, given their employee ID."
+
+Function: GetEmployeeDepartmentName(emp_id INT)
+
+4.Problem: "The HR department requires a count of employees in each department for workforce planning and resource allocation."
+
+Function: CountEmployeesInDepartment(dept_id INT)
+
+5.Problem: "The HR department needs to know the highest salary within each department for salary benchmarking and to identify potential pay disparities."
+
+Function: GetHighestSalaryInDepartment(dept_id INT)
+ 
+
+
+
+
+
+
+
+
+
+
+
+
