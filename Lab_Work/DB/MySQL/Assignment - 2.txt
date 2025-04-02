@@ -226,149 +226,149 @@ WHERE comm IS NULL;
 
 ---
 
-Here are the same queries using **regex** instead of `LIKE`:
+Here are the same queries using regex instead of `LIKE`:
 
-### 1. **Find all employees with names ending with "R"**:
-   ```sql
+ 1. Find all employees with names ending with "R":
+ 
    SELECT * FROM EMP WHERE ENAME REGEXP 'R$';
-   ```
+   
 
-### 2. **Find all employees with names starting with "M" and ending with "R"**:
-   ```sql
+ 2. Find all employees with names starting with "M" and ending with "R":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^M.*R$';
-   ```
+   
 
-### 3. **Find all employees with names starting with either "M" or "A"**:
-   ```sql
+ 3. Find all employees with names starting with either "M" or "A":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^[MA]';
-   ```
+   
 
-### 4. **List the employee names having "L" as the second character**:
-   ```sql
+ 4. List the employee names having "L" as the second character:
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^.L';
-   ```
+   
 
-### 5. **Find all employees with names having "L" at the 3rd position**:
-   ```sql
+ 5. Find all employees with names having "L" at the 3rd position:
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^..L';
-   ```
+   
 
-### 6. **List all employees with names ending by "ES"**:
-   ```sql
+ 6. List all employees with names ending by "ES":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP 'ES$';
-   ```
+   
 
-### 7. **List all employees with jobs starting with "C" and ending with "K"**:
-   ```sql
+ 7. List all employees with jobs starting with "C" and ending with "K":
+   
    SELECT * FROM EMP WHERE JOB REGEXP '^C.*K$';
-   ```
+   
 
-### 8. **Find all employees with names starting with either "M" or "A" and last character as either "R" or "E"**:
-   ```sql
+ 8. Find all employees with names starting with either "M" or "A" and last character as either "R" or "E":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^[MA].*[RE]$';
-   ```
+   
 
-### 9. **Find all employees with names starting with either "M" or "A" and ending with "E"**:
-   ```sql
+ 9. Find all employees with names starting with either "M" or "A" and ending with "E":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^[MA].*E$';
-   ```
+   
 
-### 10. **Find all employees with names starting with "A" and ending with "N", or starting with "S" and ending with "H"**:
-   ```sql
+ 10. Find all employees with names starting with "A" and ending with "N", or starting with "S" and ending with "H":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^(A.*N|S.*H)$';
-   ```
+   
 
-### 11. **Find all employees with names starting with "M", having "L" at the 3rd position, and ending with "R"**:
-   ```sql
+ 11. Find all employees with names starting with "M", having "L" at the 3rd position, and ending with "R":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^M.L.*R$';
-   ```
+   
 
-### 12. **Find all employees with names having "L" at the 3rd position and "E" at the second last position**:
-   ```sql
+ 12. Find all employees with names having "L" at the 3rd position and "E" at the second last position:
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^..L.*E.$';
-   ```
+   
 
-### 13. **Find all employees whose names do not start with "A" or "M"**:
-   ```sql
+ 13. Find all employees whose names do not start with "A" or "M":
+   
    SELECT * FROM EMP WHERE ENAME NOT REGEXP '^[AM]';
-   ```
+   
 
-### 14. **Display all employees with salary greater than 1000 and less than 3000, and job starting with "A" and ending with "T"**:
-   ```sql
+ 14. Display all employees with salary greater than 1000 and less than 3000, and job starting with "A" and ending with "T":
+   
    SELECT * FROM EMP WHERE SAL > 1000 AND SAL < 3000 AND JOB REGEXP '^A.*T$';
-   ```
+   
 
-### 15. **Display empno, ename, sal, commission, and increased salary by 10% for employees whose names start with "A", "M", or "S"**:
-   ```sql
+ 15. Display empno, ename, sal, commission, and increased salary by 10% for employees whose names start with "A", "M", or "S":
+   
    SELECT empno, ename, sal, commission, sal * 1.1 AS "Increased Salary"
    FROM EMP
    WHERE ENAME REGEXP '^[AMS]';
-   ```
+   
 
-### 16. **Display all employees whose names start with "A" and end with either "N" or "S", or work in dept 10**:
-   ```sql
+ 16. Display all employees whose names start with "A" and end with either "N" or "S", or work in dept 10:
+   
    SELECT * FROM EMP WHERE (ENAME REGEXP '^A.*[NS]$') OR deptno = 10;
-   ```
+   
 
-### 17. **List all departments whose name has at least 8 characters**:
-   ```sql
+ 17. List all departments whose name has at least 8 characters:
+   
    SELECT * FROM DEPT WHERE LENGTH(DNAME) >= 8;
-   ```
+   
 
-### 18. **List employees whose names have "E" as the second last character**:
-   ```sql
+ 18. List employees whose names have "E" as the second last character:
+   
    SELECT * FROM EMP WHERE ENAME REGEXP 'E.$';
-   ```
+   
 
-### 19. **List the details of employees whose names start with "A" and end with "S", or whose names contain "N" as the second or third character, and end with either "N" or "S"**:
-   ```sql
+ 19. List the details of employees whose names start with "A" and end with "S", or whose names contain "N" as the second or third character, and end with either "N" or "S":
+   
    SELECT * FROM EMP WHERE (ENAME REGEXP '^A.*S$' OR ENAME REGEXP '^.*N.*[NS]$');
-   ```
+   
 
-### 20. **List employees whose names start with either "A" or "S" in dept 20**:
-   ```sql
+ 20. List employees whose names start with either "A" or "S" in dept 20:
+   
    SELECT * FROM EMP WHERE ENAME REGEXP '^[AS]' AND deptno = 20;
-   ```
+   
 
-### 21. **List all employees with jobs starting with "C", having "E" at the 3rd position, and ending with "K"**:
-   ```sql
+ 21. List all employees with jobs starting with "C", having "E" at the 3rd position, and ending with "K":
+   
    SELECT * FROM EMP WHERE JOB REGEXP '^C.*E.*K$';
-   ```
+   
 
-### 22. **List all employees with jobs containing "L" at the 3rd position and "M" at the 3rd last position**:
-   ```sql
+ 22. List all employees with jobs containing "L" at the 3rd position and "M" at the 3rd last position:
+   
    SELECT * FROM EMP WHERE JOB REGEXP '^..L.*M..$';
-   ```
+   
 
-### 23. **List all employees with commission as null and name starting with "S"**:
-   ```sql
+ 23. List all employees with commission as null and name starting with "S":
+   
    SELECT * FROM EMP WHERE COMM IS NULL AND ENAME REGEXP '^S';
-   ```
+   
 
-### 24. **List employees in all departments whose salary is not in the range of 2000 to 3000 and job has "MAN" at the end**:
-   ```sql
+ 24. List employees in all departments whose salary is not in the range of 2000 to 3000 and job has "MAN" at the end:
+   
    SELECT * FROM EMP WHERE (SAL NOT BETWEEN 2000 AND 3000) AND JOB REGEXP 'MAN$';
-   ```
+   
 
-### 25. **List all employees whose names do not end with "S" in departments 20 and 30**:
-   ```sql
+ 25. List all employees whose names do not end with "S" in departments 20 and 30:
+   
    SELECT * FROM EMP WHERE (DEPTNO = 20 OR DEPTNO = 30) AND ENAME NOT REGEXP 'S$';
-   ```
+   
 
-### 26. **Display a list of all employees whose names end with "ER"**:
-   ```sql
+ 26. Display a list of all employees whose names end with "ER":
+   
    SELECT * FROM EMP WHERE ENAME REGEXP 'ER$';
-   ```
+   
 
-### 27. **Display all employees where commission is null and name starts with "S"**:
-   ```sql
+ 27. Display all employees where commission is null and name starts with "S":
+   
    SELECT * FROM EMP WHERE COMM IS NULL AND ENAME REGEXP '^S';
-   ```
+   
 
-### 28. **Display all rows where commission is null**:
-   ```sql
+ 28. Display all rows where commission is null:
+   
    SELECT * FROM EMP WHERE COMM IS NULL;
-   ```
+   
 
 ---
 
