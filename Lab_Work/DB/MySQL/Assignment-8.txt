@@ -586,6 +586,85 @@ mysql> CALL increment_sal();
 
 Query OK, 0 rows affected (0.00 sec)
 
+---
+
+mysql> DELIMITER //
+mysql> DROP PROCEDURE IF EXISTS increment_sal;
+    ->     CREATE PROCEDURE increment_sal(j varchar(255))
+    ->     
+    ->     BEGIN
+    ->     
+    ->     DECLARE done int default 0;
+    ->     DECLARE v_ename VARCHAR(15);
+    ->     DECLARE v_salary DECIMAL(7, 2);
+    ->     
+    ->     DECLARE increment_cur CURSOR for
+    ->     SELECT ename,
+    ->     CASE
+    ->     WHEN JOB='CLERK' THEN SAL*1.10
+    ->     WHEN JOB='MANAGER' THEN SAL*1.05
+    ->     WHEN JOB='ANALYST' THEN SAL*1.07
+    ->     ELSE SAL
+    ->     END as incremented_sal
+    ->     FROM emp
+    ->     WHERE JOB IN (j);
+    ->     
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND SET DONE =1;
+    ->     
+    ->     OPEN increment_cur;
+    ->     
+    ->     read_loop : LOOP
+    ->     fetch increment_cur into v_ename, v_salary;
+    ->     
+    ->     IF done THEN
+    ->     LEAVE read_loop;
+    ->     END IF;
+    ->     
+    ->     SELECT v_ename as Emp_Name, v_salary as "Incremented Salary";
+    ->     END LOOP;
+    ->     
+    ->     CLOSE increment_cur;
+    ->     
+    ->     END //
+Query OK, 0 rows affected (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> 
+mysql> CALL increment_sal('CLERK');
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| SMITH    |             881.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| ADAMS    |            1211.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| JAMES    |            1046.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
++----------+--------------------+
+| Emp_Name | Incremented Salary |
++----------+--------------------+
+| MILLER   |            1431.16 |
++----------+--------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
 3. Pass job as a parameter to PROCEDURE and display all employees working for the specIFied job using cursor.
 mysql> DELIMITER //
 

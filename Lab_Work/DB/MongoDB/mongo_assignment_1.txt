@@ -1,0 +1,233 @@
+1.display all movies with rating=4
+db.movie.find({rating:4})
+[
+  {
+    _id: ObjectId('5bf6a36f57b2d4cc676c7a95'),
+    name: 'Andhadhund',
+    price: 400,
+    actor: [ 'Ayushman', 'radhika' ],
+    rating: 4
+  },
+  {
+    _id: ObjectId('5ca47e5b2952ebdd7ae2a931'),
+    name: 'padmavat',
+    rating: 4,
+    price: 250,
+    ticket_no: 300,
+    actor: [
+      'Deepika',
+      'shahid kapoor',
+      'ranveer singh',
+      'aditi Rao',
+      'aaaaa'
+    ],
+    cancellation: { date: Timestamp({ t: 1567175239, i: 1 }) }
+  },
+  {
+    _id: ObjectId('5bf6a38c57b2d4cc676c7a96'),
+    name: 'Andhadhund',
+    price: null,
+    actor: [ 'Tabbu' ],
+    rating: 4
+  }
+]
+
+
+ 
+2.display all movies with rating=3 and price=200
+db.movie.find({rating:3,price:200})
+[
+  {
+    _id: ObjectId('5aaa31ee639395f86922a87f'),
+    name: '3 idiots',
+    actor: [ 'Kareena Kapoor', 'amir', 'kareena', 'mahadavan', 'sharman' ],
+    rating: 3,
+    ticket_no: 150,
+    price: 200
+  }
+]
+
+ 
+3.display all movies with rating>3 and price=540
+db.movie.find({rating:{$gt:3},price:540})
+
+no result found
+  
+4.display all movies with rating>3 and price>300
+db.movie.find({rating:{$gt:3},price:{$gt:300}})
+[
+  {
+    _id: ObjectId('5d6935a3470e2bef2a82cdfa'),
+    name: 'mission mangal',
+    price: 350,
+    actor: [ 'Sonakshi', 'Vidya Balan' ],
+    rating: 6
+  },
+  {
+    _id: ObjectId('5bf6a36f57b2d4cc676c7a95'),
+    name: 'Andhadhund',
+    price: 400,
+    actor: [ 'Ayushman', 'radhika' ],
+    rating: 4
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a880'),
+    name: 'lagaan',
+    actor: [ 'amir', 'angraz' ],
+    rating: 6,
+    ticket_no: 410,
+    price: 350,
+    cancellation: {
+      date: Timestamp({ t: 1554356003, i: 1 }),
+      reason: 'user request'
+    },
+    lastModified: ISODate('2019-04-04T05:33:23.022Z')
+  },
+  {
+    _id: ObjectId('5ca453ef2952ebdd7ae2a92f'),
+    name: 'Kesari',
+    actor: [ 'Akshay Kumar', 'Pariniti chopra' ],
+    rating: 6,
+    price: 350,
+    ticket_no: 270,
+    rdate: ISODate('2019-01-23T00:00:00.000Z')
+  },
+  {
+    _id: ObjectId('5aaa3334639395f86922a881'),
+    name: 'sholay',
+    actor: [
+      'Dharamendra',
+      'Amitabh',
+      'Sachin Pilgaokar',
+      'Dharamendra',
+      'Dharamendra',
+      'Mr. Khote',
+      'jaya bacchan',
+      'sanjiv kapoor'
+    ],
+    rating: 6,
+    ticket_no: 550,
+    price: 350,
+    position: [ 2, 2 ]
+  }
+]
+
+5.display all movies with price > 200 and < 400
+db.movie.find({price:{$gt:200 ,$lt:400}})
+
+ 
+6.display all movies with price = 200 or 540 400
+db.movie.find({price:{$in:[200,540,400]}})
+
+7.display all movies with price not = 200 nor 540  nor 400
+db.movie.find({price:{$nin:[200,540,400]}})
+
+8.display count of  movies with price not = 200 nor 540  nor 400
+db.movie.find({price:{$nin:[200,540,400]}}).count()
+
+9.display all movies with rating=4 or price>300
+db.movie.find({ $or:[{rating:4}, {price:{$gt:300}}]})
+
+10.display all movies with price not > 200 and < 400
+db.movie.find({$and:[{price:{$lte:200}},{price:{$lt:400}}]})
+ 
+11.display all movies with rating is odd
+db.movie.find({rating:{$mod:[2,1]}})
+ 
+12.display all movies in which amitabh has acted
+db.movie.find({$or:[{actor:'Amitabh'},{actor: 'amitabh'}]})
+
+13.display all movies in which amitabh has acted display in ascending order of price
+db.movie.find({$or:[{actor:'Amitabh'},{actor: 'amitabh'}]}).sort({price:1})
+
+14. Display all movies which contains 3  actors. 
+> db.movie.find({actor:{$size:3}}).pretty()
+
+15.display all movies in which amitabh has acted display only 1st document
+> db.movie.find({actor:/^[Aa]mitabh/})
+
+16.Display all movies where name starts with digit and ends with s.
+db.movie.find({name:/^[0-9].*s$/})
+ 
+17.display top 2 rating movies in which amitabh has acted   
+db.movie.find({actor:/^[Aa]mitabh/}).sort({rating:-1}).limit(2)
+
+18.to display all movies with number of actors=3
+db.movie.find({actor:{$size:3}})
+
+19.Display top 5 highest rating movies.
+db.movie.find({}).sort({rating:-1}).limit(5)
+
+20. Display  lowest 3 rating movies.
+db.movie.find({rating: { $ne : null }}).sort({rating:1}).limit(3)
+[
+  {
+    _id: ObjectId('5ca456072952ebdd7ae2a930'),
+    name: 'paa',
+    actor: [ 'Amitabh', 'vidya balan', 'Abhishek' ],
+    rating: 2,
+    price: 270,
+    ticket_no: 210,
+    rdate: ISODate('2019-01-23T00:00:00.000Z'),
+    others: { director: 'R Balki', songs: 'Amit trivedi' }
+  },
+  {
+    _id: ObjectId('5c865923d82c19b8ed996550'),
+    name: 'Dil dhadakane do',
+    rating: 3,
+    price: 340,
+    actor: "['Anil kapoor']"
+  },
+  {
+    _id: ObjectId('5aaa31ee639395f86922a87f'),
+    name: '3 idiots',
+    actor: [ 'Kareena Kapoor', 'amir', 'kareena', 'mahadavan', 'sharman' ],
+    rating: 3,
+    ticket_no: 150,
+    price: 200
+  }
+]
+
+22. Display all movies ending with digits.
+dac> db.movie.find({name:/.*[0-9]$/})
+[
+  {
+    _id: ObjectId('5aab6da4639395f86922a883'),
+    name: 'kahani 2',
+    ticket_no: 820,
+    actor: [
+      'vidya',  'Arjun',
+      'Jonny',  'nawaz',
+      'prasad', 'Shreyas',
+      'Jonny',  'yash'
+    ],
+    rating: 7,
+    price: 280
+  }
+]
+
+23. Display all movies with rating 4 and price > 300
+db.movie.find({rating: 4, price:{$gt:300}})
+
+25. Display all movies in which  Amitabh is an actor and entry in the array is at first index position.
+dac> db.movie.find({'actor.0':/^[Aa]mitabh/})
+[
+  {
+    _id: ObjectId('5aaa3334639395f86922a882'),
+    name: 'aradhana',
+    actor: [ 'amitabh', 'prem', 'rajesh khanna' ],
+    rating: 3,
+    ticket_no: 550,
+    price: 260
+  },
+  {
+    _id: ObjectId('5ca456072952ebdd7ae2a930'),
+    name: 'paa',
+    actor: [ 'Amitabh', 'vidya balan', 'Abhishek' ],
+    rating: 2,
+    price: 270,
+    ticket_no: 210,
+    rdate: ISODate('2019-01-23T00:00:00.000Z'),
+    others: { director: 'R Balki', songs: 'Amit trivedi' }
+  }
+]

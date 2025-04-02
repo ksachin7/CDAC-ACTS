@@ -1,0 +1,254 @@
+1.Change rating of movie Kesari to 2  
+dac> db.movie.updateOne({name:'Kesari'},{$set:{rating:2}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+2.increase the price of all tickits by Rs 20 for Amitabh's movie. 
+dac> db.movie.updateMany({actor:/^[A/^mitabh/},{$set:{ticket_no: 'ticket_no'+20}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 3,
+  modifiedCount: 3,
+  upsertedCount: 0
+}
+
+3.Delete key rating for movie Kesari
+dac> db.movie.deleteOne({name: 'Kesari'})
+{ acknowledged: true, deletedCount: 1 }
+
+4.Increase price by 50 and change rating to 7 for movie 3 idiots.
+dac> db.movie.updateOne({name:'3 idiots'},{$set:{rating:7,price:50}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+5.Add new actor in movie Sholay
+dac> db.movie.updateOne({name: 'sholay'}, {$push: {actor: "Gabbar"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+dac> db.movie.find({name: 'sholay'},{})
+[
+  {
+    _id: ObjectId('5aaa3334639395f86922a881'),
+    name: 'sholay',
+    actor: [
+      'Dharamendra',
+      'Amitabh',
+      'Sachin Pilgaokar',
+      'Dharamendra',
+      'Dharamendra',
+      'Mr. Khote',
+      'jaya bacchan',
+      'sanjiv kapoor',
+      'Gabbar'
+    ],
+    rating: 6,
+    ticket_no: 550,
+    price: 350,
+    position: [ 2, 2 ]
+  }
+]
+
+6.Add multiple actors in any movie of your choice.
+dac> db.movie.updateOne({name: 'sholay'},{$push: {actor: {$each: ["actor1", "actor2", "actor3"]}}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+dac> db.movie.find({name: 'sholay'},{})
+[
+  {
+    _id: ObjectId('5aaa3334639395f86922a881'),
+    name: 'sholay',
+    actor: [
+      'Dharamendra',
+      'Amitabh',
+      'Sachin Pilgaokar',
+      'Dharamendra',
+      'Dharamendra',
+      'Mr. Khote',
+      'jaya bacchan',
+      'sanjiv kapoor',
+      'Gabbar',
+      'actor1',
+      'actor2',
+      'actor3'
+    ],
+    rating: 6,
+    ticket_no: 550,
+    price: 350,
+    position: [ 2, 2 ]
+  }
+]
+
+7.Add actors at a perticular position
+dac> db.movie.updateOne(
+...   { name: "sholay" },
+...   { $push: { actor: { $each: ["New Actor"], $position: 1 } } }
+... );
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+dac> db.movie.find({name: 'sholay'},{})
+[
+  {
+    _id: ObjectId('5aaa3334639395f86922a881'),
+    name: 'sholay',
+    actor: [
+      'Dharamendra',   'New Actor',
+      'Amitabh',       'Sachin Pilgaokar',
+      'Dharamendra',   'Dharamendra',
+      'Mr. Khote',     'jaya bacchan',
+      'sanjiv kapoor', 'Gabbar',
+      'actor1',        'actor2',
+      'actor3'
+    ],
+    rating: 6,
+    ticket_no: 550,
+    price: 350,
+    position: [ 2, 2 ]
+  }
+]
+
+8.Delete first value from array
+dac> db.movie.updateOne(
+...   { name: "sholay" },
+...   { $pop: { actor: -1 } }
+... );
+...
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+9.delete last value from array
+dac> db.movie.updateOne(
+...   { name: "sholay" },
+...   { $pop: { actor: 1 } }
+... );
+...
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+10.For movie "kahani 2" change rating to 5.
+dac>  db.movie.updateOne(
+...   { name: "kahani 2" },
+...   { $set: { rating: 5 } }
+... );
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+11.Change price =400 and increase rating by 2 for all movies with name Kahani in it.
+dac> db.movie.updateMany(
+...   { name: { $regex: "Kahani", $options: "i" } },
+...   { $set: { price: 400 }, $inc: { rating: 2 } }
+... );
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+
+12.Decrease price of all movies by Rs.40.
+dac> db.movie.updateMany(
+...   {price:{$ne:null}},
+...   { $inc: { price: -40 } }
+... );
+...
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 15,
+  modifiedCount: 15,
+  upsertedCount: 0
+}
+
+13.Increase the price by 10% of price to display all movies with amitabh acted in it and is at 1 st db.movie.updateMany(
+    { actor: {$elemMatch:{$eq:"Amitabh", $position:0}}},
+    [{$set: {price: {$multiply: ["$price", 1.1]}}}]
+);
+
+db.movie.find({actor: {$elemMatch:{$eq:"Amitabh", $position:0}}})
+
+16.Create a capped collection of size 5 by name dept.Store dno,  dname,location.Test this capped collection by adding new documents.
+dac> db.createCollection("dept", { capped: true, size: 524288, max: 5 }); // size in bytes
+...
+... // Test the capped collection by adding new documents.
+... db.dept.insertOne({ dno: 1, dname: "HR", location: "Building A" });
+... db.dept.insertOne({ dno: 2, dname: "IT", location: "Building B" });
+... db.dept.insertOne({ dno: 3, dname: "Sales", location: "Building C" });
+... db.dept.insertOne({ dno: 4, dname: "Finance", location: "Building D" });
+... db.dept.insertOne({ dno: 5, dname: "Marketing", location: "Building E" });
+... db.dept.insertOne({ dno: 6, dname: "Operations", location: "Building F" }); // This will overwrite the first document inserted.
+...
+... db.dept.find(); // to see the capped collection contents.
+...
+[
+  {
+    _id: ObjectId('67ea65207cf83e2fcab71237'),
+    dno: 2,
+    dname: 'IT',
+    location: 'Building B'
+  },
+  {
+    _id: ObjectId('67ea65207cf83e2fcab71238'),
+    dno: 3,
+    dname: 'Sales',
+    location: 'Building C'
+  },
+  {
+    _id: ObjectId('67ea65207cf83e2fcab71239'),
+    dno: 4,
+    dname: 'Finance',
+    location: 'Building D'
+  },
+  {
+    _id: ObjectId('67ea65207cf83e2fcab7123a'),
+    dno: 5,
+    dname: 'Marketing',
+    location: 'Building E'
+  },
+  {
+    _id: ObjectId('67ea65207cf83e2fcab7123b'),
+    dno: 6,
+    dname: 'Operations',
+    location: 'Building F'
+  }
+]

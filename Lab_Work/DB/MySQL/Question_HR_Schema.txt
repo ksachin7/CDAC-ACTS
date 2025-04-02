@@ -1,5 +1,5 @@
 
------------------------------------- Restricting and Sorting Data ------------------------------------
+-------------------------------- Restricting and Sorting Data --------------------------------
 
 The HR department needs your assistance in creating some queries.
 1. Because of budget issues, the HR department needs a report that displays the last name and salary of employees earning more than $12,000.
@@ -41,101 +41,780 @@ where salary<12000;
 13.	Display the last name, salary, and commission for all employees whose commission amount is 20%. 
 
 
--------------------------------------------- Aggregate Function -------------------------------------
+---------------------------------------- Aggregate Function -------------------------------------
 The HR department needs the following reports:
 14.	Find the highest, lowest, sum, and average salary of all employees. Label the columns Maximum, Minimum, Sum, and Average, respectively. Round your results to the nearest whole number.
-
+SELECT 
+    MAX(salary) AS Maximum, 
+    MIN(salary) AS Minimum, 
+    ROUND(SUM(salary)) AS Sum, 
+    ROUND(AVG(salary)) AS Average 
+FROM employees;
 
 15.	Create a query that displays employees’ last names, and indicates the amounts of their salaries with asterisks. Each asterisk signifies a thousand dollars. Sort the data in descending order of salary. Label the column EMPLOYEES_AND_THEIR_SALARIES.
+SELECT 
+    last_name, 
+    REPEAT('*', FLOOR(salary / 1000)) AS EMPLOYEES_AND_THEIR_SALARIES
+FROM 
+    employees
+ORDER BY 
+    salary DESC;
 
------------------------------------------- Joins ------------------------------------------
+---------------------------------------- Joins ----------------------------------------
 16.	Write a query for the HR department to produce the addresses of all the departments. Use the LOCATIONS and COUNTRIES tables. Show the location ID, street address, city, state or province, and country in the output. 
-
+mysql> SELECT l.location_id, l.street_address, l.city, l.state_province, c.country_name
+    -> FROM locations l
+    -> JOIN countries c ON l.country_id = c.country_id;
 
 17.	The HR department needs a report of all employees with corresponding departments. Write a query to display the last name, department number, and department name for all the employees.
-
+mysql> SELECT e.last_name, e.department_id, d.department_name
+    -> FROM employees e
+    -> JOIN departments d ON e.department_id = d.department_id;
 
 18.	The HR department needs a report of employees in Toronto. Display the last name, job, department number, and department name for all employees who work in Toronto.
+mysql> SELECT e.last_name, e.job_id, e.department_id, d.department_name
+    -> FROM employees e
+    -> JOIN departments d ON e.department_id = d.department_id
+    -> JOIN locations l ON d.location_id = l.location_id
+    -> WHERE l.city = 'Toronto';
++-----------+--------+---------------+-----------------+
+| last_name | job_id | department_id | department_name |
++-----------+--------+---------------+-----------------+
+| Hartstein | MK_MAN |            20 | Marketing       |
+| Fay       | MK_REP |            20 | Marketing       |
++-----------+--------+---------------+-----------------+
+2 rows in set (0.00 sec)
 
 19.	Create a report to display employees’ last names and employee numbers along with their managers’ last names and manager numbers. Label the columns Employee, Emp#, Manager, and Mgr#, respectively. 
+mysql> SELECT e.last_name AS Employee, e.employee_id AS "Emp#", m.last_name AS Manager, m.employee_id AS "Mgr#"
+    -> FROM employees e
+    -> LEFT JOIN employees m ON e.manager_id = m.employee_id;
 
 20.	Modifyabove to display all employees, including King, who has no manager. Order the results by employee number.
+mysql> SELECT e.last_name AS Employee, e.employee_id AS "Emp#", m.last_name AS Manager, m.employee_id AS "Mgr#"
+    -> FROM employees e
+    -> LEFT JOIN employees m ON e.manager_id = m.employee_id
+    -> ORDER BY e.employee_id;
 
 21.	Create a report for the HR department that displays employee last names, department numbers, and all employees who work in the same department(colleague) as a given employee. Give each column an appropriate label.
+mysql> SELECT e1.last_name AS Employee, e1.employee_id AS "Emp#", e2.last_name AS Colleague, e2.employee_id AS "Colleague Emp#"
+    -> FROM employees e1
+    -> JOIN employees e2 ON e1.department_id = e2.department_id
+    -> WHERE e1.employee_id = 101 AND e1.employee_id != e2.employee_id;
++----------+------+-----------+----------------+
+| Employee | Emp# | Colleague | Colleague Emp# |
++----------+------+-----------+----------------+
+| Kochhar  |  101 | King      |            100 |
+| Kochhar  |  101 | De Haan   |            102 |
++----------+------+-----------+----------------+
+2 rows in set (0.01 sec)
 
 22.	The HR department needs a report on job grades and salaries. To familiarize yourself with the JOB_GRADES table, first show the structure of the JOB_GRADES table. Then create a query that displays the name, job, department name, salary, and grade for all employees.
 DESC JOB_GRADES;
+SELECT e.first_name, e.last_name, e.job_id, d.department_name, e.salary, j.grade_level
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+JOIN job_grades j ON e.salary BETWEEN j.lowest_salary AND j.highest_salary;
+
+mysql> SELECT DISTINCT e.first_name, e.last_name, e.job_id, d.department_name, e.salary,
+    ->        CASE
+    ->            WHEN j.min_salary >= 100000 THEN 'Grade A'
+    ->            WHEN j.min_salary >= 50000 THEN 'Grade B'
+    ->            WHEN j.min_salary >= 25000 THEN 'Grade C'
+    ->            ELSE 'Grade D'
+    ->        END AS job_grade
+    -> FROM employees e
+    -> JOIN departments d ON e.department_id = d.department_id
+    -> JOIN jobs j ON e.salary BETWEEN j.min_salary AND j.max_salary;
 
 
 23.	The HR department wants to determine the names of all employees who were hired after Davies. Create a query to display the name and hire date of any employee hired after employee Davies.
+mysql> SELECT CONCAT(first_name, " ", last_name), hire_date
+    -> FROM employees
+    -> WHERE hire_date > 
+    ->                 (SELECT hire_date from employees 
+    ->                 WHERE  last_name= "Davies");
+
 
 24.	The HR department needs to find the names and hire dates of all employees who were hired before their managers, along with their managers’ names and hire dates.
+mysql> SELECT 
+    ->     CONCAT(e.first_name, " ", e.last_name) AS "Employee Name", 
+    ->     CONCAT(m.first_name, " ", m.last_name) AS "Manager Name", 
+    ->     e.hire_date AS "Employee's Hire Date", 
+    ->     m.hire_date AS "Manager Hire Date"
+    -> FROM employees e
+    -> LEFT JOIN employees m ON e.manager_id = m.employee_id
+    -> WHERE e.hire_date < m.hire_date;
++------------------+------------------+----------------------+-------------------+
+| Employee Name    | Manager Name     | Employee's Hire Date | Manager Hire Date |
++------------------+------------------+----------------------+-------------------+
+| Alexander Hunold | Lex De Haan      | 1990-01-03           | 1993-01-13        |
+| Daniel Faviet    | Nancy Greenberg  | 1994-08-16           | 1994-08-17        |
+| James Marlow     | Adam Fripp       | 1997-02-16           | 1997-04-10        |
+| Renske Ladwig    | Shanta Vollman   | 1995-07-14           | 1997-10-10        |
+| Trenna Rajs      | Kevin Mourgos    | 1995-10-17           | 1999-11-16        |
+| Curtis Davies    | Kevin Mourgos    | 1997-01-29           | 1999-11-16        |
+| Randall Matos    | Kevin Mourgos    | 1998-03-15           | 1999-11-16        |
+| Peter Vargas     | Kevin Mourgos    | 1998-07-09           | 1999-11-16        |
+| Janette King     | Karen Partners   | 1996-01-30           | 1997-01-05        |
+| Patrick Sully    | Karen Partners   | 1996-03-04           | 1997-01-05        |
+| Allan McEwen     | Karen Partners   | 1996-08-01           | 1997-01-05        |
+| Lisa Ozer        | Gerald Cambrault | 1997-03-11           | 1999-10-15        |
+| Harrison Bloom   | Gerald Cambrault | 1998-03-23           | 1999-10-15        |
+| Tayler Fox       | Gerald Cambrault | 1998-01-24           | 1999-10-15        |
+| William Smith    | Gerald Cambrault | 1999-02-23           | 1999-10-15        |
+| Elizabeth Bates  | Gerald Cambrault | 1999-03-24           | 1999-10-15        |
+| Ellen Abel       | Eleni Zlotkey    | 1996-05-11           | 2000-01-29        |
+| Alyssa Hutton    | Eleni Zlotkey    | 1997-03-19           | 2000-01-29        |
+| Jonathon Taylor  | Eleni Zlotkey    | 1998-03-24           | 2000-01-29        |
+| Jack Livingston  | Eleni Zlotkey    | 1998-04-23           | 2000-01-29        |
+| Kimberely Grant  | Eleni Zlotkey    | 1999-05-24           | 2000-01-29        |
+| Charles Johnson  | Eleni Zlotkey    | 2000-01-04           | 2000-01-29        |
+| Nandita Sarchand | Adam Fripp       | 1996-01-27           | 1997-04-10        |
+| Alexis Bull      | Adam Fripp       | 1997-02-20           | 1997-04-10        |
+| Sarah Bell       | Shanta Vollman   | 1996-02-04           | 1997-10-10        |
+| Britney Everett  | Shanta Vollman   | 1997-03-03           | 1997-10-10        |
+| Alana Walsh      | Kevin Mourgos    | 1998-04-24           | 1999-11-16        |
+| Kevin Feeney     | Kevin Mourgos    | 1998-05-23           | 1999-11-16        |
+| Donald OConnell  | Kevin Mourgos    | 1999-06-21           | 1999-11-16        |
+| Jennifer Whalen  | Neena Kochhar    | 1987-09-17           | 1989-09-21        |
++------------------+------------------+----------------------+-------------------+
+30 rows in set (0.00 sec)
 
 
- --------------------------------- Using Subqueries to Solve Queries -------------------------
+ -------------------------------- Using Subqueries to Solve Queries ------------------------------
  
 25.	The HR department needs a query the to display  the last name and hire date of any employee in the same department as the employee whose name the user supplies (excluding that employee). For example, if the user enters Zlotkey, find all employees who work with Zlotkey (excluding Zlotkey).
+mysql> SET @x= "Jack Livingston";
+Query OK, 0 rows affected (0.00 sec)
 
-set x=20;
-
-select last_name,hire_date from employees 
-where department_id = (
-select department_id from employees
-where department_id = @x
-);
-
-
+mysql> SELECT employee_id, department_id, concat(first_name,' ', last_name) as full_name, hire_date from employees 
+    -> WHERE department_id= (SELECT DISTINCT department_id from employees 
+    ->                     WHERE concat(first_name,' ', last_name)= @x)
+    -> AND concat(first_name,' ', last_name) != @x;
++-------------+---------------+-------------------+------------+
+| employee_id | department_id | full_name         | hire_date  |
++-------------+---------------+-------------------+------------+
+|         145 |            80 | John Russell      | 1996-10-01 |
+|         146 |            80 | Karen Partners    | 1997-01-05 |
+|         147 |            80 | Alberto Errazuriz | 1997-03-10 |
+|         148 |            80 | Gerald Cambrault  | 1999-10-15 |
+|         149 |            80 | Eleni Zlotkey     | 2000-01-29 |
+|         150 |            80 | Peter Tucker      | 1997-01-30 |
+|         151 |            80 | David Bernstein   | 1997-03-24 |
+|         152 |            80 | Peter Hall        | 1997-08-20 |
+|         153 |            80 | Christopher Olsen | 1998-03-30 |
+|         154 |            80 | Nanette Cambrault | 1998-12-09 |
+|         155 |            80 | Oliver Tuvault    | 1999-11-23 |
+|         156 |            80 | Janette King      | 1996-01-30 |
+|         157 |            80 | Patrick Sully     | 1996-03-04 |
+|         158 |            80 | Allan McEwen      | 1996-08-01 |
+|         159 |            80 | Lindsey Smith     | 1997-03-10 |
+|         160 |            80 | Louise Doran      | 1997-12-15 |
+|         161 |            80 | Sarath Sewall     | 1998-11-03 |
+|         162 |            80 | Clara Vishney     | 1997-11-11 |
+|         163 |            80 | Danielle Greene   | 1999-03-19 |
+|         164 |            80 | Mattea Marvins    | 2000-01-24 |
+|         165 |            80 | David Lee         | 2000-02-23 |
+|         166 |            80 | Sundar Ande       | 2000-03-24 |
+|         167 |            80 | Amit Banda        | 2000-04-21 |
+|         168 |            80 | Lisa Ozer         | 1997-03-11 |
+|         169 |            80 | Harrison Bloom    | 1998-03-23 |
+|         170 |            80 | Tayler Fox        | 1998-01-24 |
+|         171 |            80 | William Smith     | 1999-02-23 |
+|         172 |            80 | Elizabeth Bates   | 1999-03-24 |
+|         173 |            80 | Sundita Kumar     | 2000-04-21 |
+|         174 |            80 | Ellen Abel        | 1996-05-11 |
+|         175 |            80 | Alyssa Hutton     | 1997-03-19 |
+|         176 |            80 | Jonathon Taylor   | 1998-03-24 |
+|         179 |            80 | Charles Johnson   | 2000-01-04 |
++-------------+---------------+-------------------+------------+
+33 rows in set (0.02 sec)
 
 
 26. Create a report that displays the employee number, last name, and salary of all employees who earn more than the average salary. Sort the results in ascending order by salary.
+mysql> SELECT employee_id,last_name,salary
+    -> FROM employees
+    -> WHERE salary>
+    -> (SELECT avg(salary) FROM employees) 
+    -> ORDER BY salary;
++-------------+------------+----------+
+| employee_id | last_name  | salary   |
++-------------+------------+----------+
+|         203 | Mavris     |  6500.00 |
+|         123 | Vollman    |  6500.00 |
+|         165 | Lee        |  6800.00 |
+|         113 | Popp       |  6900.00 |
+|         155 | Tuvault    |  7000.00 |
+|         178 | Grant      |  7000.00 |
+|         161 | Sewall     |  7000.00 |
+|         164 | Marvins    |  7200.00 |
+|         172 | Bates      |  7300.00 |
+|         171 | Smith      |  7400.00 |
+|         160 | Doran      |  7500.00 |
+|         154 | Cambrault  |  7500.00 |
+|         111 | Sciarra    |  7700.00 |
+|         112 | Urman      |  7800.00 |
+|         122 | Kaufling   |  7900.00 |
+|         120 | Weiss      |  8000.00 |
+|         159 | Smith      |  8000.00 |
+|         153 | Olsen      |  8000.00 |
+|         110 | Chen       |  8200.00 |
+|         121 | Fripp      |  8200.00 |
+|         206 | Gietz      |  8300.00 |
+|         177 | Livingston |  8400.00 |
+|         176 | Taylor     |  8600.00 |
+|         175 | Hutton     |  8800.00 |
+|         152 | Hall       |  9000.00 |
+|         158 | McEwen     |  9000.00 |
+|         109 | Faviet     |  9000.00 |
+|         103 | Hunold     |  9000.00 |
+|         151 | Bernstein  |  9500.00 |
+|         157 | Sully      |  9500.00 |
+|         163 | Greene     |  9500.00 |
+|         170 | Fox        |  9600.00 |
+|         150 | Tucker     | 10000.00 |
+|         156 | King       | 10000.00 |
+|         169 | Bloom      | 10000.00 |
+|         204 | Baer       | 10000.00 |
+|         149 | Zlotkey    | 10500.00 |
+|         162 | Vishney    | 10500.00 |
+|         148 | Cambrault  | 11000.00 |
+|         114 | Raphaely   | 11000.00 |
+|         174 | Abel       | 11000.00 |
+|         168 | Ozer       | 11500.00 |
+|         147 | Errazuriz  | 12000.00 |
+|         108 | Greenberg  | 12000.00 |
+|         205 | Higgins    | 12000.00 |
+|         201 | Hartstein  | 13000.00 |
+|         146 | Partners   | 13500.00 |
+|         145 | Russell    | 14000.00 |
+|         102 | De Haan    | 17000.00 |
+|         101 | Kochhar    | 17000.00 |
+|         100 | King       | 24000.00 |
++-------------+------------+----------+
+51 rows in set (0.00 sec)
 
-select employee_id,last_name,salary
-from employees
-where salary<
-(
-select avg(salary)
-from employees
-) order by salary;
 
 27. Write a query that displays the employee number and last name of all employees who work in a department with any employee whose last name contains the letter “u.” 
-
-select employee_id,last_name 
-from employees
-where department_id in (
-select department_id 
-from employees
-where last_name like "%u%"
-);
+mysql> SELECT employee_id, last_name 
+    -> FROM employees
+    -> WHERE department_id in (
+    ->     SELECT department_id 
+    ->     FROM employees
+    ->     WHERE last_name LIKE "%u%");
++-------------+-------------+
+| employee_id | last_name   |
++-------------+-------------+
+|         103 | Hunold      |
+|         104 | Ernst       |
+|         105 | Austin      |
+|         106 | Pataballa   |
+|         107 | Lorentz     |
+|         108 | Greenberg   |
+|         109 | Faviet      |
+|         110 | Chen        |
+|         111 | Sciarra     |
+|         112 | Urman       |
+|         113 | Popp        |
+|         114 | Raphaely    |
+|         115 | Khoo        |
+|         116 | Baida       |
+|         117 | Tobias      |
+|         118 | Himuro      |
+|         119 | Colmenares  |
+|         120 | Weiss       |
+|         121 | Fripp       |
+|         122 | Kaufling    |
+|         123 | Vollman     |
+|         124 | Mourgos     |
+|         125 | Nayer       |
+|         126 | Mikkilineni |
+|         127 | Landry      |
+|         128 | Markle      |
+|         129 | Bissot      |
+|         130 | Atkinson    |
+|         131 | Marlow      |
+|         132 | Olson       |
+|         133 | Mallin      |
+|         134 | Rogers      |
+|         135 | Gee         |
+|         136 | Philtanker  |
+|         137 | Ladwig      |
+|         138 | Stiles      |
+|         139 | Seo         |
+|         140 | Patel       |
+|         141 | Rajs        |
+|         142 | Davies      |
+|         143 | Matos       |
+|         144 | Vargas      |
+|         180 | Taylor      |
+|         181 | Fleaur      |
+|         182 | Sullivan    |
+|         183 | Geoni       |
+|         184 | Sarchand    |
+|         185 | Bull        |
+|         186 | Dellinger   |
+|         187 | Cabrio      |
+|         188 | Chung       |
+|         189 | Dilly       |
+|         190 | Gates       |
+|         191 | Perkins     |
+|         192 | Bell        |
+|         193 | Everett     |
+|         194 | McCain      |
+|         195 | Jones       |
+|         196 | Walsh       |
+|         197 | Feeney      |
+|         198 | OConnell    |
+|         199 | Grant       |
+|         145 | Russell     |
+|         146 | Partners    |
+|         147 | Errazuriz   |
+|         148 | Cambrault   |
+|         149 | Zlotkey     |
+|         150 | Tucker      |
+|         151 | Bernstein   |
+|         152 | Hall        |
+|         153 | Olsen       |
+|         154 | Cambrault   |
+|         155 | Tuvault     |
+|         156 | King        |
+|         157 | Sully       |
+|         158 | McEwen      |
+|         159 | Smith       |
+|         160 | Doran       |
+|         161 | Sewall      |
+|         162 | Vishney     |
+|         163 | Greene      |
+|         164 | Marvins     |
+|         165 | Lee         |
+|         166 | Ande        |
+|         167 | Banda       |
+|         168 | Ozer        |
+|         169 | Bloom       |
+|         170 | Fox         |
+|         171 | Smith       |
+|         172 | Bates       |
+|         173 | Kumar       |
+|         174 | Abel        |
+|         175 | Hutton      |
+|         176 | Taylor      |
+|         177 | Livingston  |
+|         179 | Johnson     |
++-------------+-------------+
+96 rows in set (0.00 sec)
 
 
 28.	The HR department needs a report that displays the last name, department number, and job ID of all employees whose department location ID is 1700.
-
-
-
+mysql> SELECT e.last_name, d.department_id, e.job_id
+    -> FROM employees e
+    -> JOIN departments d ON e.department_id= d.department_id
+    -> WHERE d.department_id in (
+    ->     SELECT distinct department_id from departments 
+    ->     WHERE location_id= 1700
+    -> );
++------------+---------------+------------+
+| last_name  | department_id | job_id     |
++------------+---------------+------------+
+| Whalen     |            10 | AD_ASST    |
+| Raphaely   |            30 | PU_MAN     |
+| Khoo       |            30 | PU_CLERK   |
+| Baida      |            30 | PU_CLERK   |
+| Tobias     |            30 | PU_CLERK   |
+| Himuro     |            30 | PU_CLERK   |
+| Colmenares |            30 | PU_CLERK   |
+| King       |            90 | AD_PRES    |
+| Kochhar    |            90 | AD_VP      |
+| De Haan    |            90 | AD_VP      |
+| Greenberg  |           100 | FI_MGR     |
+| Faviet     |           100 | FI_ACCOUNT |
+| Chen       |           100 | FI_ACCOUNT |
+| Sciarra    |           100 | FI_ACCOUNT |
+| Urman      |           100 | FI_ACCOUNT |
+| Popp       |           100 | FI_ACCOUNT |
+| Higgins    |           110 | AC_MGR     |
+| Gietz      |           110 | AC_ACCOUNT |
++------------+---------------+------------+
+18 rows in set (0.00 sec)
 
 29.	Create a report for HR that displays the last name and salary of every employee who reports to King.
+mysql> SELECT last_name, salary
+    -> FROM employees
+    -> WHERE manager_id in (SELECT employee_id FROM employees
+    ->                     WHERE last_name="King");
++-----------+----------+
+| last_name | salary   |
++-----------+----------+
+| Kochhar   | 17000.00 |
+| De Haan   | 17000.00 |
+| Raphaely  | 11000.00 |
+| Weiss     |  8000.00 |
+| Fripp     |  8200.00 |
+| Kaufling  |  7900.00 |
+| Vollman   |  6500.00 |
+| Mourgos   |  5800.00 |
+| Russell   | 14000.00 |
+| Partners  | 13500.00 |
+| Errazuriz | 12000.00 |
+| Cambrault | 11000.00 |
+| Zlotkey   | 10500.00 |
+| Hartstein | 13000.00 |
++-----------+----------+
+14 rows in set (0.00 sec)
 
 
 30.	Create a report for HR that displays the department number, last name, and job ID for every employee in the Executive department.
+mysql> SELECT d.department_id, e.last_name, e.job_id from employees e
+    -> JOIN departments d on d.department_id= e.department_id
+    -> WHERE d.department_name= "Executive";
++---------------+-----------+---------+
+| department_id | last_name | job_id  |
++---------------+-----------+---------+
+|            90 | King      | AD_PRES |
+|            90 | Kochhar   | AD_VP   |
+|            90 | De Haan   | AD_VP   |
++---------------+-----------+---------+
+3 rows in set (0.00 sec)
 
 31.	Create a report that displays a list of all employees whose salary is more than the salary of any employee from department 60.
+mysql> SELECT CONCAT(first_name, " ", last_name) as Name, salary
+    -> FROM employees
+    -> WHERE  salary > ALL(
+    ->                 SELECT salary from employees
+    ->                 WHERE department_id=60);
++-------------------+----------+
+| Name              | salary   |
++-------------------+----------+
+| Steven King       | 24000.00 |
+| Neena Kochhar     | 17000.00 |
+| Lex De Haan       | 17000.00 |
+| Nancy Greenberg   | 12000.00 |
+| Den Raphaely      | 11000.00 |
+| John Russell      | 14000.00 |
+| Karen Partners    | 13500.00 |
+| Alberto Errazuriz | 12000.00 |
+| Gerald Cambrault  | 11000.00 |
+| Eleni Zlotkey     | 10500.00 |
+| Peter Tucker      | 10000.00 |
+| David Bernstein   |  9500.00 |
+| Janette King      | 10000.00 |
+| Patrick Sully     |  9500.00 |
+| Clara Vishney     | 10500.00 |
+| Danielle Greene   |  9500.00 |
+| Lisa Ozer         | 11500.00 |
+| Harrison Bloom    | 10000.00 |
+| Tayler Fox        |  9600.00 |
+| Ellen Abel        | 11000.00 |
+| Michael Hartstein | 13000.00 |
+| Hermann Baer      | 10000.00 |
+| Shelley Higgins   | 12000.00 |
++-------------------+----------+
+23 rows in set (0.00 sec)
 
-32.	Modify above query in display the employee number, last name, and salary of all employees who earn more than the average salary and who work in a department with any employee whose 
+mysql> SELECT CONCAT(first_name, " ", last_name) AS Name, salary
+    -> FROM employees
+    -> WHERE salary > (
+    ->     SELECT MAX(salary)
+    ->     FROM employees
+    ->     WHERE department_id = 60
+    -> );
++-------------------+----------+
+| Name              | salary   |
++-------------------+----------+
+| Steven King       | 24000.00 |
+| Neena Kochhar     | 17000.00 |
+| Lex De Haan       | 17000.00 |
+| Nancy Greenberg   | 12000.00 |
+| Den Raphaely      | 11000.00 |
+| John Russell      | 14000.00 |
+| Karen Partners    | 13500.00 |
+| Alberto Errazuriz | 12000.00 |
+| Gerald Cambrault  | 11000.00 |
+| Eleni Zlotkey     | 10500.00 |
+| Peter Tucker      | 10000.00 |
+| David Bernstein   |  9500.00 |
+| Janette King      | 10000.00 |
+| Patrick Sully     |  9500.00 |
+| Clara Vishney     | 10500.00 |
+| Danielle Greene   |  9500.00 |
+| Lisa Ozer         | 11500.00 |
+| Harrison Bloom    | 10000.00 |
+| Tayler Fox        |  9600.00 |
+| Ellen Abel        | 11000.00 |
+| Michael Hartstein | 13000.00 |
+| Hermann Baer      | 10000.00 |
+| Shelley Higgins   | 12000.00 |
++-------------------+----------+
+23 rows in set (0.00 sec)
 
-------------------------------------: Using Set Operators :--------------------------
+
+32.	Modify above query in display the employee number, last name, and salary of all employees who earn more than the average salary and who work in a department with any employee whose salary is greater than the average salary.
+mysql> SELECT employee_id, last_name, salary
+    -> FROM employees
+    -> WHERE salary > (SELECT AVG(salary) FROM employees)
+    ->                 AND department_id in(
+    ->                     SELECT department_id from employees
+    ->                     WHERE salary > (SELECT AVG(salary) from employees)
+    ->                     );
++-------------+------------+----------+
+| employee_id | last_name  | salary   |
++-------------+------------+----------+
+|         100 | King       | 24000.00 |
+|         101 | Kochhar    | 17000.00 |
+|         102 | De Haan    | 17000.00 |
+|         103 | Hunold     |  9000.00 |
+|         108 | Greenberg  | 12000.00 |
+|         109 | Faviet     |  9000.00 |
+|         110 | Chen       |  8200.00 |
+|         111 | Sciarra    |  7700.00 |
+|         112 | Urman      |  7800.00 |
+|         113 | Popp       |  6900.00 |
+|         114 | Raphaely   | 11000.00 |
+|         120 | Weiss      |  8000.00 |
+|         121 | Fripp      |  8200.00 |
+|         122 | Kaufling   |  7900.00 |
+|         123 | Vollman    |  6500.00 |
+|         145 | Russell    | 14000.00 |
+|         146 | Partners   | 13500.00 |
+|         147 | Errazuriz  | 12000.00 |
+|         148 | Cambrault  | 11000.00 |
+|         149 | Zlotkey    | 10500.00 |
+|         150 | Tucker     | 10000.00 |
+|         151 | Bernstein  |  9500.00 |
+|         152 | Hall       |  9000.00 |
+|         153 | Olsen      |  8000.00 |
+|         154 | Cambrault  |  7500.00 |
+|         155 | Tuvault    |  7000.00 |
+|         156 | King       | 10000.00 |
+|         157 | Sully      |  9500.00 |
+|         158 | McEwen     |  9000.00 |
+|         159 | Smith      |  8000.00 |
+|         160 | Doran      |  7500.00 |
+|         161 | Sewall     |  7000.00 |
+|         162 | Vishney    | 10500.00 |
+|         163 | Greene     |  9500.00 |
+|         164 | Marvins    |  7200.00 |
+|         165 | Lee        |  6800.00 |
+|         168 | Ozer       | 11500.00 |
+|         169 | Bloom      | 10000.00 |
+|         170 | Fox        |  9600.00 |
+|         171 | Smith      |  7400.00 |
+|         172 | Bates      |  7300.00 |
+|         174 | Abel       | 11000.00 |
+|         175 | Hutton     |  8800.00 |
+|         176 | Taylor     |  8600.00 |
+|         177 | Livingston |  8400.00 |
+|         201 | Hartstein  | 13000.00 |
+|         203 | Mavris     |  6500.00 |
+|         204 | Baer       | 10000.00 |
+|         205 | Higgins    | 12000.00 |
+|         206 | Gietz      |  8300.00 |
++-------------+------------+----------+
+50 rows in set (0.00 sec)
+
+
+-------------------------------- Using Set Operators --------------------------------
 
 33.	The HR department needs a list of department IDs for departments that do not contain the job ID ST_CLERK. Use the set operators to create this report.
+mysql> SELECT department_id from employees 
+    -> EXCEPT
+    -> SELECT department_id from employees where job_id = 'ST_CLERK' or department_id is NULL;
++---------------+
+| department_id |
++---------------+
+|            10 |
+|            20 |
+|            30 |
+|            40 |
+|            60 |
+|            70 |
+|            80 |
+|            90 |
+|           100 |
+|           110 |
++---------------+
+10 rows in set (0.01 sec)
 
 34.The HR department needs a list of countries that have no departments located in them. Display the country IDs and the names of the countries. Use the set operators to create this report.
+mysql> SELECT countries.country_id, countries.country_name
+    -> FROM countries
+    -> LEFT JOIN locations ON countries.country_id = locations.country_id
+    -> LEFT JOIN departments ON locations.location_id = departments.location_id
+    -> WHERE departments.department_id IS NULL;
++------------+--------------------------+
+| country_id | country_name             |
++------------+--------------------------+
+| AR         | Argentina                |
+| AU         | Australia                |
+| BE         | Belgium                  |
+| BR         | Brazil                   |
+| CA         | Canada                   |
+| CH         | Switzerland              |
+| CH         | Switzerland              |
+| CN         | China                    |
+| DK         | Denmark                  |
+| EG         | Egypt                    |
+| FR         | France                   |
+| HK         | HongKong                 |
+| IL         | Israel                   |
+| IN         | India                    |
+| IT         | Italy                    |
+| IT         | Italy                    |
+| JP         | Japan                    |
+| JP         | Japan                    |
+| KW         | Kuwait                   |
+| MX         | Mexico                   |
+| NG         | Nigeria                  |
+| NL         | Netherlands              |
+| SG         | Singapore                |
+| UK         | United Kingdom           |
+| US         | United States of America |
+| ZM         | Zambia                   |
+| ZW         | Zimbabwe                 |
++------------+--------------------------+
+27 rows in set (0.00 sec)
+
+---
+mysql> SELECT country_id, country_name
+    -> FROM countries
+    -> EXCEPT
+    -> SELECT countries.country_id, countries.country_name
+    -> FROM countries
+    -> JOIN locations ON countries.country_id = locations.country_id
+    -> JOIN departments ON locations.location_id = departments.location_id;
++------------+--------------+
+| country_id | country_name |
++------------+--------------+
+| AR         | Argentina    |
+| AU         | Australia    |
+| BE         | Belgium      |
+| BR         | Brazil       |
+| CH         | Switzerland  |
+| CN         | China        |
+| DK         | Denmark      |
+| EG         | Egypt        |
+| FR         | France       |
+| HK         | HongKong     |
+| IL         | Israel       |
+| IN         | India        |
+| IT         | Italy        |
+| JP         | Japan        |
+| KW         | Kuwait       |
+| MX         | Mexico       |
+| NG         | Nigeria      |
+| NL         | Netherlands  |
+| SG         | Singapore    |
+| ZM         | Zambia       |
+| ZW         | Zimbabwe     |
++------------+--------------+
+21 rows in set (0.00 sec)
 
 35.Produce a list of all the employees who work in departments 50 and 80. Display the employee ID, job ID, and department ID by using the set operators.
+mysql> SELECT employee_id,job_id,department_id FROM employees WHERE department_id=50
+    -> UNION
+    -> SELECT employee_id,job_id,department_id FROM employees WHERE department_id=80;
++-------------+----------+---------------+
+| employee_id | job_id   | department_id |
++-------------+----------+---------------+
+|         120 | ST_MAN   |            50 |
+|         121 | ST_MAN   |            50 |
+|         122 | ST_MAN   |            50 |
+|         123 | ST_MAN   |            50 |
+|         124 | ST_MAN   |            50 |
+|         125 | ST_CLERK |            50 |
+|         126 | ST_CLERK |            50 |
+|         127 | ST_CLERK |            50 |
+|         128 | ST_CLERK |            50 |
+|         129 | ST_CLERK |            50 |
+|         130 | ST_CLERK |            50 |
+|         131 | ST_CLERK |            50 |
+|         132 | ST_CLERK |            50 |
+|         133 | ST_CLERK |            50 |
+|         134 | ST_CLERK |            50 |
+|         135 | ST_CLERK |            50 |
+|         136 | ST_CLERK |            50 |
+|         137 | ST_CLERK |            50 |
+|         138 | ST_CLERK |            50 |
+|         139 | ST_CLERK |            50 |
+|         140 | ST_CLERK |            50 |
+|         141 | ST_CLERK |            50 |
+|         142 | ST_CLERK |            50 |
+|         143 | ST_CLERK |            50 |
+|         144 | ST_CLERK |            50 |
+|         180 | SH_CLERK |            50 |
+|         181 | SH_CLERK |            50 |
+|         182 | SH_CLERK |            50 |
+|         183 | SH_CLERK |            50 |
+|         184 | SH_CLERK |            50 |
+|         185 | SH_CLERK |            50 |
+|         186 | SH_CLERK |            50 |
+|         187 | SH_CLERK |            50 |
+|         188 | SH_CLERK |            50 |
+|         189 | SH_CLERK |            50 |
+|         190 | SH_CLERK |            50 |
+|         191 | SH_CLERK |            50 |
+|         192 | SH_CLERK |            50 |
+|         193 | SH_CLERK |            50 |
+|         194 | SH_CLERK |            50 |
+|         195 | SH_CLERK |            50 |
+|         196 | SH_CLERK |            50 |
+|         197 | SH_CLERK |            50 |
+|         198 | SH_CLERK |            50 |
+|         199 | SH_CLERK |            50 |
+|         145 | SA_MAN   |            80 |
+|         146 | SA_MAN   |            80 |
+|         147 | SA_MAN   |            80 |
+|         148 | SA_MAN   |            80 |
+|         149 | SA_MAN   |            80 |
+|         150 | SA_REP   |            80 |
+|         151 | SA_REP   |            80 |
+|         152 | SA_REP   |            80 |
+|         153 | SA_REP   |            80 |
+|         154 | SA_REP   |            80 |
+|         155 | SA_REP   |            80 |
+|         156 | SA_REP   |            80 |
+|         157 | SA_REP   |            80 |
+|         158 | SA_REP   |            80 |
+|         159 | SA_REP   |            80 |
+|         160 | SA_REP   |            80 |
+|         161 | SA_REP   |            80 |
+|         162 | SA_REP   |            80 |
+|         163 | SA_REP   |            80 |
+|         164 | SA_REP   |            80 |
+|         165 | SA_REP   |            80 |
+|         166 | SA_REP   |            80 |
+|         167 | SA_REP   |            80 |
+|         168 | SA_REP   |            80 |
+|         169 | SA_REP   |            80 |
+|         170 | SA_REP   |            80 |
+|         171 | SA_REP   |            80 |
+|         172 | SA_REP   |            80 |
+|         173 | SA_REP   |            80 |
+|         174 | SA_REP   |            80 |
+|         175 | SA_REP   |            80 |
+|         176 | SA_REP   |            80 |
+|         177 | SA_REP   |            80 |
+|         179 | SA_REP   |            80 |
++-------------+----------+---------------+
+79 rows in set (0.00 sec)
 
-36.Create a report that lists the detail of all employees who are sales representatives and are currently working in the sales department.
 
-------------------------Managing Tables by Using DML Statements--------------------------------
+36.Create a report that lists the details of all employees who are sales representatives and are currently working in the sales department.
+
+SELECT * FROM employees
+WHERE department_id in 
+    (SELECT department_id FROM employees where job_id= "SA_REP");
+
+SELECT * FROM employees
+where job_id= "SA_REP" 
+and department_id IN (SELECT department_id from departments where department_name="Sales")
+and department_id is NOT NULL;
+
+----------------------------- Managing Tables by Using DML Statements ----------------------------
 Insert data into the MY_EMPLOYEE table.
-37. Create a table called MY_EMPLOYEE.
 
+37. Create a table called MY_EMPLOYEE.
 CREATE TABLE my_employee
 (id int CONSTRAINT my_employee_id_pk PRIMARY Key,
  last_name VARCHAR(25),
@@ -143,37 +822,72 @@ first_name VARCHAR(25),
 userid VARCHAR(8), salary decimal(9,2));
 
 
-
 38.	Create an INSERT statement to add the first row of data to the MY_EMPLOYEE table from the following sample data. Do not list the columns in the INSERT clause.
 
 ID	LAST_NAME	FIRST_NAME	USERID	SALARY
-1	Patel	Ralph	rpatel	895
-2	Dancs	Betty	bdancs	860
-3	Biri	Ben	bbiri	1100
-4	Newman	Chad	cnewman	750
+1	Patel	    Ralph	rpatel	895
+2	Dancs	    Betty	bdancs	860
+3	Biri	    Ben	bbiri	    1100
+4	Newman	    Chad	cnewman	750
 5	Ropeburn	Audrey	aropebur	1550
 
 pass values to id last_name,first_name and salary and generate userid as given
 
-------------------------------------- procedure ----------------------
+INSERT INTO my_employee (id, last_name, first_name, salary, userid)
+VALUES 
+    (1, 'Patel', 'Ralph', 895, 
+    CONCAT(LOWER(SUBSTRING('Ralph', 1, 3)), 
+    LOWER(SUBSTRING('Patel', 1, 3)))
+    );
+
+
+-------------------------------- procedure --------------------------------
 1. Retrieve Employees by Manager
 Objective: Create a stored procedure that retrieves all employees under a specific manager.
-
-delimiter //
-
-create procedure emp_by_mgr(mgr_id int)
-
-begin
-
-select * from employees 
-where manager_id=mgr_id;
-
-end //
-delimiter ;
 
 Input: p_manager_id IN NUMBER (Manager's employee ID)
 Output: List of employees with their details (Employee ID, First Name, Last Name, Job Title, Salary)
 Business Logic: The procedure should return employees whose manager_id matches the given p_manager_id.
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE emp_by_mgr(IN mgr_id INT)
+    -> BEGIN
+    ->     SELECT employee_id, first_name, last_name, job_id, salary
+    ->     FROM employees
+    ->     WHERE manager_id = mgr_id;
+    -> END //
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL emp_by_mgr(100);
++-------------+------------+-----------+--------+----------+
+| employee_id | first_name | last_name | job_id | salary   |
++-------------+------------+-----------+--------+----------+
+|         101 | Neena      | Kochhar   | AD_VP  | 17000.00 |
+|         102 | Lex        | De Haan   | AD_VP  | 17000.00 |
+|         114 | Den        | Raphaely  | PU_MAN | 11000.00 |
+|         120 | Matthew    | Weiss     | ST_MAN |  8000.00 |
+|         121 | Adam       | Fripp     | ST_MAN |  8200.00 |
+|         122 | Payam      | Kaufling  | ST_MAN |  7900.00 |
+|         123 | Shanta     | Vollman   | ST_MAN |  6500.00 |
+|         124 | Kevin      | Mourgos   | ST_MAN |  5800.00 |
+|         145 | John       | Russell   | SA_MAN | 14000.00 |
+|         146 | Karen      | Partners  | SA_MAN | 13500.00 |
+|         147 | Alberto    | Errazuriz | SA_MAN | 12000.00 |
+|         148 | Gerald     | Cambrault | SA_MAN | 11000.00 |
+|         149 | Eleni      | Zlotkey   | SA_MAN | 10500.00 |
+|         201 | Michael    | Hartstein | MK_MAN | 13000.00 |
++-------------+------------+-----------+--------+----------+
+14 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CALL emp_by_mgr(0);
+Empty set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
 
 
 2. Update Employee Salary
@@ -181,12 +895,57 @@ Objective: Create a stored procedure that updates the salary of a given employee
 Input: p_employee_id IN NUMBER, p_new_salary IN NUMBER
 Output: Success message or error message if the employee is not found.
 Business Logic: The procedure should check if the employee exists and then update their salary. If the employee doesn't exist, return an error message.
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE update_employee_salary(IN p_employee_id INT, IN p_new_salary DECIMAL(8,2))
+    -> BEGIN
+    ->     DECLARE employee_exists INT;
+    ->     
+    ->     -- Check if employee exists
+    ->     SELECT COUNT(*) INTO employee_exists
+    ->     FROM employees
+    ->     WHERE employee_id = p_employee_id;
+    ->     
+    ->     -- If employee exists, update the salary
+    ->     IF employee_exists > 0 THEN
+    ->         UPDATE employees
+    ->         SET salary = p_new_salary
+    ->         WHERE employee_id = p_employee_id;
+    ->         SELECT 'Salary updated successfully' AS message;
+    ->     ELSE
+    ->         SELECT 'Employee not found' AS message;
+    ->     END IF;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL update_employee_salary(101, 25000);
++-----------------------------+
+| message                     |
++-----------------------------+
+| Salary updated successfully |
++-----------------------------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
 
 3. Employee Count by Department
 Objective: Create a stored procedure that returns the count of employees in a specific department.
 Input: p_department_id IN NUMBER
 Output: Count of employees in that department.
 Business Logic: The procedure should count the employees in the specified department and return the result.
+DELIMITER //
+
+CREATE PROCEDURE employee_count_by_dept(IN p_department_id INT)
+BEGIN
+    SELECT COUNT(*) AS employee_count
+    FROM employees
+    WHERE department_id = p_department_id;
+END //
+
+DELIMITER ;
 
 
 4. Employee Job Title and Salary Information
@@ -194,6 +953,36 @@ Objective: Create a stored procedure that retrieves employees' job titles and sa
 Input: p_job_id IN VARCHAR2
 Output: List of employees with job title and salary.
 Business Logic: The procedure should return the employee ID, first name, last name, and salary for employees with the specified job title.
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE emp_job_salary_info(IN p_job_id VARCHAR(10))
+    -> BEGIN
+    ->     SELECT employee_id, first_name, last_name, salary
+    ->     FROM employees
+    ->     WHERE job_id = p_job_id;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL emp_job_salary_info('CLERK');
+Empty set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CALL emp_job_salary_info('IT_PROG');
++-------------+------------+-----------+---------+
+| employee_id | first_name | last_name | salary  |
++-------------+------------+-----------+---------+
+|         103 | Alexander  | Hunold    | 9000.00 |
+|         104 | Bruce      | Ernst     | 6000.00 |
+|         105 | David      | Austin    | 4800.00 |
+|         106 | Valli      | Pataballa | 4800.00 |
+|         107 | Diana      | Lorentz   | 4200.00 |
++-------------+------------+-----------+---------+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
 
 
 5. Promote Employee
@@ -201,6 +990,31 @@ Objective: Create a stored procedure to promote an employee by changing their jo
 Input: p_employee_id IN NUMBER, p_new_job_id IN VARCHAR2, p_salary_increase IN NUMBER
 Output: Success or failure message.
 Business Logic: The procedure should check if the employee exists, and then update the job_id and salary based on the provided values. Ensure salary increase is not less than a certain percentage (e.g., 10%).
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE promote_employee(IN p_employee_id INT, IN p_new_job_id VARCHAR(10), IN p_salary_increase DECIMAL(8,2))
+    -> BEGIN
+    ->     DECLARE employee_exists INT;
+    ->     
+    ->     -- Check if employee exists
+    ->     SELECT COUNT(*) INTO employee_exists
+    ->     FROM employees
+    ->     WHERE employee_id = p_employee_id;
+    ->     
+    ->     -- If employee exists, promote them
+    ->     IF employee_exists > 0 THEN
+    ->         UPDATE employees
+    ->         SET job_id = p_new_job_id, salary = salary + p_salary_increase
+    ->         WHERE employee_id = p_employee_id;
+    ->         SELECT 'Promotion successful' AS message;
+    ->     ELSE
+    ->         SELECT 'Employee not found' AS message;
+    ->     END IF;
+    -> END //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> 
+mysql> DELIMITER ;
 
 6. Employee Payroll Report
 Objective: Create a stored procedure that generates a payroll report for a specific date range.
