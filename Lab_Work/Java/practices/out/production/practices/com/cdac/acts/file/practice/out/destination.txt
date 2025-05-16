@@ -1,0 +1,5 @@
+This is a sample file.
+Created on: 2025-04-20
+Content line 1
+Content line 2
+End of sample.

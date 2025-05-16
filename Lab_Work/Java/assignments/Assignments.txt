@@ -1,0 +1,349 @@
+ Day-1
++-----+
+1. Write simple java program to get person name from command line and print Hello <Name> on console.
+ 
+
+2. Write menu driven java program for performing Add, Subtract, Multiplication and division of numbers.
+ 
+
+3. Write menu driven java program with below options
+ 
+
+• Calculate simple interest
+• Calculate compound interest
+ 
+4. Get 4-digit number from user, write a function to calculate sum of digits of the 4-digit number: Using loop and Using recursion
+ 
+5. Write a function for factorial and use the function for printing factorial series like 1 2 6 24 120………
+ 
+
+ Day-2
++-----+
+1. Write a Java program to allot grade student grade based on below conditions
+Up to 50% pass class
+Up to 60% second class
+Up to 75% First class
+Above 75% Distinction.
+ 
+2. Write a java program for printing patterns like below
+ 
+*****
+****
+***
+**
+*
+*
+**
+***
+****
+*****
+ 
+*******
+*** ***
+**   **
+* *
+ 
+*****
+***
+*
+***
+*****
+ 
+ 
+3. Write a java program to sort an array of 10 numbers. Get array element from user and use any sorting method you like.
+
+ Day-3
++-----+
+1. Write a Java program to create Employee class with properties with empNo, name, salary. Write printData method for printing Employee. Create Default and parameterized constructor. Generate empNo automatically using static field. Create an array of 5 employees and do input  and output.
+
+ Day-4
++-----+
+1. Write a menu driven program to add Student objects in an array of students.
+	1. Add Student
+	2. Print Student by rollNo
+	3. Print All students Sorted by Marks
+	0. exit 
+2. Write a menu driven program to add Employee objects in an array of Employees.
+	1. Add Employee
+	2. Print Employee by empId
+	3. Print All Employees Sorted by Salary
+	0. exit
+3. Create overloaded static methods for printing an array of String and Integers separately. Put these methods in ArrayPrinter class and call from main
+	ex.
+	public static void printArray(int[] arr) {}
+	public static void printArrray(String[] arr) {}
+
+4. Write a java program to print given number in words.
+
+ Day-5
++-----+
+1. Write a menu driven java program to create an array of Accounts.
+Menus:
+1. Add account
+2. Display balance of particular
+3. Withdraw
+4. Transfer
+ 
+2. Implement toString() method in all the entiry class.
+ 
+3.Write java program for billing of items purchased by customer. Create an Item class with itemCode, itemName, price and quantity along with getters and toString mthods.
+Create an array of items holding stock of items. Create another array of items for customer. When customer buy the Item by using item code then add purchased item in an array. For every purchase create item using Parametrized constructor.
+Menus.
+1. Display stock
+2. BUY item by item code
+
+ Day-6
++-----+
+Topics: String, String Pool, intern(), String equality, String manipulation, StringBuilder, OOP, Association, Inheritance,
+ 
+Assignments:
+Write java program to call at least 10 different methods of String and StringBuilder class each.
+Write a program to reverse as String.
+Write a program to find out if word is present in string.
+Write a program to find occurrence of  word is present in string.
+Write java program to format given mobile number to expected format as shown below.
+Expected output +91-988-162-8598
+Input +91-988-162-8598
+Input +919881628598
+Input 9881628598
+Input 988162859 Error for less than 10 char
+ 
+Create association  between Employee and Address class. Create address reference in Employee class and Print Employee. Override toString() in Address and Employee
+
+ Day-7
++-----+
+Topics: java.util.Date, java.sql.Date, Java.time.LocalDate, DateFormatter, Enum, AccessSpecifier, Association
+Revise all the Enum, Date and Association examples from class
+
+1. Create Enum for course separately with values as DAC, DESD, DVLSI. Use Course Enum and Date of Birth in Student class. Sort student by Date of Birth using after/before methods of java.util.Date/java.time.LocalDate
+
+2. Create Person class with basic details like addharNumber, name, date of birth, address (use Address class for this). Find out whether the person is born before 15th August 1947. calculate person age and find out person age is above 100 years.
+
+3. Use date of birth, date of joining  and Dept enum in existing Employee class. Check whether the employee  eligible for Gratuity
+ 
+ 
+ Day-8
++-----+
+Topics Covered: Inheritance, abstract class, , upcasting, down casting, overriding, Object class methods like getClass and toString. Overriding, Polymorphism, constructor chaining. Wider access, interface
+Students should revise and try all above concepts
+
+1. Create Account class with accountNumber, accountName, dateOfOpening, balcance.
+Add below functionality
+	1.  Generate account number on account creation.
+	2.  Add abstract method as double applyInterest() in the account class
+	3. Create child classes as SavingAccount, CurrentAccount, DepositAccount. Override double applyInterest() in the child classes.
+	4. Interest percentage of Saving are 3%, Deposit 8%, and Current as 1%
+	5. Use upcasting and demonstrate Dynamic method dispatch.
+	6. Make is menu driven.
+	 
+2. Create Shape class with abstract methods as
+	1. double calculateArea();
+	2. double calculatePerimeter();
+	Override these methods in child classes like Rectangle and Circle.
+	Add additional method in Circle class as void draw() with message( No need to draw real Circle just print message)
+	Create circle object and have Shape reference to it.
+	Call the draw method of circle with specific circle reference after down casting from Shape reference
+	Make is menu driven.
+ 
+3) Add Contract Employee in Employee Hierarchy and demonstrate polymorphism  @Override base class methods and toString()
+
+ Day-9
++-----+
+Topic Covered: Method overriding, Polymorphism, final class, final var, final methods, Interface, SAM type, Functional Interface, Default methods, Interface extension, Interface implementation. Wrapper class, Static  and non-static block, Implementing 2 inferences with common method  name
+
+1. Create Depositable, Withdrwable , Maturable interfaces with methods. Implement these interfaces in Account class hierarchy.
+	1) Depositable I/F
+	 double depoist(double)
+	2)  Withdrwable
+	 double withdraw(double)
+	3)  Muturable
+	 double calculateMatutyAmount(double)
+	 
+	 
+2. Create Drawable interface with draw() method in it. Implement the interface in Circle and Rectangle. Note. Just print message in draw methods.
+ 
+3. Try overriding methods with co-varient return type
+ex. Number add(Number a, Number b)
+ 
+@Override
+Integer add(Number a, Number b)
+ 
+ Day-10
++------+
+Assignment 0: Add MinBalException for Account withdraw and QueueEmptyException for Queue hierarchy. Use try, catch finally blocks.
+Try with resource should be used with Scanner
+
+Assignment 1:
+Create Fruit class with name, color, price and quantity and do following things
+1. Implement toString() method
+2. Add Constructors
+3. Create ArrayList< Fruit> fruitList = new ArrayList<Fruit>();
+4. Provide for adding fruit in the list
+5. Remove fruit by index
+ 
+Assignment 2:
+Create an ArrayList of 10 double numbers. Calculate sum of all numbers and print. Accept these numbers form user using do while loop.
+
+Try indexOf, lastIndexOf methods of ArrayList and go through Java doc for ArrayList methods
+
+ Day-11
++------+
+1) Create Account class with accNo, accName, dateOfOpening, balance (please note that you need to create new account class and not to use existing account Hierarchy). Use LocalDate for date of opening.
+
+Validations: Balance should be more than 1000
+Menus:
+1.Add account
+2. Print all accounts
+3. Create unmodifiable from existing list
+4. Use Upper bound
+5. User lower bound
+7. exit
+ 
+2) Replace all the ArrayList assignments with LinkedList and perform operations. Try add, remove, get and set operations in LinkedList
+
+  Day 12
+ +------+
+1)	Create Account class with accNo, accName, dateOfOpening, balance (please note that you need to create new account class and not to use existing account Hierarchy). Use LocalDate for date of opening.
+ Validations:
+1. Add validation for date of opening is not future date
+2. balance should be more than 1000
+ 
+Menu:
+1. 	Add account
+2. 	Print all accounts
+3. 	Sort by account no desc
+4. 	Sort by accName
+5. 	Sort by Date of opening
+6. 	Sort by balance desc
+7.   	exit
+ 
+2. Use existing fruit class to create list of fruits and provide below functionality
+  		Menu:
+1. Add fruit
+2. 	Sort fruits by color (natural order)
+3. 	Sort by quantity
+4.   	Sort by price
+ 
+  Day 13
+ +------+
+1. Create simple List using CopyOnWriteArrayList of Account implement below menu
+Menus
+1 Accept A/C details from user
+2 Display all Accounts content using Enhanced For loop
+3 Accept account No & display details or error message if account Not Found (Create AccountNotFoundException)
+4 Accept From A/C No, To Account No and amount for fund transfer. (check for min Bal Exception)
+5 Accept A/C NO & remove A/C from List
+6 Apply interest on all saving A/C
+7 Sort accounts as per ascending A/C No.
+8 Sort by accountOpeningDate
+ 
+2. Create application for Job Portal and provide below options.
+Create classes JobSeeker with registrationId, name, email, password, dateOfBirth, aadharId, phone number,  graduationDate, degree(enum).
+Validate user entered graduation date should be in past and date of birth cannot be future
+Use HashSet for avoiding duplicate entries
+validate phone number for 10 digits without characters
+ 
+Menus
+1 JobSeeker registration
+//TODO Get all details and validate data if it is valid then add in list
+2 Update email
+//Get old and new email from user
+3 Display all job seeker by their degree type. take degree from user
+4 Sort JobSeeker details as per email (Comparable)
+5 Sort JobSeeker details as per dob (Comparator)
+6 Sort customer details as per graduationDate (Comparator)
+
+  Day 14
+ +------+
+Library Application
+1. Use HashMap, LinkedHamap and TreeMap (Create separate tester for each type of Map)
+Book details: title, bookType(enum), price, publishedDate, authorName, quantity
+Unique ID: book title
+Get data from user and store Books in HashSet
+Menus
+1 Add book.
+2 Display All books
+3 Allot book to student (quantity -1). Find by book title
+4 Take book return (quantity +1) Find by book title
+5 Remove book
+ Handle exceptions for duplicate book entries and BookNotFoundException
+ 2)
+Create an application for School which will maintain data for all the school students in HashMap.
+RollNo is not unique, there can be more than 1 students in school with same roll No.
+Division/Section is not unique in the school for 5A, 6B
+Unique key can be a combination of standard, division and roll no
+ 
+Student class will have following properties
+rollNo
+standard
+division
+name
+ Menu:
+Add student
+Find student using unique mentioned above
+Print all students
+ 
+Note: once it works change the HashMap to TreeMap
+ 
+ Day 15
++------+
+1) Complete all collection pending assignments.
+2) Try finding out Class laoder for different classes
+ 
+
+ Day 16
++------+
+1) Check if the file object is directory or file. If its directory then print all the files or directories in it.
+2) Create a new file if the file is not present at specified path
+3) Read text file using FileReader->Bufferered reader and print on console.
+4) Read from one text file and write in other files. Use PrintWriter, Bufferedwriter, FileWriter for writing. User BufferedReader, FileReader for reading. Use try catch with resource
+
+1) Use Book class from Library application and use DataOuputStream and DataInputStream to write and read books from binary file.
+ 
+Write methods to save book in file and save many books in file. Pass book object and DOS to method for saving book. Reuse the method to save multiple books.
+ 
+Create methods to read one book and read many books until data is available on stream.
+ 
+Print the data read from file using forEach and method reference.
+ 
+2) Create Printer class with serialNo, modelNo, price, printerType, manufacturingDate. Create Enum for PrinterType with values as LASER, INKJET, DOTMATRIX.
+ 
+Store the printers objects in file using ObjectOutputStream. On program startup read all printers from file and store them in HashMap where serialNo will be key and printer object will be value.
+ 
+ 1.Add Printer
+ 2.Update Printer Price
+ 3.Print all Printers
+
+ Day 17
++------+
+1) Write lambda for conversion from String to LocalDate and Vice Versa. Use Function<R, T> interface
+2) Practice lambda expressions for Function, BiFunction, Predicate, forE each on collection
+3) Replace all the compactors from Day 7 to Day 12 by lambda expressions and use forEach Iterable method instead of Enhanced for loop
+
+4) Create Apple class with weight, color and taste. Use Stream API for below things. Use method ref for println
+	1. Filter by weight
+	2. filter by color
+	3. filter by color and weight
+	4. filter by color, weight and taste
+	5. Sort by weight
+	6. Sort by color
+	7. Remove red apples
+	8. Removed Green apples
+	9. Convert to Set collection
+ 
+5) create list of String and use Stream API for below ( use method ref for println
+	1. print distinct
+	2. print all with uppercase
+	3. print which starts with specific letter
+	4. concat all strings in the list
+	5. filter by ending with some text
+
+
+ Day 18
++------+
+Stream API assignments
+1) Create MobilePhone  class with serialNo, brand, os, color, price, ram etc. Store in list and use partitionedBy method to separate Android  and IOS phones.
+2) Use comparing and thenComparing methods to sort MobilePhones by color and weight
+3)	Convert the list of MobilePhones in set using Collect method.
+4)	Filter by every field
+ 
