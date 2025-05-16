@@ -1,0 +1,215 @@
+1. Containerize a Plain Java Hello World Application
+  # Create a HelloWorld.java file
+  ❯ nano HelloWorld.java 
+
+  # Compile the Java file
+  ❯ javac HelloWorld.java
+
+  # Create a Docker image using a plain OpenJDK image and mount the class file
+  ❯ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp openjdk:17 java HelloWorld
+
+2. Java with MySQL Integration as discussed in the class
+
+  # Compile the Java program:
+  ❯ javac -cp mysql-connector-java-8.0.15.jar DbConnect.java
+
+  # Create a custom network and run both containers on it: 
+  ❯ docker network create my-net
+
+  # build and run the container
+  ❯ docker run -d \
+  --name mysql \
+  --network my-net \
+  -e MYSQL_ROOT_PASSWORD=pass \
+  -e MYSQL_DATABASE=cdac \
+  -p 3306:3306 \
+  -v db_data:/var/lib/mysql \
+  mysql:8
+
+# Run Java program inside a Docker container with class & driver
+  ❯ docker run --rm   --network my-net -v "$PWD":/usr/src/myapp -w /usr/src/myapp openjdk:17 \
+  java -cp .:mysql-connector-java-8.0.15.jar DbConnect
+
+3. Do the above using Docker Compose
+  # create docker-compose.yml
+  ❯ docker compose up --build
+
+4. Start a Apache/Tomcat container. Change the home page to print "Hello C-DAC". Verify in the browser.
+  ❯ docker pull tomcat:9
+
+  ❯ docker run -d --name tomcat -p 8080:8080 tomcat:9
+  ❯ docker exec -it tomcat bash
+
+  ❯ echo "Hello C-DAC" > /usr/local/tomcat/webapps/ROOT/index.html
+
+  Note: In many official Tomcat Docker images (like tomcat:10, tomcat:9-jdk17, etc.), the default webapps directory is empty at runtime, and the default apps (including ROOT) are moved to /usr/local/tomcat/webapps.dist/ to reduce container size and startup time. You must copy the ROOT folder back to webapps before editing:
+  
+  ❯ cp -r /usr/local/tomcat/webapps.dist/ROOT /usr/local/tomcat/webapps/
+  ❯ echo "Hello C-DAC" > /usr/local/tomcat/webapps/ROOT/index.html
+
+  # using docker-compose.yml
+  # create docker-compose.yml
+  ❯ docker compose up --build
+
+5. For the above, add a Docker Volume.
+  # add below line in docker-compose.yml to create a volume
+  volumes:
+      - ./my-app:/usr/local/tomcat/webapps/ROOT
+
+6. Push your "Hello World" Java image to DockerHub.
+  # Build the Docker image
+  ❯ docker build -t ksachin7/cdac-html-tomcat .
+
+  # Push to Docker Hub
+  ❯ docker push ksachin7/cdac-html-tomcat
+
+7. Run a Docker container from one of your batch-mate's Docker image pulled from Docker Hub.
+  ❯ docker pull ksachin7/cdac-html-tomcat
+  ❯ docker run --rm ksachin7/cdac-html-tomcat
+
+8. Create an nginx Pod.
+  # install microk8s
+  ❯ sudo apt install snapd
+
+  ❯ sudo systemctl enable --now snapd
+
+  ❯ sudo snap install microk8s --classic --channel=1.28
+
+  # Add your user to the microk8s group
+  ❯ sudo usermod -a -G microk8s $USER
+
+  ❯ sudo chown -f -R $USER ~/.kube
+
+  ❯ su - $USER
+
+  ❯ microk8s status --wait-ready
+
+  ❯ microk8s kubectl get nodes
+
+  ❯ microk8s kubectl get services
+
+  ❯ alias kubectl='microk8s kubectl'
+
+  ❯ kubectl get nodes
+
+  ❯ microk8s kubectl get nodes
+
+  ❯ microk8s kubectl run nginx-pod --image=nginx:latest
+
+  # verify the Pod is created and running:
+  ❯ microk8s kubectl get pods
+
+9. Run the nginx Pod as a service.
+  ❯ microk8s kubectl expose deployment/nginx-pod --port=80 --type=ClusterIP --name=nginx-service
+  
+  # verify the service is created
+  ❯ microk8s kubectl get services
+
+10. Change the replicas to 5.
+  ❯ microk8s kubectl scale deployment/nginx-pod --replicas=5
+
+  # To verify that 5 Pods are now running
+  ❯ microk8s kubectl get pods -l app=nginx-pod
+
+11. Manually delete a pod. Verify that a new pod gets created.
+  # Get the names of the Nginx Pods:
+  ❯ microk8s kubectl get pods -l app=nginx-pod
+
+  # Delete one of the Pods:
+  ❯ microk8s kubectl delete pod <your-pod-name>
+
+  # Verify a new Pod is created:
+  ❯ microk8s kubectl get pods -l app=nginx-pod
+
+
+12. Create a new repository on GitHub. Clone it on the local machine. Add a "Hello World" Java program and push it to GitHub and verify.
+  ❯ git clone https://github.com/yourusername/hello-java.git
+
+  ❯ nano HelloWorld.java
+  
+  ❯ git add HelloWorld.java
+
+  ❯ git commit -m "Initial commit"
+
+  ❯ git push origin main
+
+13. Now create two branches for the above program on the local machine. Edit the same file in both the branches, merge changes, and push the final version on to GitHub.
+  # Create and switch to branch1
+  ❯ git checkout -b branch1
+
+  # Create and switch to branch2 from main
+  ❯ git checkout main
+  ❯ git checkout -b branch2
+
+  # Edit the same file in both branches HelloWorld.java
+
+  # on branch2
+  ❯ git checkout branch2
+
+  # Merge branch1 into branch2
+  ❯ git merge branch1
+
+  # After resolving conflicts
+  ❯ git add HelloWorld.java
+  ❯ git commit -m "Merged branch1 into branch2 with combined changes"
+
+  # Push both branches if needed
+  ❯ git push origin branch1
+  ❯ git push origin branch2
+
+  # Optionally merge to main
+  ❯ git checkout main
+  ❯ git merge branch2
+  ❯ git push origin main
+
+14. Use a yaml file to run nginx deployment with 5 pods in Kubernetes.
+  # create a yml file
+
+  
+15. Write a Java program to accept two numbers from the user and display their sum. Create a Docker image and run it as a container.
+  # Build Docker Image
+  ❯ docker build -t java-sum-app .
+
+  # Run Docker Container
+  ❯ docker run -it java-sum-app
+
+16. Run an Ubuntu container. Open a terminal inside it. Create a directory called cdac. Create a file named hello.txt and store your name in it.
+  # get an Ubuntu container running and perform those actions inside it
+  ❯ microk8s kubectl run ubuntu-shell --image=ubuntu:latest --command -- sleep infinity
+
+  # let's get a terminal inside the running container
+  ❯ microk8s kubectl exec -it ubuntu-shell -- bash
+
+  # let's create the directory and the file
+  ❯ mkdir cdac
+  ❯ echo "Your Name Here" > cdac/hello.txt
+
+  # verify that the directory and file were created and the content is correct
+  ❯ ls cdac
+  ❯ cat cdac/hello.txt
+
+  # stop and remove the container and its associated Pod
+  ❯ microk8s kubectl delete pod ubuntu-shell
+
+17. Stop and remove the above container, this time rerun with a volume attached.
+
+18. Stop and remove the container and restart it. Check if the earlier file still exists.
+
+19. Run a fresh Ubuntu container. Install nano editor in it. Open nano and create file 'cdac.txt' containing text 'Hello C-DAC'.
+  microk8s kubectl run ubuntu-editor --image=ubuntu:latest --command -- sleep infinity
+  microk8s kubectl exec -it ubuntu-editor -- bash
+  apt update && apt install -y nano
+  nano cdac.txt
+  # Type "Hello C-DAC", save with Ctrl+O, exit with Ctrl+X
+
+20. Start a MySQL container. Open a terminal inside it. Create a database named testdb. In that database, create a table named 'customer' with fields customer_id and name. Add 5 records.
+  docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:8
+  docker exec -it mysql-container mysql -u root -p
+  # Enter password: root
+  CREATE DATABASE testdb;
+  USE testdb;
+  CREATE TABLE customer (customer_id INT PRIMARY KEY, name VARCHAR(50));
+  INSERT INTO customer VALUES (1, 'Alice'), (2, 'Bob'), (3, 'Charlie'), (4, 'David'), (5, 'Eve');
+
+
+  SELECT * FROM customer;

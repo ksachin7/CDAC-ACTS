@@ -1,0 +1,252 @@
+docker ps
+❯ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+❯ docker build -t java-hello .
+
+[+] Building 1.0s (1/1) FINISHED                                                                                                    docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                                                0.3s
+ => => transferring dockerfile: 2B                                                                                                                  0.0s
+ERROR: failed to solve: failed to read dockerfile: open Dockerfile: no such file or directory
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/vyoym1pa9xgmh78djslf9psh9
+❯ cd Hello
+❯ docker build -t java-hello .
+
+[+] Building 219.5s (8/8) FINISHED                                                                                                  docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                                                0.3s
+ => => transferring dockerfile: 129B                                                                                                                0.1s
+ => [internal] load metadata for docker.io/library/openjdk:17                                                                                       1.8s
+ => [internal] load .dockerignore                                                                                                                   0.2s
+ => => transferring context: 2B                                                                                                                     0.0s
+ => [internal] load build context                                                                                                                   0.2s
+ => => transferring context: 179B                                                                                                                   0.1s
+ => [1/3] FROM docker.io/library/openjdk:17@sha256:528707081fdb9562eb819128a9f85ae7fe000e2fbaeaf9f87662e7b3f38cb7d8                               202.8s
+ => => resolve docker.io/library/openjdk:17@sha256:528707081fdb9562eb819128a9f85ae7fe000e2fbaeaf9f87662e7b3f38cb7d8                                 0.2s
+ => => sha256:528707081fdb9562eb819128a9f85ae7fe000e2fbaeaf9f87662e7b3f38cb7d8 1.04kB / 1.04kB                                                      0.0s
+ => => sha256:98f0304b3a3b7c12ce641177a99d1f3be56f532473a528fda38d53d519cafb13 954B / 954B                                                          0.0s
+ => => sha256:5e28ba2b4cdb3a7c3bd0ee2e635a5f6481682b77eabf8b51a17ea8bfe1c05697 4.45kB / 4.45kB                                                      0.0s
+ => => sha256:38a980f2cc8accf69c23deae6743d42a87eb34a54f02396f3fcfd7c2d06e2c5b 42.11MB / 42.11MB                                                   25.5s
+ => => sha256:de849f1cfbe60b1c06a1db83a3129ab0ea397c4852b98e3e4300b12ee57ba111 13.53MB / 13.53MB                                                   14.1s
+ => => sha256:a7203ca35e75e068651c9907d659adc721dba823441b78639fde66fc988f042f 187.53MB / 187.53MB                                                143.2s
+ => => extracting sha256:38a980f2cc8accf69c23deae6743d42a87eb34a54f02396f3fcfd7c2d06e2c5b                                                          20.1s
+ => => extracting sha256:de849f1cfbe60b1c06a1db83a3129ab0ea397c4852b98e3e4300b12ee57ba111                                                           3.4s
+ => => extracting sha256:a7203ca35e75e068651c9907d659adc721dba823441b78639fde66fc988f042f                                                          58.0s
+ => [2/3] COPY HelloWorld.java /                                                                                                                    3.1s
+ => [3/3] RUN javac HelloWorld.java                                                                                                                10.4s
+ => exporting to image                                                                                                                              0.3s
+ => => exporting layers                                                                                                                             0.1s
+ => => writing image sha256:76744fb32bffb85dd9e3c1f1409c27760b5fbe0076f24937ddd33b983f2d5c6d                                                        0.0s
+ => => naming to docker.io/library/java-hello                                                                                                       0.0s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/xwc2sy0lsc7ofwslbfatcv0u1
+
+What's next:
+    View a summary of image vulnerabilities and recommendations → docker scout quickview 
+
+
+ ~/Desktop/CDAC_ACTS/Lab_Work/docker/Hello  main +7 
+❯ 
+
+❯ docker run java-hello
+
+Hello World from Docker!
+
+---
+❯ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+java-hello   latest    76744fb32bff   20 minutes ago   471MB
+mysql        8.0       c6f7ec307380   3 days ago       772MB
+
+❯ docker run --name my-mysql \
+  -e MYSQL_ROOT_PASSWORD=password \
+  -e MYSQL_DATABASE=TestDB \
+  -p 3306:3306 \
+  -d mysql:8.0
+
+Unable to find image 'mysql:8.0' locally
+8.0: Pulling from library/mysql
+cea172a6e83b: Pull complete 
+6cfd9ff0e16b: Pull complete 
+6cdb1d882a76: Pull complete 
+29c08134121b: Pull complete 
+bcc2e96984e1: Pull complete 
+a5636d731401: Pull complete 
+fb0ff87df77d: Pull complete 
+bb9c2ecc3352: Pull complete 
+fbde96d8818e: Pull complete 
+26bcb3921fdb: Pull complete 
+069dfe57230c: Pull complete 
+Digest: sha256:968e12b1fde035655c7a940db808b47372b70128293a38a3914e0b291c306e5e
+Status: Downloaded newer image for mysql:8.0
+f253e034853bc38753df37c2fcc575dbb82ac8b203cc23d6957f4887a131f6a7
+
+❯ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+java-hello   latest    76744fb32bff   20 minutes ago   471MB
+mysql        8.0       c6f7ec307380   3 days ago       772MB
+
+❯ docker run --name my-mysql \
+  -e MYSQL_ROOT_PASSWORD=password \
+  -e MYSQL_DATABASE=TestDB \
+  -p 3306:3306 \
+  -d mysql:8.0
+
+docker: Error response from daemon: Conflict. The container name "/my-mysql" is already in use by container "f253e034853bc38753df37c2fcc575dbb82ac8b203cc23d6957f4887a131f6a7". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+
+❯ docker container ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED              STATUS          PORTS                               NAMES
+f253e034853b   mysql:8.0   "docker-entrypoint.s…"   About a minute ago   Up 55 seconds   0.0.0.0:3306->3306/tcp, 33060/tcp   my-mysql
+
+❯ docker exec -it my-mysql mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| TestDB             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.02 sec)
+
+mysql> use TestDB
+Database changed
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> exit
+Bye
+
+❯ docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS         PORTS                               NAMES
+f253e034853b   mysql:8.0   "docker-entrypoint.s…"   6 minutes ago   Up 6 minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   my-mysql
+
+❯ javac -cp .:mysql-connector-java-8.0.15/mysql-connector-java-8.0.15.jar MySQLDemo.java
+
+error: file not found: MySQLDemo.java
+Usage: javac <options> <source files>
+use --help for a list of possible options
+
+❯ cd ../jdbc
+❯ javac -cp .:mysql-connector-java-8.0.15/mysql-connector-java-8.0.15.jar MySQLDemo.java
+
+❯ java -cp .:mysql-connector-java-8.0.15/mysql-connector-java-8.0.15.jar MySQLDemo
+
+Database created successfully...
+Table created successfully...
+Records inserted successfully...
+Employee Records:
+1 | Alice | 30
+2 | Bob | 25
+3 | Charlie | 28
+Sat Apr 19 01:10:23 IST 2025 WARN: Caught while disconnecting...
+
+EXCEPTION STACK TRACE:
+
+
+
+** BEGIN NESTED EXCEPTION ** 
+
+javax.net.ssl.SSLException
+MESSAGE: closing inbound before receiving peer's close_notify
+
+STACKTRACE:
+
+javax.net.ssl.SSLException: closing inbound before receiving peer's close_notify
+        at java.base/sun.security.ssl.SSLSocketImpl.shutdownInput(SSLSocketImpl.java:843)
+        at java.base/sun.security.ssl.SSLSocketImpl.shutdownInput(SSLSocketImpl.java:821)
+        at com.mysql.cj.protocol.a.NativeProtocol.quit(NativeProtocol.java:1319)
+        at com.mysql.cj.NativeSession.quit(NativeSession.java:182)
+        at com.mysql.cj.jdbc.ConnectionImpl.realClose(ConnectionImpl.java:1750)
+        at com.mysql.cj.jdbc.ConnectionImpl.close(ConnectionImpl.java:720)
+        at MySQLDemo.main(MySQLDemo.java:66)
+
+
+** END NESTED EXCEPTION **
+
+
+❯ docker-compose up --build
+
+WARN[0000] /Users/sachin/Desktop/CDAC_ACTS/Lab_Work/docker/jdbc/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] Running 0/0
+[+] Running 0/1-app  Building                                                                                                 0.1s 
+[+] Building 7.0s (11/11) FINISHED                                                                            docker:desktop-linux 
+ => [java-app internal] load build definition from Dockerfile                                                                 0.1s
+ => => transferring dockerfile: 266B                                                                                          0.0s
+ => [java-app internal] load metadata for docker.io/library/openjdk:17                                                        1.0s 
+ => [java-app internal] load .dockerignore                                                                                    0.1s
+ => => transferring context: 2B                                                                                               0.0s
+ => CACHED [java-app 1/5] FROM docker.io/library/openjdk:17@sha256:528707081fdb9562eb819128a9f85ae7fe000e2fbaeaf9f87662e7b3f  0.0s
+ => [java-app internal] load build context                                                                                    0.3s 
+ => => transferring context: 2.14MB                                                                                           0.2s
+ => [java-app 2/5] WORKDIR /app                                                                                               0.3s 
+ => [java-app 3/5] COPY mysql-connector-java-8.0.15.jar .                                                                     0.1s 
+ => [java-app 4/5] COPY MySQLDemo.java .                                                                                      0.1s
+ => [java-app 5/5] RUN javac -cp .:mysql-connector-java-8.0.15.jar MySQLDemo.java                                             4.8s 
+ => [java-app] exporting to image                                                                                             0.2s
+ => => exporting layers                                                                                                       0.2s
+ => => writing image sha256:0b5b6ec9b3e41c9f6ed388dee3722e5e893e283e0e73a4f8fce3783c05897971                                  0.0s 
+[+] Running 4/4o docker.io/library/jdbc-java-app                                                                              0.0s
+ ✔ Service java-app           Built                                                                                           7.6s 
+ ✔ Network jdbc_app-network   Created                                                                                         0.2s 
+ ✔ Container mysql-db         Created                                                                                         0.2s 
+ ✔ Container java-mysql-demo  Created                                                                                         0.1s 
+Attaching to java-mysql-demo, mysql-db
+Gracefully stopping... (press Ctrl+C again to force)
+Error response from daemon: driver failed programming external connectivity on endpoint mysql-db (2e03b8b611079f792d89a617bddb1df18261d8fd04362bcfda4c52b4a2051a2e): Bind for 0.0.0.0:3306 failed: port is already allocated
+
+❯ docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS          PORTS                               NAMES
+f253e034853b   mysql:8.0   "docker-entrypoint.s…"   14 minutes ago   Up 14 minutes   0.0.0.0:3306->3306/tcp, 33060/tcp   my-mysql
+
+❯ docker rm -f f253e034853b
+f253e034853b
+
+---
+❯ javac -cp mysql-connector-java-8.0.15.jar DbConnect.java
+
+❯ docker run -d \
+  --name mysql \
+  --network my-net \
+  -e MYSQL_ROOT_PASSWORD=pass \
+  -e MYSQL_DATABASE=cdac \
+  -p 3306:3306 \
+  -v db_data:/var/lib/mysql \
+  mysql:8
+
+6d3ac968111a432a66da314589d81d73c60ed8fdc75145c68dfec3a122be1fed
+❯ docker run --rm   --network my-net -v "$PWD":/usr/src/myapp -w /usr/src/myapp openjdk:17 \
+  java -cp .:mysql-connector-java-8.0.15.jar DbConnect
+
+MySQL JDBC Driver loaded successfully.
+Initial database connection established.
+Database 'cdac' created or already exists.
+Initial connection closed.
+Connected to 'cdac' database.
+Table 'student' created or already exists.
+Inserted record for PRN: 1
+Inserted record for PRN: 2
+Inserted record for PRN: 3
+
+Student Data:
+PRN: 1, Name: Student 1, Course: DAC
+PRN: 2, Name: Student 2, Course: DITISS
+PRN: 3, Name: Student 3, Course: DAI
+
+---

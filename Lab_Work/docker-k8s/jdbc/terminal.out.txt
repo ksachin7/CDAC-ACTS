@@ -1,0 +1,91 @@
+❯ javac -cp mysql-connector-java-8.0.15.jar DbConnect.java
+
+❯ docker run -d \
+  --name mysql \
+  --network my-net \
+  -e MYSQL_ROOT_PASSWORD=pass \
+  -e MYSQL_DATABASE=cdac \
+  -p 3306:3306 \
+  -v db_data:/var/lib/mysql \
+  mysql:8
+
+6d3ac968111a432a66da314589d81d73c60ed8fdc75145c68dfec3a122be1fed
+
+❯ docker run --rm   --network my-net -v "$PWD":/usr/src/myapp -w /usr/src/myapp openjdk:17 \
+  java -cp .:mysql-connector-java-8.0.15.jar DbConnect
+
+MySQL JDBC Driver loaded successfully.
+Initial database connection established.
+Database 'cdac' created or already exists.
+Initial connection closed.
+Connected to 'cdac' database.
+Table 'student' created or already exists.
+Inserted record for PRN: 1
+Inserted record for PRN: 2
+Inserted record for PRN: 3
+
+Student Data:
+PRN: 1, Name: Student 1, Course: DAC
+PRN: 2, Name: Student 2, Course: DITISS
+PRN: 3, Name: Student 3, Course: DAI
+
+--- using dockerfile & docker-compose ---
+TODO: DbConnect.java: change in connection string from mysql -> db
+con = DriverManager.getConnection("jdbc:mysql://db:3306?useSSL=false&allowPublicKeyRetrieval=true", "root", "pass");
+
+❯ docker compose up --build
+WARN[0000] The "MYSQL_ROOT_PASSWORD" variable is not set. Defaulting to a blank string. 
+WARN[0000] /Users/sachin/Desktop/CDAC_ACTS/Lab_Work/docker/jdbc/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] Running 0/1
+[+] Running 0/1 Building                                                                                                                                                     0.1s 
+[+] Building 3.5s (12/12) FINISHED                                                                                                                           docker:desktop-linux 
+ => [app internal] load build definition from Dockerfile                                                                                                                     0.0s
+ => => transferring dockerfile: 581B                                                                                                                                         0.0s
+ => [app internal] load metadata for docker.io/library/openjdk:11-jdk-slim                                                                                                   1.0s 
+ => [app internal] load .dockerignore                                                                                                                                        0.0s
+ => => transferring context: 2B                                                                                                                                              0.0s
+ => [app 1/6] FROM docker.io/library/openjdk:11-jdk-slim@sha256:868a4f2151d38ba6a09870cec584346a5edc8e9b71fde275eb2e0625273e2fd8                                             0.0s
+ => [app internal] load build context                                                                                                                                        0.0s
+ => => transferring context: 5.27kB                                                                                                                                          0.0s
+ => CACHED [app 2/6] WORKDIR /app                                                                                                                                            0.0s
+ => CACHED [app 3/6] RUN mkdir /app/lib                                                                                                                                      0.0s
+ => [app 4/6] COPY . /app                                                                                                                                                    0.1s 
+ => [app 5/6] COPY mysql-connector-java-8.0.15.jar /app/lib/                                                                                                                 0.1s 
+ => [app 6/6] RUN javac -cp /app:/app/lib/* *.java                                                                                                                           1.6s 
+ => [app] exporting to image                                                                                                                                                 0.2s
+ => => exporting layers                                                                                                                                                      0.1s
+ => => writing image sha256:183be0f1f4a8627bfd588014424b8acb94228c368931748167a1491e5a0f9b42                                                                                 0.0s 
+[+] Running 3/3o docker.io/library/jdbc-app                                                                                                                                  0.0s 
+ ✔ Service app            Built                                                                                                                                              3.8s 
+ ✔ Container mysql        Created                                                                                                                                            0.0s 
+ ✔ Container student_app  Recreated                                                                                                                                          0.3s 
+Attaching to mysql, student_app
+mysql        | 2025-04-26 09:32:37+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.5-1.el9 started.
+mysql        | 2025-04-26 09:32:38+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+mysql        | 2025-04-26 09:32:38+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.4.5-1.el9 started.
+mysql        | '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+mysql        | 2025-04-26T09:32:38.846504Z 0 [System] [MY-015015] [Server] MySQL Server - start.
+mysql        | 2025-04-26T09:32:39.074012Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.4.5) starting as process 1
+mysql        | 2025-04-26T09:32:39.084415Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+mysql        | 2025-04-26T09:32:39.682794Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+mysql        | 2025-04-26T09:32:40.141275Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+mysql        | 2025-04-26T09:32:40.141363Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+mysql        | 2025-04-26T09:32:40.150356Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+mysql        | 2025-04-26T09:32:40.265363Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+mysql        | 2025-04-26T09:32:40.265499Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.4.5'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+student_app  | MySQL JDBC Driver loaded successfully.
+student_app  | Initial database connection established.
+student_app  | Database 'cdac' created or already exists.
+student_app  | Initial connection closed.
+student_app  | Connected to 'cdac' database.
+student_app  | Table 'student' created or already exists.
+student_app  | Inserted record for PRN: 1
+student_app  | Inserted record for PRN: 2
+student_app  | Inserted record for PRN: 3
+student_app  | 
+student_app  | Student Data:
+student_app  | PRN: 1, Name: Student 1, Course: DAC
+student_app  | PRN: 2, Name: Student 2, Course: DITISS
+student_app  | PRN: 3, Name: Student 3, Course: DAI
+student_app exited with code 0
+

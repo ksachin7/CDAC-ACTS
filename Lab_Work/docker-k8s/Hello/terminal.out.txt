@@ -1,0 +1,17 @@
+❯ # 1. Create a HelloWorld.java file
+echo 'public class HelloWorld { public static void main(String[] args) { System.out.println("Hello, World"); } }' > HelloWorld.java
+
+# 2. Compile the Java file
+javac HelloWorld.java
+
+# 3. Create a Docker image using a plain OpenJDK image and mount the class file
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp openjdk:17 java HelloWorld
+
+Unable to find image 'openjdk:17' locally
+17: Pulling from library/openjdk
+38a980f2cc8a: Pull complete 
+de849f1cfbe6: Pull complete 
+a7203ca35e75: Pull complete 
+Digest: sha256:528707081fdb9562eb819128a9f85ae7fe000e2fbaeaf9f87662e7b3f38cb7d8
+Status: Downloaded newer image for openjdk:17
+Hello, World

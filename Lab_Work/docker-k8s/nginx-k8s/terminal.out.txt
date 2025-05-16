@@ -1,0 +1,29 @@
+❯ docker build -t java-sum-app .
+
+[+] Building 13.2s (9/9) FINISHED                                               docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                            0.3s
+ => => transferring dockerfile: 303B                                                            0.1s
+ => [internal] load metadata for docker.io/library/openjdk:17                                   0.0s
+ => [internal] load .dockerignore                                                               0.2s
+ => => transferring context: 2B                                                                 0.0s
+ => [1/4] FROM docker.io/library/openjdk:17                                                     0.7s
+ => [internal] load build context                                                               1.0s
+ => => transferring context: 487B                                                               0.1s
+ => [2/4] WORKDIR /app                                                                          0.4s
+ => [3/4] COPY Sum.java .                                                                       0.6s
+ => [4/4] RUN javac Sum.java                                                                    9.7s
+ => exporting to image                                                                          0.4s
+ => => exporting layers                                                                         0.3s
+ => => writing image sha256:8ec623acb02c5dcf82e28913731d410a740cfe4d6d58cc9f2d93c89059c30126    0.0s
+ => => naming to docker.io/library/java-sum-app                                                 0.0s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/913bl8mja0ofabw93l1s6riy7
+
+What's next:
+    View a summary of image vulnerabilities and recommendations → docker scout quickview 
+    
+❯ docker run -it java-sum-app
+
+Enter first number: 5
+Enter second number: 6
+Sum: 11
