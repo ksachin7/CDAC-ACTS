@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <style>
+      #root {
+        margin: 0;
+        background-color: #2e3740;
+        color: lightgrey;
+        font-family: monospace;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .form-container {
+        width: 100%;
+        max-width: 300px;
+      }
+      input {
+        color: white;
+        width: 100%;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid lightgrey;
+        background-color: transparent;
+        margin-bottom: 16px;
+        padding: 10px 0;
+      }
+      input[type="checkbox"] {
+        width: fit-content;
+      }
+      input[type="button"] {
+        background-color: rgb(121, 209, 121);
+      }
+      .form-header {
+        font-family: cursive;
+        text-align: center;
+      }
+      .reg {
+        width: 100%;
+        text-align: center;
+      }
+      .reg a {
+        color: lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="form-container">
+        <div class="form-header">
+          <h1>Register</h1>
+        </div>
+
+        <div class="form-body">
+          <input type="text" name="" id="name" placeholder="Username" />
+          <input type="password" name="" id="pass" placeholder="Password" />
+          <input type="email" name="" id="mail" placeholder="E-mail Address" />
+          <input
+            type="checkbox"
+            id="rules"
+            value="Accept rules and conditions"
+          />
+          <span>Accept rules and conditions</span>
+          <input type="button" value="Register" />
+        </div>
+        <div class="reg">
+          <a href="/login.html">Already have an account?</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

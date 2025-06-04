@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function Employee(name, email, salary, department) {
+            this.name = name;
+            this.email = email;
+            this.salary = salary;
+            this.department = department;
+            this.calculateTax = function () {
+                return this.salary * 0.2;
+            };
+        }
+        function Student(name, email, department, dob, marks) {
+            this.name = name;
+            this.email = email;
+            this.department = department;
+            this.dob = dob;
+            this.marks = marks;
+            this.calculateTotalMarks = function () {
+                return this.marks.reduce((sum, m) => sum + m.mark, 0);
+            };
+        }
+    </script>
+
+    <!-- class version -->
+    <!-- <script src="/JS/day-7/emp_stud.js"></script> -->
+</body>
+
+</html>

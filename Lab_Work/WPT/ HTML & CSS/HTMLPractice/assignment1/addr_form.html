@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: auto;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #form {
+        background-color: rgb(170, 157, 134);
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        padding: 2.1rem;
+      }
+      .name,
+      .address {
+        max-width: 500px;
+        height: auto;
+      }
+      input,
+      select {
+        margin-bottom: 5px;
+        border-radius: 5px;
+        padding: 5px;
+      }
+      input[type="submit"] {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="form">
+      <fieldset class="name">
+        <legend><strong>Name</strong></legend>
+        <lable for="fev-name">Fevorite Name</lable>
+        <input type="text" name="fev-name" /><br />
+
+        <lable for="curr-name">Current Name</lable>
+        <input type="text" name="curr-name" /><br />
+
+        <lable for="next-name">Your Next Name</lable>
+        <input type="text" name="next-name" /><br />
+      </fieldset>
+      <fieldset class="address">
+        <legend><strong>Address</strong></legend>
+        <label for="addr">Your Address</label>
+        <select name="addr" id="addr">
+          <option>Select Address</option>
+          <option>Earth</option>
+          <option>Mars</option>
+          <option>Moon</option>
+        </select>
+
+        <br />
+        <label for="like">Like it?</label>
+        <label for="yes">Yes</label>
+        <input type="radio" value="Yes" name="yes" />
+        <label for="no">No</label>
+        <input type="radio" value="No" />
+      </fieldset>
+      <br />
+      <input type="submit" value="Send Anyway!" />
+    </div>
+  </body>
+</html>

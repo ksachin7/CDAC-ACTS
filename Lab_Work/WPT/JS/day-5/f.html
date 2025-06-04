@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section-F</title>
+</head>
+
+<body>
+    <h1>Assignment Section-F</h1>
+    <p>num="1,2,3,4,5,6,7,8,9"
+        <br><b>Note:</b>Use num string in below questions:
+        <br>1.Print only numbers not comma
+        <br>2.Print all even numbers
+    </p>
+    <p>Please look into console for output</p>
+    <script>
+        num = "1,2,3,4,5,6,7,8,9"
+
+        let numbers = num.split(",").join('')
+
+        console.log(numbers)
+        let evenNums = num.split(",")
+        // console.log(evenNums)
+
+        evenNums.forEach(element => {
+            if (parseInt(element) % 2 == 0) {
+                console.log(element)
+            }
+        });
+    </script>
+</body>
+
+</html>

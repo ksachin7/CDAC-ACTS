@@ -113,11 +113,17 @@ coverage/
 .idea/
 
 # Eclipse IDE
-/.classpath
-/.project
-/.settings
-/.buildpath
-/.metadata/
+.classpath/
+.project/
+.settings/
+.buildpath/
+.metadata/
+
+.classpath
+.project
+.settings
+.buildpath
+.metadata
 
 # IntelliJ IDEA
 .idea/
@@ -129,3 +135,6 @@ coverage/
 
 Notes/**
 auto_commit.sh
+
+.*/
+*.xlsx

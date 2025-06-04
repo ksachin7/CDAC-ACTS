@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section E</title>
+</head>
+<body>
+    <h1>Assignment Section E</h1>
+    <p>2.Write a code to check the given string is palindrome or not. (abba)</p>
+
+    <script>
+        function checkPalindrome(str){
+            let reverse= str.split('').reverse().join("")
+            console.log(str, reverse)
+            if(str === reverse){
+                console.log("The entered number is a palindrome!")
+            }else{
+                console.log("The entered number is not a palindrome!")
+            }
+        }
+        let givenString= prompt("please enter a String")
+        checkPalindrome(givenString)
+    </script>
+</body>
+</html>

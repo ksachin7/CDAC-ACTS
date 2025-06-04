@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrap Pricing</title>
+    <style>
+      body {
+        margin: 0;
+        box-sizing: border-box;
+        height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(115deg, #62cff4, #2c67f2);
+        display: flex;
+        justify-content: center;
+        color: white;
+      }
+      #root {
+        width: 100%;
+        max-width: 740px;
+        margin-top: 30px;
+      }
+      p {
+        font-size: small;
+        line-height: 0.5;
+      }
+      .card-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;
+      }
+      .card {
+        width: 200px;
+        height: auto;
+        padding: 16px;
+        color: rgb(41, 41, 41);
+        background-color: rgba(245, 245, 245, 1);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .header,
+      .crd-head {
+        text-align: center;
+      }
+      hr {
+        width: 47px;
+        font-weight: bold;
+        border: 2px solid rgb(84, 191, 233);
+      }
+      span {
+        font-size: 11px;
+        list-style: none;
+        line-height: 2.7;
+        display: flex;
+        align-items: center;
+      }
+      button {
+        padding: 10px;
+        border-radius: 30px;
+        width: 150px;
+        background-color: rgb(53, 131, 221);
+        border: none;
+        color: white;
+        margin: 10px 0;
+      }
+      sub {
+        font-size: xx-small;
+      }
+      svg {
+        width: 11px;
+        margin-right: 10px;
+        fill: rgb(72, 176, 218);
+      }
+      svg:nth-child(4){
+        fill: red;
+      }
+      .cross{
+        fill: grey;
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="header">
+        <h1>Bootstrap pricing table</h1>
+        <p>Easily create a classy pricing table in Bootstrap 4</p>
+        <p>Bootstrap snippet by Bootstrapious</p>
+      </div>
+      <div class="card-group">
+        <div class="card">
+          <div class="crd-head">
+            <p><b>Basic</b></p>
+            <h3>$199<sub>/month</sub></h3>
+            <hr />
+          </div>
+
+          <div class="text-container">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              Lorem ipsum dolor sit amet</span
+            >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              consectetur, adipisicing elit</span
+            >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              deserunt fugit autem ut?
+            </span>
+            <span class="cross">
+              <svg class="cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+              Modi quaerat</span
+            >
+            <span class="cross">
+              <svg class="cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+              distinctio eligendi reiciendis</span
+            >
+            <span class="cross">
+              <svg class="cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+              quas amet nisi. Minus soluta</span
+            >
+          </div>
+          <button>Subscribe</button>
+        </div>
+        <div class="card">
+          <div class="crd-head">
+            <p><b>Pro</b></p>
+            <h3>$399<sub>/month</sub></h3>
+            <hr />
+          </div>
+
+          <div class="text-container">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              Lorem ipsum dolor sit amet</span
+            >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              consectetur, adipisicing elit</span
+            >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              deserunt fugit autem ut?
+            </span>
+            <span>
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              Modi quaerat</span
+            >
+            <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              distinctio eligendi reiciendis</span
+            >
+            <span  class="cross">
+              <svg class="cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path
+                  d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
+                />
+              </svg>
+              quas amet nisi. Minus soluta</span
+            >
+          </div>
+          <button>Subscribe</button>
+        </div>
+        <div class="card">
+          <div class="crd-head">
+            <p><b>Enterprise</b></p>
+            <h3>$899<sub>/month</sub></h3>
+            <hr />
+          </div>
+
+          <div class="text-container">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              Lorem ipsum dolor sit amet</span
+            >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              consectetur, adipisicing elit</span
+            >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              deserunt fugit autem ut?
+            </span>
+            <span>
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              Modi quaerat</span
+            >
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              distinctio eligendi reiciendis</span
+            >
+            <span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              quas amet nisi. Minus soluta</span
+            >
+          </div>
+            <button>Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

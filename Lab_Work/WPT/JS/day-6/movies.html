@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            padding-top: 2.4rem;
+        }
+
+        table,
+        th,
+        td {
+            border: 2px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Create a web page and take 3 Movies details  and show in table 
+     Movies property : Movie Name,Price,Seat -->
+
+    <h1>Movies</h1>
+    <table id="movies">
+        <thead id="t-head">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Seat</th>
+            </tr>
+        </thead>
+        <tbody id="t-body"></tbody>
+    </table>
+
+    <script>
+        let movies = [
+            {
+                "Name": "Avatar",
+                "Price": 600,
+                "Seat": "Available"
+            },
+            {
+                "Name": "I Am Legend",
+                "Price": 300,
+                "Seat": "Not-Available"
+            },
+            {
+                "Name": "300",
+                "Price": 300,
+                "Seat": "Available"
+            },]
+        let movies_data = '';
+
+        // console.log(movies)
+        movies.forEach(e => {
+            movies_data = `
+           <tr>
+                <td>${e.Name}</td>
+                <td>${e.Price}</td>
+                <td>${e.Seat}</td>
+            <tr>`;
+            // console.log("movies: ", movies_data);
+            document.getElementById("t-body").innerHTML += movies_data;
+        });
+
+
+    </script>
+</body>
+
+</html>

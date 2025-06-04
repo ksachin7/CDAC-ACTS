@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homepage</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0.7) 75%,
+            #000 100%
+          ),
+          url("./img/bg-masthead.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        backdrop-filter: blur(1px);
+        color: rgba(245, 245, 245, 0.726);
+        height: 100vh;
+        margin: 0;
+        font-family: "Varela Round", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
+          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+      }
+
+      nav.nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .nav-left {
+        font-size: larger;
+        font-weight: 600;
+      }
+
+      .nav-right ul {
+        display: flex;
+        gap: 30px;
+        padding: 0;
+        margin: 0;
+      }
+
+      .nav-right li {
+        list-style: none;
+        font-weight: 400;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .cover {
+        height: calc(100vh - 120px); /* Full height minus nav */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 20px;
+        gap: 20px;
+      }
+
+      .cover h1 {
+        font-size: clamp(48px, 10vw, 100px);
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 20px;
+        line-height: 1.2;
+        background-image: linear-gradient(
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 255, 255, 0)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+      }
+
+      .cover p {
+        font-size: 1rem;
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        line-height: 1.6;
+        color: rgba(245, 245, 245, 0.9);
+      }
+
+      .cover button {
+        padding: 14px 28px;
+        font-size: 16px;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        background-color: #363838;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .cover button:hover {
+        background-color: #369fd8;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <nav class="nav">
+        <div class="nav-left">Start Bootstrap</div>
+        <div class="nav-right">
+          <ul>
+            <li>About</li>
+            <li>Projects</li>
+            <li>Contact</li>
+          </ul>
+        </div>
+      </nav>
+      <div class="cover">
+        <h1 class="h1">Grayscale</h1>
+        <p>
+          A free, responsive, one page Bootstrap theme<br />
+          created by Start Bootstrap.
+        </p>
+        <button type="submit">Get Started</button>
+      </div>
+    </div>
+  </body>
+</html>

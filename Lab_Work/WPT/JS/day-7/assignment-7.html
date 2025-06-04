@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Entry Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 bg-white p-4 rounded shadow-sm">
+                <h4 class="mb-3">Movie Form</h4>
+                <form id="movieForm">
+                    <div class="mb-3">
+                        <label class="form-label">Movie Name</label>
+                        <input type="text" id="movieName" class="form-control" required>
+                        <small id="nameErr" class="text-danger"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Actor</label>
+                        <input type="text" id="actor" class="form-control" required>
+                        <small id="actorErr" class="text-danger"></small>
+
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Release Date</label>
+                        <input type="date" id="release" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Movie Type</label><br>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" value="2D" class="form-check-input movie-type" id="type2d">
+                            <label class="form-check-label" for="type2d">2D</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" value="3D" class="form-check-input movie-type" id="type3d">
+                            <label class="form-check-label" for="type3d">3D</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="checkbox" value="IMAX" class="form-check-input movie-type" id="typeimax">
+                            <label class="form-check-label" for="typeimax">IMAX</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Language</label><br>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name="language" value="English" class="form-check-input" id="langEn"
+                                required>
+                            <label class="form-check-label" for="langEn">English</label>
+                        </div>
+                        <div class="form-check form-check-inline" id="langHiWrap">
+                            <input type="radio" name="language" value="Hindi" class="form-check-input" id="langHi">
+                            <label class="form-check-label" for="langHi">Hindi</label>
+                        </div>
+                        <small id="langErr" class="text-danger d-block mt-1"></small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Show Time</label>
+                        <input type="datetime-local" id="showtime" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100">Add Movie</button>
+                </form>
+            </div>
+
+            <div class="col-md-7 ps-4">
+                <h4>Movie List</h4>
+                <table class="table table-bordered table-striped" id="movieTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Movie Name</th>
+                            <th>Actor</th>
+                            <th>Release</th>
+                            <th>Type</th>
+                            <th>Language</th>
+                            <th>Show Time</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const movieForm = document.getElementById('movieForm');
+        const nameInput = document.getElementById('movieName');
+        const actorInput = document.getElementById('actor');
+        const langHiWrap = document.getElementById('langHiWrap');
+        const movieTypes = document.querySelectorAll('.movie-type');
+
+        const nameErr = document.getElementById('nameErr');
+        const actorErr = document.getElementById('actorErr');
+        const langErr = document.getElementById('langErr');
+
+        nameInput.addEventListener('input', () => {
+            if (nameInput.value.trim().length >= 5) nameErr.textContent = '';
+        });
+
+        actorInput.addEventListener('input', () => {
+            if (actorInput.value.trim().length >= 3) actorErr.textContent = '';
+        });
+
+        movieForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = nameInput.value.trim();
+            const actor = actorInput.value.trim();
+            const release = document.getElementById('release').value;
+            const showtime = document.getElementById('showtime').value;
+
+            const selectedTypes = [...movieTypes].filter(cb => cb.checked).map(cb => cb.value);
+            const types = selectedTypes.join(', ');
+
+            const langInput = document.querySelector('input[name="language"]:checked');
+            const language = langInput ? langInput.value : "";
+
+            let isValid = true;
+
+            if (name.length < 5) {
+                nameErr.textContent = "Movie name must be at least 5 characters.";
+                isValid = false;
+            }
+            if (actor.length < 3) {
+                actorErr.textContent = "Actor name must be at least 3 characters.";
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            const row = `
+                <tr>
+                    <td>${name}</td>
+                    <td>${actor}</td>
+                    <td>${release}</td>
+                    <td>${types}</td>
+                    <td>${language}</td>
+                    <td>${showtime}</td>
+                </tr>`;
+            document.querySelector('#movieTable tbody').innerHTML += row;
+
+            movieForm.reset();
+            nameErr.textContent = '';
+            actorErr.textContent = '';
+            langErr.textContent = '';
+        });
+    </script>
+
+</body>
+
+</html>

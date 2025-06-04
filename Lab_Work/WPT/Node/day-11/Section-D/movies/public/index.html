@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Form (XHR)</title>
+</head>
+
+<body>
+    <h2>Enter 3 Movies</h2>
+
+    <div id="form-container">
+        <div class="movie" data-index="0">
+            <input class="name" placeholder="Movie Name">
+            <input class="price" placeholder="Price" type="number">
+            <input class="seat" placeholder="Seat" type="number">
+        </div>
+        <div class="movie" data-index="1">
+            <input class="name" placeholder="Movie Name">
+            <input class="price" placeholder="Price" type="number">
+            <input class="seat" placeholder="Seat" type="number">
+        </div>
+        <div class="movie" data-index="2">
+            <input class="name" placeholder="Movie Name">
+            <input class="price" placeholder="Price" type="number">
+            <input class="seat" placeholder="Seat" type="number">
+        </div>
+    </div>
+
+    <button onclick="submitMovies()">Submit Movies</button>
+    </div>
+
+    <h2>Saved Movies</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Seat</th>
+            </tr>
+        </thead>
+        <tbody id="movieTableBody"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

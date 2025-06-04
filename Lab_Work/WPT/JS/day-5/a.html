@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- even-odd -->
+    <input type="text" id="number"><br>
+    <button onclick="evenOdd()">Button</button><br>
+    <span id="result">Result</span><br><br>
+
+    <!-- greater number -->
+    <div>Check Gretest Number</div>
+    Number 1: <input type="text" id="number1"><br>
+    Number 2:<input type="text" id="number2"><br>
+    Number 3:<input type="text" id="number3"><br>
+    <button onclick="greaterNumber()">Check Greater</button><br>
+    <span id="result2"></span><br>
+
+    <!-- Table -->
+    <script>
+        // 1.Write a program to find given number is even or odd.
+        // 2.Write a program to find the greater number out of three numbers.
+        // 3.Write a program to find the print the day of week.
+        // 4.Implement a calculator using if-else ladder
+        // (Take two number from prompt and also operator from prompt) 
+
+        function evenOdd() {
+            let x = document.getElementById("number").value;
+
+            if (parseInt(x) % 2 === 0) {
+                // document.write(`${x} is an even number.`)
+                document.getElementById("result").innerHTML = `${x} is an even number.`;
+            } else {
+                document.getElementById("result").innerHTML = `${x} is an odd number.`;
+            }
+        }
+
+        function greaterNumber() {
+            let num1 = parseInt(document.getElementById("number1").value);
+            let num2 = parseInt(document.getElementById("number2").value);
+            let num3 = parseInt(document.getElementById("number3").value);
+
+            console.log(isNaN(num1), number2.value, number3.value)
+
+            if (num1 > num2 && num1 > num3) {
+                document.getElementById("result2").innerHTML = `${num1} is the greatest number.`
+            } else if (num2 > num1 && num2 > num3) {
+                document.getElementById("result2").innerHTML = `${num2} is the greatest number.`
+            } else {
+                document.getElementById("result3").innerHTML = `${num3} is the greatest number.`
+            }
+        }
+
+        function findDayOfTheWeek() {
+            let date = new Date();
+            let day = date.getDay();
+
+            switch (day) {
+                case 1: console.log("Monday"); break;
+                case 2: console.log("Tuesday"); break;
+                case 3: console.log("Wednesday"); break;
+                case 4: console.log("Thursday"); break;
+                case 5: console.log("Friday"); break;
+                case 6: console.log("Saturday"); break;
+                case 7: console.log("Sunday"); break;
+            }
+        }
+        findDayOfTheWeek();
+
+
+        function calculator(x, y, op) {
+            let result;
+
+            switch (op) {
+                case '+': result = x + y; break;
+                case '-': result = x - y; break;
+                case '*': result = x * y; break;
+                case '/': result = x / y; break;
+                default:
+                    "Please enter a valid operations. one of these(+, -, *, /)";
+                    break;
+            }
+
+
+            console.log(`The result of ${x}${op}${y} is= ${result}`)
+        }
+        let x = prompt("Please enter a number")
+        let y = prompt("Please enter another number")
+        let op = prompt("Please enter a operator")
+        calculator(x, y, op)
+
+        // calculator(5, 6, '+')
+        // calculator(5, 6, '-')
+        // calculator(5, 6, '*')
+        // calculator(5, 6, '/')
+        // calculator(5, 6, '?')
+    </script>
+</body>
+
+</html>

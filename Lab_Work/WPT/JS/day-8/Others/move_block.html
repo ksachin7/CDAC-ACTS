@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Animated Div</title>
+    <style>
+        #movingBox {
+            position: absolute;
+            top: 200px;
+            left: 50px;
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+            text-align: center;
+        }
+
+        #movingBox img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <button class="btn btn-primary m-3" id="moveBtn">Move Clockwise</button>
+
+    <div id="movingBox">
+        <img src="https://via.placeholder.com/100" alt="Moving">
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#moveBtn").click(function () {
+                $("#movingBox")
+                    .animate({ left: "+=300px" }, 500)    // Right
+                    .animate({ top: "+=300px" }, 500)     // Down
+                    .animate({ left: "-=300px" }, 500)    // Left
+                    .animate({ top: "-=300px" }, 500);    // Back to top
+            });
+        });
+    </script>
+
+</body>
+
+</html>

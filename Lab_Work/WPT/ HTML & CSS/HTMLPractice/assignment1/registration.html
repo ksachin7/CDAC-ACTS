@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .form {
+        background-color: rgb(60, 60, 133);
+        padding: 30px;
+        max-width: 600px;
+        color: antiquewhite;
+        margin: 50px auto;
+        /* border-radius: 10px; */
+      }
+
+      fieldset {
+        padding: 30px;
+      }
+
+      legend {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 1rem;
+      }
+
+      label {
+        text-align: right;
+        padding-right: 10px;
+      }
+
+      input,
+      select {
+        padding: 8px;
+        border-radius: 5px;
+        border: none;
+        width: fit-content;
+        box-sizing: border-box;
+      }
+
+      .radio-group {
+        display: flex;
+      }
+
+      .radio-group label,
+      input[type="radio"] {
+        text-align: left;
+        padding-right: 0;
+      }
+      input[type="number"] {
+        width: 70px;
+      }
+
+      .radio-group input[type="radio"] {
+        margin-right: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="form">
+      <fieldset>
+        <legend>Registration Details</legend>
+
+        <div class="form-group">
+          <label for="uni">University</label>
+          <input type="text" name="uni" />
+        </div>
+
+        <div class="form-group">
+          <label for="institute">Institute</label>
+          <input type="text" name="institute" />
+        </div>
+
+        <div class="form-group">
+          <label for="branch">Branch</label>
+          <select name="branch">
+            <option>Select Branch</option>
+            <option>Computer</option>
+            <option>Mechanical</option>
+            <option>Electrical</option>
+            <option>Electronics and Communication</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="degree">Degree</label>
+          <select name="degree">
+            <option>BE</option>
+            <option>ME</option>
+            <option>BCA</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="radio">Status</label>
+          <div class="radio-group" name="radio">
+            <label for="pstatus"> Pursuing</label>
+            <input type="radio" name="pstatus" value="pursuing" />
+
+            <label for="cstatus"> Completed</label>
+            <input type="radio" name="cstatus" value="completed" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="cpi">Average CPI</label>
+          <div style="display: block">
+            <input type="number" name="cpi" />
+            <label for="upto">Upto</label>
+            <input type="number" name="upto" />th Semester
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="exp">Experience (Years)</label>
+          <input type="number" name="exp" />
+        </div>
+
+        <div class="form-group">
+          <label for="web-link">Website / Blog</label>
+          <input type="search" name="web-link" placeholder="http://" />
+        </div>
+      </fieldset>
+    </div>
+  </body>
+</html>

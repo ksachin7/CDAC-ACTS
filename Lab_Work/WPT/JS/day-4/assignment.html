@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment-4</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Assignment - 4</h1>
+    <h3>Output of programs:</h3>
+    <script>
+        let a = 15;
+        let b = 7;
+        let result = a - b;
+        console.log("Subtraction:", result);
+        document.write("Subtraction: ", result, '<br>')
+
+        let x = 2;
+        let y = 3;
+        let z = 4;
+        let product = x * y * z;
+        console.log("Multiplication:", product);
+        document.write("Multiplication: ", product, '<br>');
+
+        let num1 = 20;
+        let num2 = 5;
+        let division = num1 / num2;
+        console.log("Division:", division);
+        document.write("Division: ", division, '<br>');
+
+        let m = 10;
+        let n = 3;
+        let modulus = m % n;
+        console.log("Modulus:", modulus);
+        document.write("Modulus: ", modulus, '<br>')
+
+        let number = 7;
+        if (number % 2 === 0) {
+            console.log(number + " is Even");
+        } else {
+            console.log(number + " is Odd");
+        }
+    </script>
+
+    <script>
+        // Greatest of Three Numbers
+        let numA = 12, numB = 25, numC = 18;
+        let greatest;
+
+        if (numA >= numB && numA >= numC) {
+            greatest = numA;
+        } else if (numB >= numA && numB >= numC) {
+            greatest = numB;
+        } else {
+            greatest = numC;
+        }
+        console.log("Greatest number is: ", greatest);
+        document.write("Greatest number is: ", greatest, "<br>");
+    </script>
+
+    <script>
+        // Day of the Week
+        // let dayNumber = 3;
+        let today = new Date();
+        let dayNumber = today.getDay();
+        let day;
+
+        switch (dayNumber) {
+            case 0: day = "Sunday"; break;
+            case 1: day = "Monday"; break;
+            case 2: day = "Tuesday"; break;
+            case 3: day = "Wednesday"; break;
+            case 4: day = "Thursday"; break;
+            case 5: day = "Friday"; break;
+            case 6: day = "Saturday"; break;
+            default: day = "Invalid day number";
+        }
+        console.log("Day of the week is: ", day);
+        document.write("Day of the week is: ", day, "<br>");
+    </script>
+</body>
+
+</html>

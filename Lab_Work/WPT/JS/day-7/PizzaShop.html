@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pizza Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="p-4">
+    <div class="row px-5 py-3">
+        <div class="col-md-4">
+            <h2>Pizza Order Form</h2>
+            <form id="pizzaForm" class="mb-4">
+                <div class="mb-2">
+                    <label>Name</label>
+                    <input type="text" id="pname" class="form-control" required>
+                    <small class="text-danger" id="name-err"></small>
+                </div>
+                <div class="mb-2">
+                    <label>Pizza Sauce</label><br>
+                    <select id="sauce" class="form-select">
+                        <option>Tomato</option>
+                        <option>Cheese</option>
+                    </select>
+                    <small class="text-danger" id="sauce-err"></small>
+                </div>
+                <div class="mb-2">
+                    <label>Toppings</label><br>
+                    <input type="checkbox" class="topping" value="Cheese"> Cheese
+                    <input type="checkbox" class="topping" value="Pepperoni"> Pepperoni
+                    <input type="checkbox" class="topping" value="Supreme"> Supreme
+                    <small id="toppings-err"></small>
+                </div>
+                <div class="mb-2">
+                    <label>Delivery Instructions</label>
+                    <textarea id="instructions" class="form-control" required></textarea>
+                    <small class="text-danger" id="i-err"></small>
+                </div>
+                <button class="btn btn-success">Order</button>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-bordered" id="pizzaTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sauce</th>
+                        <th>Toppings</th>
+                        <th>Instructions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById('pizzaForm');
+
+        const nameField = document.getElementById('pname');
+        const nameErr = document.getElementById('name-err');
+
+        const sauceField = document.getElementById('sauce');
+        const sauceErr = document.getElementById('sauce-err');
+
+        const toppingsFields = document.querySelectorAll('.topping');
+        const toppingsErr = document.getElementById('toppings-err');
+
+        const instructionsField = document.getElementById('instructions');
+        const instructionsErr = document.getElementById("i-err");
+
+        // Real-time validation
+        nameField.addEventListener('input', () => {
+            console.log("User is typing...");
+            if (nameField.value.trim().length >= 5) nameErr.textContent = '';
+        });
+
+        sauceField.addEventListener('change', validateSauceToppings);
+        toppingsFields.forEach(cb => cb.addEventListener('change', validateSauceToppings));
+
+        instructionsField.addEventListener('input', () => {
+            console.log("User is typing...");
+            if (instructionsField.value.trim().split(/\s+/).length >= 5) instructionsErr.textContent = '';
+        });
+
+        function validateSauceToppings() {
+            const sauce = sauceField.value;
+            const toppings = [...document.querySelectorAll('.topping:checked')].map(el => el.value);
+            if (sauce === 'Tomato' && toppings.includes('Supreme')) {
+                sauceErr.innerText = "Tomato sauce can't have Supreme toppings.";
+            } else {
+                sauceErr.innerText = '';
+            }
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = nameField.value.trim();
+            const sauce = sauceField.value;
+            const toppings = [...document.querySelectorAll('.topping:checked')].map(el => el.value);
+            const instructions = instructionsField.value.trim();
+
+            let isValid = true;
+
+            if (name.length < 5) {
+                nameErr.textContent = "Name must be at least 5 characters";
+                isValid = false;
+            }
+
+            if (sauce === 'Tomato' && toppings.includes('Supreme')) {
+                sauceErr.innerText = "Tomato sauce can't have Supreme toppings.";
+                isValid = false;
+            }
+
+            if (instructions.split(/\s+/).length < 5) {
+                instructionsErr.innerText = "Delivery instruction must be at least 5 words.";
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            const row = `
+                <tr>
+                    <td>${name}</td>
+                    <td>${sauce}</td>
+                    <td>${toppings.join(', ')}</td>
+                    <td>${instructions}</td>
+                </tr>`;
+            document.querySelector('#pizzaTable tbody').innerHTML += row;
+
+            form.reset();
+            nameErr.textContent = '';
+            sauceErr.textContent = '';
+            instructionsErr.textContent = '';
+        });
+    </script>
+</body>
+
+</html>

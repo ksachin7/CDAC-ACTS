@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Pizza Shop 2.0</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body class="container my-5">
+
+  <h2 class="mb-4">Pizza Shop 2.0</h2>
+
+  <form id="pizzaForm">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" class="form-control" id="name" name="name" required />
+      <div class="invalid-feedback">Name must be at least 5 characters long.</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Pizza Toppings:</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topping" id="pepperoni" value="Pepperoni" required />
+        <label class="form-check-label" for="pepperoni">Pepperoni</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topping" id="mushrooms" value="Mushrooms" />
+        <label class="form-check-label" for="mushrooms">Mushrooms</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topping" id="supreme" value="Supreme" />
+        <label class="form-check-label" for="supreme">Supreme</label>
+      </div>
+      <div class="text-danger" id="toppingError" style="display:none;">Supreme is not allowed with Tomato Sauce.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="sauce" class="form-label">Pizza Sauce:</label>
+      <select class="form-select" id="sauce" name="sauce" required>
+        <option value="">--Select Sauce--</option>
+        <option value="Tomato">Tomato</option>
+        <option value="Pesto">Pesto</option>
+        <option value="White Garlic">White Garlic</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Optional Extras:</label><br />
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="extra_cheese" value="Cheese" />
+        <label class="form-check-label" for="extra_cheese">Extra Cheese</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="extra_olives" value="Olives" />
+        <label class="form-check-label" for="extra_olives">Olives</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="extra_chili" value="Chili Flakes" />
+        <label class="form-check-label" for="extra_chili">Chili Flakes</label>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="instructions" class="form-label">Delivery Instructions:</label>
+      <textarea class="form-control" id="instructions" name="instructions" rows="3" required></textarea>
+      <div class="invalid-feedback">Please enter at least 5 words.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Send My Order</button>
+  </form>
+
+  <script>
+    document.getElementById("pizzaForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const sauce = document.getElementById("sauce").value;
+      const instructions = document.getElementById("instructions").value.trim();
+
+      const toppingInput = document.querySelector("input[name='topping']:checked");
+      const topping = toppingInput ? toppingInput.value : null;
+
+      const extras = [];
+      if (document.getElementById("extra_cheese").checked) extras.push("Cheese");
+      if (document.getElementById("extra_olives").checked) extras.push("Olives");
+      if (document.getElementById("extra_chili").checked) extras.push("Chili Flakes");
+
+      let isValid = true;
+
+      // Name validation
+      if (name.length < 5) {
+        document.getElementById("name").classList.add("is-invalid");
+        isValid = false;
+      } else {
+        document.getElementById("name").classList.remove("is-invalid");
+      }
+
+      // Sauce-topping rule
+      const toppingError = document.getElementById("toppingError");
+      if (sauce === "Tomato" && topping === "Supreme") {
+        toppingError.style.display = "block";
+        isValid = false;
+      } else {
+        toppingError.style.display = "none";
+      }
+
+      // Delivery instructions: 5 words
+      if (instructions.split(/\s+/).filter(Boolean).length < 5) {
+        document.getElementById("instructions").classList.add("is-invalid");
+        isValid = false;
+      } else {
+        document.getElementById("instructions").classList.remove("is-invalid");
+      }
+
+      if (!isValid) return;
+
+      const orderData = { name, topping, sauce, extras, instructions };
+
+      fetch("http://localhost:3000/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          alert("Order received: " + JSON.stringify(data));
+          document.getElementById("pizzaForm").reset();
+        })
+        .catch((err) => {
+          console.error("Error submitting order:", err);
+        });
+    });
+  </script>
+</body>
+
+</html>

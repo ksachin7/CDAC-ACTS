@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+
+    <style>
+        #root{
+            margin:auto;
+            padding: 5rem;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        table{
+            width: 100%;
+            align-items: center;
+            text-align: center;;
+        }
+
+        table, tr, th, td{
+           border: 1px solid black;
+           border-collapse: collapse;
+        }
+        tr:nth-child(even){
+            background-color: rgb(241, 241, 241);
+        }
+        th{
+            background-color: burlywood;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <h1>Student Name</h1>
+        <hr>
+        <h3>Professional Summary</h3>
+        <p>I'm a Full-Stack Software Developer</p>
+        <section style="max-width: 600px">
+            <h3>Qualifications</h3>
+            <table>
+                <tr>
+                    <th>Sr no</th>
+                    <th>Degree</th>
+                    <th>Institute</th>
+                    <th>Marks</th>
+                </tr>
+                <tr>
+                    <td>001</td>
+                    <td>BE</td>
+                    <td>DYP</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>001</td>
+                    <td>BE</td>
+                    <td>DYP</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>001</td>
+                    <td>BE</td>
+                    <td>DYP</td>
+                    <td>10</td>            
+                </tr>
+            </table>
+        </section>
+        <hr>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section-C</title>
+</head>
+
+<body>
+    <h1>Assignment Section-C</h1>
+    <p>Problem: Write a code to accept name of fruits name from user and show in list</p>
+
+    <script>
+        function printFruits() {
+            let fruit;
+            const fruits = [];
+
+            do {
+                fruit = prompt("Please enter a fruit name. Enter 0 to exit!")
+                // console.log(fruit)
+                if (parseInt(fruit) != 0) fruits.push(fruit)
+            } while (fruit != 0)
+
+            console.log(fruits)
+            fruits.forEach(element => {
+                document.write(element + ", ")
+            });
+        }
+        printFruits()
+    </script>
+</body>
+
+</html>

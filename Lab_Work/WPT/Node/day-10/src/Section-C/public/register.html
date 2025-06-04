@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+</head>
+
+<body>
+    <form action="/register" method="POST">
+        <input type="text" name="name" placeholder="Name" required><br>
+        <input type="date" name="dob" required><br>
+        <input type="tel" name="phone" required><br>
+        <input type="email" name="email" required><br>
+
+        Gender:
+        <input type="radio" name="gender" value="Male" required> Male
+        <input type="radio" name="gender" value="Female"> Female<br>
+
+        Languages:
+        <input type="checkbox" name="language" value="English"> English
+        <input type="checkbox" name="language" value="Hindi"> Hindi
+        <input type="checkbox" name="language" value="Other"> Other<br>
+
+        State:
+        <select name="state" required>
+            <option value="">--Select State--</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Bihar">Bihar</option>
+        </select><br>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+
+</html>

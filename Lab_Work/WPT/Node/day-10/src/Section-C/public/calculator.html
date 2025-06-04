@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculator</title>
+</head>
+
+<body>
+    <form action="/calculate" method="POST">
+        <input type="number" name="num1" required><br>
+        <input type="number" name="num2" required><br>
+
+        <input type="radio" name="operation" value="add" required> Add<br>
+        <input type="radio" name="operation" value="subtract"> Subtract<br>
+        <input type="radio" name="operation" value="multiply"> Multiply<br>
+        <input type="radio" name="operation" value="divide"> Divide<br>
+        <input type="radio" name="operation" value="modulus"> Modulus<br>
+
+        <button type="submit">Calculate</button>
+    </form>
+</body>
+
+</html>

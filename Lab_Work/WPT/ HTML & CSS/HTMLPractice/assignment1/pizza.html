@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pizza Shop 2.0</title>
+  </head>
+  <body>
+    <form>
+      <table border="1" cellpadding="10">
+        <!-- Header -->
+        <tr>
+          <th colspan="2">Pizza Shop 2.0</th>
+        </tr>
+
+        <!-- Name -->
+        <tr>
+          <td><label for="name">Name:</label></td>
+          <td><input type="text" id="name" name="name" /></td>
+        </tr>
+
+        <!-- Pizza Toppings (Radio) -->
+        <tr>
+          <td><label>Pizza Toppings:</label></td>
+          <td>
+            <label
+              ><input type="radio" name="topping" value="pepperoni" />
+              Pepperoni</label
+            ><br />
+            <label
+              ><input type="radio" name="topping" value="mushrooms" />
+              Mushrooms</label
+            ><br />
+            <label
+              ><input type="radio" name="topping" value="onions" />
+              Onions</label
+            >
+          </td>
+        </tr>
+
+        <!-- Pizza Sauce (Select) -->
+        <tr>
+          <td><label for="sauce">Pizza Sauce:</label></td>
+          <td>
+            <select name="sauce" id="sauce">
+              <option value="">--Select Sauce--</option>
+              <option value="tomato">Tomato</option>
+              <option value="pesto">Pesto</option>
+              <option value="white">White Garlic</option>
+            </select>
+          </td>
+        </tr>
+
+        <!-- Optional Extras (Checkboxes) -->
+        <tr>
+          <td><label>Optional Extras:</label></td>
+          <td>
+            <label for="extra_cheese"> Extra Cheese</label>
+            <input type="checkbox" name="extra_cheese" value="cheese" />
+
+            <label for="extra_olives"> Olives</label>
+            <input type="checkbox" name="extra_olives" value="olives" />
+
+            <label for="extra_chili"> Chili Flakes</label>
+            <input type="checkbox" name="extra_chili" value="chili" />
+          </td>
+        </tr>
+
+        <!-- Delivery Instructions (Textarea) -->
+        <tr>
+          <td colspan="2">
+            <label for="instructions">Delivery Instructions:</label><br />
+            <textarea
+              id="instructions"
+              name="instructions"
+              rows="4"
+              cols="50"
+            ></textarea>
+          </td>
+        </tr>
+
+        <!-- Submit Button -->
+        <tr>
+          <td colspan="2">
+            <button type="submit">Send My Order</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

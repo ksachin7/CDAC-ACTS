@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Movie Details Table</h1>
+    <button onclick="getMovieDetails()">Enter Movie Details</button>
+
+    <table id="movieTable">
+        <thead>
+            <tr>
+                <th>Movie Name</th>
+                <th>Price (₹)</th>
+                <th>Seat Plan</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        function getMovieDetails() {
+            const tableBody = document.querySelector("#movieTable tbody");
+            tableBody.innerHTML = "";
+
+            const no = prompt("Enter no. of movies to add: ")
+            for (let i = 1; i <= no; i++) {
+                const name = prompt(`Enter name of movie ${i}:`);
+                const price = prompt(`Enter price of movie ${i}:`);
+                const seat = prompt(`Enter seat plan of movie ${i}:`);
+
+                if (name && price && seat) {
+                    const row = `
+                        <tr>
+                            <td>${name}</td>
+                            <td>${price}</td>
+                            <td>${seat}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                } else {
+                    alert("All fields are required!");
+                    i--;
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

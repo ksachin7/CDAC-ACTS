@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Order Summary</title>
+    <style>
+      table {
+        text-align: left;
+      }
+      table,
+      td,
+      tr {
+        padding: 8px;
+        border: 2px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Order Summary</h2>
+
+    <table>
+      <!-- Order Info -->
+      <tr>
+        <td rowspan="11"><strong>TCB</strong></td>
+        <td><strong>Order No:</strong></td>
+        <td colspan="5">#ABC001</td>
+      </tr>
+      <tr>
+        <td><strong>Order Date:</strong></td>
+        <td colspan="5">23-Mar-2016</td>
+      </tr>
+
+      <!-- Customer Info Header -->
+      <tr>
+        <td colspan="6" style="text-align: center">
+          <strong>Customer</strong>
+        </td>
+      </tr>
+
+      <!-- Customer Name and Address -->
+      <tr>
+        <td><strong>Name:</strong></td>
+        <td colspan="5">John Papas</td>
+      </tr>
+      <tr>
+        <td><strong>Address:</strong></td>
+        <td colspan="5">Independence Day 5th Str, 11511</td>
+      </tr>
+
+      <!-- Order Details Header -->
+      <tr>
+        <td colspan="6" style="text-align: center">
+          <strong>Order Details</strong>
+        </td>
+      </tr>
+
+      <!-- Order Items -->
+      <tr>
+        <td>1</td>
+        <td colspan="2">Of Mice and Men</td>
+        <td>Book</td>
+        <td colspan="2">10.00€</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td colspan="2">Les Miserables</td>
+        <td>Book</td>
+        <td colspan="2">12.00€</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td colspan="2">Game of Thrones - S01</td>
+        <td>DVD</td>
+        <td colspan="2">50.00€</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td colspan="2">Samsung Galaxy</td>
+        <td>Mobile Phone</td>
+        <td colspan="2">200.00€</td>
+      </tr>
+
+      <!-- Total -->
+      <tr>
+        <td colspan="4" style="text-align: right"><strong>Total:</strong></td>
+        <td colspan="2">272.00€</td>
+      </tr>
+    </table>
+  </body>
+</html>

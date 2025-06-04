@@ -1,0 +1,279 @@
+
+ Javascript Assignments
++----------------------+
+
++----------------------------------------------------+ day-4 +----------------------------------------------------+
+ 
+Javascript Assignment:
+1.Write a JS program to perform substraction of two number
+2.Write a JS program to perform multiplication of three number
+3.Write a JS program to perform division of two number
+4.Write a JS program to perform modulas of two number
+5.Write a program to find given number is even or odd.
+6.Write a program to find the greater number out of three numbers.
+7.Write a program to find the print the day of week.
+ 
+ 
++----------------------------------------------------+ day-5 +----------------------------------------------------+
+Note: 
+1.Complete the Section A after completing assignment by using document.getElementById() function
+2.Last question of each section is compulsory
+
+
+---------
+Section A
+---------
+1.Write a program to find given number is even or odd.
+2.Write a program to find the greater number out of three numbers.
+3.Write a program to find the print the day of week.
+4.Implement a calculator using if-else ladder
+(Take two number from prompt and also operator from prompt) 
+
+opr = "+"
+if(opr == "+")
+
+
+
+---------
+Section B
+---------
+1.Print table on page(Take input from user)
+Format:
+2 * 1 = 2
+2 * 2 = 4
+
+2.Find the sum of digit of 5 digit number(Take input from user)
+
+3. Write a program to display Fibonacci series
+4. Create a web page to calculate the compound Interest.
+p = Principal,
+r = Rate of Interest,
+n = period in years
+The values used in the example in the following figure are as follows:
+P = 1000, n = 1, r = 10
+
+5. Write a program to find the sum of squares of even numbers upto N (accept from user).Take N from user
+6.Write a program to print even number from 1 to 20
+7.Write code to print table (Take Number and range from user)
+If user inputs 2 and range 20 then print table of 2 till 20
+
+
+---------
+Section C
+---------
+1.Write a program to check given string ends with "t" or not
+2.Write a code to accept name of fruits name from user and show in list
+
+
+---------
+Section D
+---------
+num="1,2,3,4,5,6,7,8,9"
+Note:Use num string in below questions:
+1.Fetch "1" and "5" from string and perform numerical addition
+2.Fetch "2" and "8" from string and perfrom numerical muliplication
+
+
+---------
+Section E
+---------
+1.Write a code to print fibonnaci series( 1,1,2,3,5,8,13,21...) till 100.
+2.Write a code to check the given string is palindrome or not. (abba)
+
+
+---------
+Section F
+---------
+num="1,2,3,4,5,6,7,8,9"
+Note:Use num string in below questions:
+1.Print only numbers not comma
+2.Print all even numbers
+
+
+---------
+Section G
+---------
+1.Write a code to take string input from user and remove duplicate words.
+2.Write a code which accepts a sequence of comma separated` five numbers and find the addition of all of them
+
+3.Create a web page and take 3 employee details from prompt and show in table
+Employee property : Id,Name,Phone,Salary
+4.Create a web page and take 3 Movies details from prompt and show in table
+Movies property : Movie Name,Price,Seat
+
++----------------------------------------------------+ day-6 +----------------------------------------------------+
+Note : 
+1.Last question of each Section is compulsory
+2.Implement Section J using submit event and click event
+
+
+---------
+Section I
+---------
+1.Write a calculator program.Create two input box and five button add,substract,multiply divide, modulas
+
+2.Write a code to accept name of Friends name from user and show in list using DOM
+3.Create a web page and take 3 Movies details  and show in table
+Movies property : Movie Name,Price,Seat
+
+
+---------
+Section J
+---------
+1.Create a web page and take 3 Movies details  and show in table (Use bootstrap)
+Movies property : Movie Name,Price,Seat
+
+2.Write js code to read movie data from user and show in table(use bootstrap)
+Movie Fields : movieName, actor, release,Movie type(2d,3d,IMAX)(use checkbox), language(Use radio button), show time(Use input type=datetime-local)
+
+
+
++----------------------------------------------------+ day-7 +----------------------------------------------------+
+
+Note : All questions are compulsory
+
+---------
+Section K
+---------
+1.Write js code to read movie data from user and show in table(use bootstrap) and apply following validation
+Movie Fields : movieName, actor, release,Movie type(2d,3d,IMAX)(use checkbox), language(Use radio button), show time(Use input type=datetime-local)
+a)Movie Name must be of at least 5 characters 
+b)Actor name must be of at 3 chars
+
+2.Use Day 2 Assignment Question 10 Pizzashop and  show data in table(Use bootstrap) and apply following validation
+a)Name must be 5 chars
+b)If Tomato Pizza sauce is selected then the user cannot select Supreme Pizza toppings
+c)Delivery Instruction must have at least 5 words
+
+---------
+Section L
+---------
+1.Create a Employee object using function constructor.
+Properties: name,email,salary,department,calculateTax
+
+2.Create a Student object using function constructor.
+Properties: name,email,department,dob, marks(Array of Objects{subject, mark}), calculateTotalMarks
+
+3.Create Question 1 and 2 object using class syntax also.
+
++----------------------------------------------------+ day-8 +----------------------------------------------------+
+Note: 
+1. Section A is compulsory
+2. Section B question 1,2,3 and 5 is compulsory
+
+---------
+Section A
+---------
+1. Implementing Inheritance with Prototypes
+Task:
+-> Write a constructor function named Person that accepts two parameters: name and age.
+-> Add a method greet on Person.prototype that returns "Hello, I'm <name>!".
+-> Write another constructor function called Student that inherits from Person and accepts an additional parameter subject.
+-> Add a method study on Student.prototype that returns "<name> is studying <subject>.".
+-> Ensure that Student inherits the greet method from Person using prototype inheritance.
+Note : Implement this without using ES6 class syntax. Consider how you’ll link the prototype chain and ensure the constructor property is correctly set.
+
+________NodeJs________
+
+---------
+Section B
+---------
+Use modules: Dont take input from user
+1.Write a code to print fibonacci number till 100
+2.Write a code to write table of 3 to file
+3.Read data from file(create a dummy file and write some data in it)
+
+4.Write a code to read list of numbers from file and perform addition and write into another file
+(Create two file ,First file have comma separated numbers )
+
+5.Create a user defined local module greeting.js containing a function greet() that greets user based on time
+of the day. If its morning, greet user as "Good morning", if its afternoon, greet user as "Good
+Afternoon" else as "Good Evening"
+Create a main module that will bring in the greeting.js module and invoke the greet function
+
++----------------------------------------------------+ day-9 +----------------------------------------------------+
+Notes: 
+1. Complete using fs async functions
+---------
+Section A
+---------
+Use modules: Take input from user
+1.Write a code to print fibonacci number till 100 
+2.Write a code to write table of 3 to file
+3.Read data from file(create a dummy file and write some data in it)
+
+4.Write a code to read list of numbers from file and perform addition and write into another file
+(Create two file ,First file have comma seperated numbers )
+
+5.Create a user defined local module greeting.js containing a function greet() that greets user based on time
+of the day. If its morning, greet user as "Good morning", if its afternoon, greet user as "Good
+Afternoon" else as "Good Evening"
+
+Create a main module that will bring in the greeting.js module and invoke the greet function (Try creating async function and await it)
+
++----------------------------------------------------+ day-10 +----------------------------------------------------+
+Note: Question 1, 2 of both sections are compulsory
+---------
+Section B
+---------
+1.Create server that handle below path:
+	a)/data -> Respond "this is data"
+	b)/profile -> Respond "this is profile"
+	
+2.Create server that handle below path:
+	a)/data -> Respond with data.html page
+	b)/profile -> Respond with profile.html page
+3.Create four html files:
+ addition.html, 
+ substraction.html, 
+ multiplication.html, 
+ division.html  
+ and perform the airthmatic calculation.
+
+---------
+Section C
+---------
+Use Express:
+1.Create server that handle below path:
+	a)/data -> Respond "this is data"
+	b)/profile -> Respond "this is profile"
+	
+2.Create four html files addition.html, substraction.html, multiplication.html, division.html  and perform the airthmatic calculation on express server
+
+3.Create calculator.html(two text box and five radio button for operation Addtion,Substraction,Multiplication,Divison,Modulas) and perfrom calculation on server
+
+4.Create register page(Name,date of birth,phone,email,gender,language(checkbox),State(dropdown)) and recieve data on server and repond "Got data"
+
++----------------------------------------------------+ day-11 +----------------------------------------------------+
+Note : 
+1.Question 2 of Section D,E is compulsory
+2.Use AJAX in Section D and E. 
+use JSON
+
+---------
+Section D
+---------
+1.Create four html files addition.html, substraction.html, multiplication.html, division.html  and perform the airthmatic calculation on express server using AJAX
+
+2.Create a web page and take 3 Movies details and store on express server using AJAX  and show in table 
+Movies property : Movie Name,Price,Seat
+
+---------
+Section E
+---------
+1.Write js code to read movie data from user and show in table(use bootstrap) and apply following validation
+Movie Fields : movieName, actor, release,Movie type(2d,3d,IMAX)(use checkbox)
+Use AJAX to store on express server
+a)Movie Name must be of at least 5 characters 
+b)Actor name must be of at 3 chars
+
+2.Use Assignment 2 PizzaShop and and show data in table(Use bootstrap) and apply following validation
+Use AJAX to store on express server
+a)Name must be 5 chars
+b)If Tomato Pizza sauce is selected then the user cannot select Supreme Pizza toppings
+c)Delievery Instruction must have at least 5 words
+
+---------
+Section F
+---------
+1.Setup react application. Try modifying App.js and test variables
