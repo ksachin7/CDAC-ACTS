@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Express Form Submit</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Submit Your Info</h1>
+        <form id="infoForm">
+            <input type="text" id="name" placeholder="Name" required />
+            <input type="email" id="email" placeholder="Email" required />
+            <button type="submit">Submit</button>
+        </form>
+        <h2>Submitted Data</h2>
+        <ul id="dataList"></ul>
+    </div>
+
+    <script>
+        const form = document.getElementById('infoForm');
+        const dataList = document.getElementById('dataList');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = form.name.value.trim();
+            const email = form.email.value.trim();
+
+            if (!name || !email) return;
+
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                dataList.innerHTML = '';
+                result.data.forEach(({ name, email }) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${name} — ${email}`;
+                    dataList.appendChild(li);
+                });
+                form.reset();
+            } else {
+                alert(result.error || 'Error submitting form');
+            }
+        });
+    </script>
+</body>
+
+</html>

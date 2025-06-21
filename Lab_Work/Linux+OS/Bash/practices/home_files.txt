@@ -1,0 +1,40 @@
+/Users/sachin/.zshrc.save
+/Users/sachin/mysql_backup.sql
+/Users/sachin/.DS_Store
+/Users/sachin/id_ed25519
+/Users/sachin/hello_crontab.sh
+/Users/sachin/java_error_in_idea_47966.log
+/Users/sachin/.yarnrc
+/Users/sachin/requirements.txt
+/Users/sachin/.angular-config.json
+/Users/sachin/.netrc
+/Users/sachin/.zshrc.pre-oh-my-zsh
+/Users/sachin/.zshrc
+/Users/sachin/Squid Game Song Red Light Green Light + Lyrics-Pw-KSwJIi5Q.m4a.mp3
+/Users/sachin/.psql_history
+/Users/sachin/cbasic
+/Users/sachin/.zprofile
+/Users/sachin/.zsh_history
+/Users/sachin/optimize_mac_2025-01-23_10-52-34.log
+/Users/sachin/.zcompdump-MacBook Air-5.8.1
+/Users/sachin/.lesshst
+/Users/sachin/.zcompdump-MacBook Air-5.8.1.zwc
+/Users/sachin/.node_repl_history
+/Users/sachin/.p10k.zsh
+/Users/sachin/yarn.lock
+/Users/sachin/.gitignore
+/Users/sachin/.zcompdump-Sachin’s MacBook Air-5.8.1
+/Users/sachin/.git-credentials
+/Users/sachin/.CFUserTextEncoding
+/Users/sachin/.zcompdump
+/Users/sachin/.testcontainers.properties
+/Users/sachin/.mysql_history
+/Users/sachin/.bash_profile
+/Users/sachin/.gitconfig
+/Users/sachin/optimize_mac_2025-01-23_10-51-33.log
+/Users/sachin/.bash_history
+/Users/sachin/.viminfo
+/Users/sachin/capture.pcap
+/Users/sachin/.h2.server.properties
+/Users/sachin/nohup.out
+/Users/sachin/acts_db_backup.sql
