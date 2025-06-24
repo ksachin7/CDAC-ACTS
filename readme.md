@@ -2,7 +2,7 @@
 
 This repository contains my **daily practice** work during the **Post Graduate Diploma in Advanced Computing (PGDAC)** course. The purpose of this repo is to organize and track my learning progress across various technologies and topics that I work on throughout the course.
 
-Every day, I will practice coding challenges, build projects, and learn new concepts which will be committed to this repository.
+<!-- Every day, I will practice coding challenges, build projects, and learn new concepts which will be committed to this repository. -->
 
 ## 🔥 About CDAC
 
@@ -28,8 +28,8 @@ C-DAC has established the Advanced Computing Training School (ACTS) to meet the 
 Clone this repository to get started:
 
 ```bash
-git clone https://github.com/ksachin7/Sunbeam_Practice.git
-cd Sunbeam_Practice
+git clone git@github.com:ksachin7/CDAC-ACTS.git
+cd CDAC-ACTS
 ```
 
 Feel free to check out the code. This repo is primarily for self-reflection and learning.
